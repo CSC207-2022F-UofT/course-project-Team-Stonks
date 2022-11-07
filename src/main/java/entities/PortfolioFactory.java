@@ -1,25 +1,27 @@
 package entities;
 
 import db.StockDSResponse;
+import db.iEntityDBGateway;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PortfolioFactory {
+    private StockFactory stockFactory = new StockFactory();
 
-    public static Portfolio createPortfolio(String name) {
-        return new Portfolio(name);
+    public Portfolio createPortfolio(String name, iEntityDBGateway dbGateway) {
+        return new Portfolio(name, dbGateway);
     }
 
-    public static Portfolio createPortfolio(double balance, String name, List<StockDSResponse> stocks) {
-        Map<Stock, Integer> stockToQuantity = new HashMap<>();
+    public Portfolio createPortfolio(double balance, String name, List<StockDSResponse> stocks, iEntityDBGateway dbGateway) {
+        Map<String, Stock> symbolToStock = new HashMap<>();
 
         for (StockDSResponse stock : stocks) {
-            Stock newStock = StockFactory.createStock(stock.symbol(), stock.value());
-            stockToQuantity.put(newStock, stock.quantity());
+            Stock newStock = stockFactory.createStock(stock.symbol(), stock.value(), stock.quantity());
+            symbolToStock.put(stock.symbol(), newStock);
         }
 
-        return new Portfolio(balance, name, stockToQuantity);
+        return new Portfolio(balance, name, symbolToStock, dbGateway);
     }
 }

@@ -1,7 +1,7 @@
 package entities;
 
 public class StockFactory {
-    public static Stock createStock(String symbol, double value) {
-        return new Stock(symbol, value);
+    public Stock createStock(String symbol, double value, int quantity) {
+        return new Stock(symbol, value, quantity);
     }
 }

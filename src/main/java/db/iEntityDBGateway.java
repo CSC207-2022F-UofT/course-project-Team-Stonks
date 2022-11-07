@@ -1,15 +1,10 @@
 package db;
 
-import entities.Portfolio;
-import entities.Stock;
-import entities.User;
-
 public interface iEntityDBGateway {
     /**
      * Adds user to database
      */
     void addUser(UserDSRequest newUser);
-
 
     /**
      * <pre>
@@ -18,8 +13,16 @@ public interface iEntityDBGateway {
      * Returns User object if it is found, null otherwise
      * </pre>
      */
-    User findUser(String username);
+    boolean findUser(String username);
 
+    /**
+     * <pre>
+     * Searches for user in database based on given username and password
+     *
+     * Returns User object if it is found, null otherwise
+     * </pre>
+     */
+    UserDSResponse findUser(String username, String password);
 
     /**
      * Deletes user from the database based on username, if it exists
@@ -28,41 +31,37 @@ public interface iEntityDBGateway {
 
 
     /**
-     * Adds user to database
+     * Adds portfolio to given user in the database
      */
     void addPortfolio(PortfolioDSRequest newPortfolio);
 
     /**
      * <pre>
-     * Searches for user in database based on given username
+     * Searches for portfolio in database based on given username and portfolioName
      *
      * Returns User object if it is found, null otherwise
      * </pre>
      */
-    Portfolio findPortfolio(String username);
-
+    PortfolioDSResponse findPortfolio(String portfolioName, String username);
 
     /**
      * Deletes portfolio from the database based on name, if it exists
      */
-    void deletePortfolio(String name);
+    void deletePortfolio(String name, String username);
 
     /**
      * Adds stock to database
      */
     void addStock(StockDSRequest newStock);
 
-    /**
-     * <pre>
-     * Searches for stock in database based on given id
-     *
-     * Returns Stock object if it is found, null otherwise
-     * </pre>
-     */
-    Stock findStock(int id);
+    StockDSResponse findStock(StockDSResponse stock);
 
     /**
      * Deletes stock from the database based on id, if it exists
      */
-    void deleteStock(int id);
+    void deleteStock(String symbol, String username, String portfolioName);
+
+    void updateStockValue(String symbol, String newValue, String username, String portfolioName);
+
+    void updateStockQuantity(String symbol, int newQuantity, String username, String portfolioName);
 }

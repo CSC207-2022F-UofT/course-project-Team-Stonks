@@ -1,4 +1,4 @@
 package db;
 
-public record PortfolioDSRequest() {
+public record PortfolioDSRequest(String name, double balance, String username) {
 }

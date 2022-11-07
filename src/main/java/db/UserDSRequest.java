@@ -1,4 +1,4 @@
 package db;
 
-public record UserDSRequest() {
+public record UserDSRequest(String username, String password, String lastLogin) {
 }
