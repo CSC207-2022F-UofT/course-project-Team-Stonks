@@ -93,11 +93,10 @@ public class Portfolio {
         return true;
     }
 
-    public void updateStockValues() {
+    public void updateStockValues(String username) {
         for (Stock stock : symbolToStock.values()) {
             Stock dsStock = convertStockDSResponse(
-                    dbGateWay.findStock(new StockDSResponse(stock.getSymbol(),
-                    stock.getValue(), stock.getQuantity())));
+                    dbGateWay.findStock(stock.getSymbol(), username, name));
             stock.setValue(dsStock.getValue());
         }
     }

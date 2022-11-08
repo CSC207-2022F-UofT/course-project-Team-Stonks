@@ -1,4 +1,6 @@
 package db;
 
-public record UserDSRequest(String username, String password, String lastLogin) {
+import java.sql.Date;
+
+public record UserDSRequest(String username, String password, Date lastLogin) {
 }

@@ -1,10 +1,12 @@
 package entities;
 
-import db.PortfolioDSRequest;
 import db.PortfolioDSResponse;
 import db.iEntityDBGateway;
 
-import java.util.*;
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class UserFactory {
     private PortfolioFactory portfolioFactory = new PortfolioFactory();

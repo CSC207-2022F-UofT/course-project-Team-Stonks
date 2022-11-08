@@ -7,7 +7,7 @@ import db.iEntityDBGateway;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class UserManager {
@@ -76,6 +76,6 @@ public class UserManager {
     }
 
     public User convertUserDSResponse(UserDSResponse userDSResponse) throws ParseException {
-        return userFactory.createUser(userDSResponse.username(), userDSResponse.password(), dateFormat.parse(userDSResponse.lastLogin()), userDSResponse.portfolios(), dbGateway);
+        return userFactory.createUser(userDSResponse.username(), userDSResponse.password(), userDSResponse.lastLogin(), userDSResponse.portfolios(), dbGateway);
     }
 }

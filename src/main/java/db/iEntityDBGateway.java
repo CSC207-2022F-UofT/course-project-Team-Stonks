@@ -54,14 +54,14 @@ public interface iEntityDBGateway {
      */
     void addStock(StockDSRequest newStock);
 
-    StockDSResponse findStock(StockDSResponse stock);
+    StockDSResponse findStock(String symbol, String username, String portfolioName);
 
     /**
      * Deletes stock from the database based on id, if it exists
      */
     void deleteStock(String symbol, String username, String portfolioName);
 
-    void updateStockValue(String symbol, String newValue, String username, String portfolioName);
+    void updateStockValue(String symbol, double newValue);
 
     void updateStockQuantity(String symbol, int newQuantity, String username, String portfolioName);
 }

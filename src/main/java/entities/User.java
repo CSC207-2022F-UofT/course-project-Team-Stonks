@@ -2,7 +2,9 @@ package entities;
 
 import db.iEntityDBGateway;
 
-import java.util.*;
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private String username;
@@ -36,8 +38,8 @@ public class User {
         nameToPortfolio.put(name, portfolioFactory.createPortfolio(name, dbGateway));
     }
 
-    public Set<String> getPortfolioNames() {
-        return nameToPortfolio.keySet();
+    public Map<String, Portfolio> getNameToPortfolio() {
+        return nameToPortfolio;
     }
 
     public Date getLastLogin() {
@@ -49,6 +51,6 @@ public class User {
     }
 
     public void updatePortfolioStockValues(String portfolioName) {
-        nameToPortfolio.get(portfolioName).updateStockValues();
+        nameToPortfolio.get(portfolioName).updateStockValues(username);
     }
 }

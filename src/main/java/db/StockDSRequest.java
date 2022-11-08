@@ -1,4 +1,4 @@
 package db;
 
-public record StockDSRequest(String symbol, double value, int amount, String username, String portfolioName) {
+public record StockDSRequest(String symbol, double value, int quantity, String username, String portfolioName) {
 }
