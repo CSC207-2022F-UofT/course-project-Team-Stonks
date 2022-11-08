@@ -9,7 +9,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
 
     public EntitySQLGateway() {
         String connectionUrl =
-                "jdbc:sqlserver://142.188.14.250:1433;"
+                "jdbc:sqlserver://MSI\\SQLEXPRESS;"
                         + "database=entities;"
                         + "user=teammate;"
                         + "password=CSC207Stocks;"

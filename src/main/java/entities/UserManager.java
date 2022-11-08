@@ -72,7 +72,7 @@ public class UserManager {
      */
     public void createUser(String username, String password, Date dateCreated) {
         users.add(userFactory.createUser(username, password, dateCreated, dbGateway));
-        dbGateway.addUser(new UserDSRequest(username, password, dateCreated.toString()));
+        dbGateway.addUser(new UserDSRequest(username, password, dateCreated));
     }
 
     public User convertUserDSResponse(UserDSResponse userDSResponse) throws ParseException {
