@@ -1,5 +1,7 @@
 package db;
 
+import java.sql.Date;
+
 public interface iEntityDBGateway {
     /**
      * Adds user to database
@@ -29,6 +31,7 @@ public interface iEntityDBGateway {
      */
     void deleteUser(String username);
 
+    void updateUserLoginDate(String username, Date loginDate);
 
     /**
      * Adds portfolio to given user in the database
@@ -49,12 +52,16 @@ public interface iEntityDBGateway {
      */
     void deletePortfolio(String name, String username);
 
+    void updatePortfolioBalance(String name, double newBalance, String username);
+
     /**
      * Adds stock to database
      */
     void addStock(StockDSRequest newStock);
 
     StockDSResponse findStock(String symbol, String username, String portfolioName);
+
+    boolean findStock(String symbol);
 
     /**
      * Deletes stock from the database based on id, if it exists
@@ -64,4 +71,5 @@ public interface iEntityDBGateway {
     void updateStockValue(String symbol, double newValue);
 
     void updateStockQuantity(String symbol, int newQuantity, String username, String portfolioName);
+
 }

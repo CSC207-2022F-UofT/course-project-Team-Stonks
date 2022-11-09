@@ -1,20 +1,17 @@
 package entities;
 
-import db.UserDSRequest;
 import db.UserDSResponse;
 import db.iEntityDBGateway;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
 public class UserManager {
-    List<User> users;
-    iEntityDBGateway dbGateway;
-    UserFactory userFactory = new UserFactory();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss");
+    private List<User> users;
+    private iEntityDBGateway dbGateway;
+    private UserFactory userFactory = new UserFactory();
 
     public UserManager(iEntityDBGateway dbGateway) {
         users = new ArrayList<>();
@@ -32,10 +29,11 @@ public class UserManager {
      * @return the user from the system that has the given username password pair
      * or null if it doesn't exist
      */
-    public User getUser(String username, String password) throws ParseException {
+    public User getUser(String username, String password, Date loginDate) {
         for (User user : users) {
             if (user.getUsername() == username) {
                 if (user.isPassword(password)) {
+                    user.updateLoginDate(loginDate);
                     return user;
                 }
 
@@ -43,7 +41,14 @@ public class UserManager {
             }
         }
 
-        return convertUserDSResponse(dbGateway.findUser(username, password));
+        User user = convertUserDSResponse(dbGateway.findUser(username, password));
+
+        if (user != null) {
+            users.add(user);
+            user.updateLoginDate(loginDate);
+        }
+
+        return user;
     }
 
     /**
@@ -72,10 +77,13 @@ public class UserManager {
      */
     public void createUser(String username, String password, Date dateCreated) {
         users.add(userFactory.createUser(username, password, dateCreated, dbGateway));
-        dbGateway.addUser(new UserDSRequest(username, password, dateCreated));
     }
 
-    public User convertUserDSResponse(UserDSResponse userDSResponse) throws ParseException {
+    private User convertUserDSResponse(UserDSResponse userDSResponse) {
+        if (userDSResponse == null) {
+            return null;
+        }
+
         return userFactory.createUser(userDSResponse.username(), userDSResponse.password(), userDSResponse.lastLogin(), userDSResponse.portfolios(), dbGateway);
     }
 }

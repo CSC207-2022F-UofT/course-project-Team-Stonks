@@ -35,7 +35,7 @@ public class User {
     }
 
     public void addPortfolio(String name) {
-        nameToPortfolio.put(name, portfolioFactory.createPortfolio(name, dbGateway));
+        nameToPortfolio.put(name, portfolioFactory.createPortfolio(name, username, dbGateway));
     }
 
     public Map<String, Portfolio> getNameToPortfolio() {
@@ -52,5 +52,9 @@ public class User {
 
     public void updatePortfolioStockValues(String portfolioName) {
         nameToPortfolio.get(portfolioName).updateStockValues(username);
+    }
+
+    public void updateLoginDate(Date loginDate) {
+        dbGateway.updateUserLoginDate(username, loginDate);
     }
 }
