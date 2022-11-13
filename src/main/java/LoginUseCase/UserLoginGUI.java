@@ -55,7 +55,7 @@ public class UserLoginGUI extends JFrame implements iUserLoginGUI {
     public void presentFailedLogin() {
         JOptionPane.showMessageDialog(
                 null,
-                "Login failed: either username or password are inccorect");
+                "Login failed: either username or password are incorrect");
     }
 
     {
