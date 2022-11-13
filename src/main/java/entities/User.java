@@ -5,6 +5,7 @@ import db.iEntityDBGateway;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class User {
     private String username;
@@ -38,8 +39,12 @@ public class User {
         nameToPortfolio.put(name, portfolioFactory.createPortfolio(name, username, dbGateway));
     }
 
-    public Map<String, Portfolio> getNameToPortfolio() {
-        return nameToPortfolio;
+    public Portfolio getPortfolio(String portfolioName) {
+        return nameToPortfolio.get(portfolioName);
+    }
+
+    public Set<String> getPortfolioNames() {
+        return nameToPortfolio.keySet();
     }
 
     public Date getLastLogin() {

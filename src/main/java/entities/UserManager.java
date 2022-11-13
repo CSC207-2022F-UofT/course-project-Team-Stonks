@@ -18,11 +18,6 @@ public class UserManager {
         this.dbGateway = dbGateway;
     }
 
-    public UserManager(iEntityDBGateway dbGateway, List<User> users) {
-        this.users = users;
-        this.dbGateway = dbGateway;
-    }
-
     /**
      * @param username non-empty string
      * @param password non-empty string
@@ -41,7 +36,7 @@ public class UserManager {
             }
         }
 
-        User user = convertUserDSResponse(dbGateway.findUser(username, password));
+        User user = convertUserDSResponse(dbGateway.findUserPortfolios(username, password));
 
         if (user != null) {
             users.add(user);

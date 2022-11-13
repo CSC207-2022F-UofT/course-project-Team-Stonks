@@ -1,38 +1,32 @@
 package LoginUseCase;
 
+import PortfolioCreationUseCase.PortfolioCreationPresenter;
+import PortfolioCreationUseCase.UserGUI;
+import entities.User;
+import main.OuterLayerFactory;
+import main.StockSimulator;
+
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class UserLoginPresenter implements iUserLoginPresenter {
-    private UserLoginGUI view;
+public class UserLoginPresenter {
+    private iUserLoginGUI view;
     private UserLoginController controller;
 
-    public UserLoginPresenter() {
-        view = new UserLoginGUI();
+    public UserLoginPresenter(iUserLoginGUI view) {
+        this.view = view;
         controller = new UserLoginController();
 
-        view.getLoginBtn().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onLogin();
-            }
-        });
-
-        view.getSignUpBtn().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onSignUp();
-            }
-        });
+        view.addLoginAction(() -> onLogin());
+        view.addSignUpAction(() -> onSignUp());
     }
 
-    public void onLogin() {
+    private void onLogin() {
         UserLoginRequest request = new UserLoginRequest(
-                view.getUsernameText().getText(),
-                String.valueOf(view.getPasswordField().getPassword()),
+                view.getUsername(),
+                view.getPassword(),
                 Date.valueOf(LocalDate.now()));
 
         UserLoginResponse response = controller.loginUser(request);
@@ -40,17 +34,24 @@ public class UserLoginPresenter implements iUserLoginPresenter {
         loginResult(response);
     }
 
-    public void onSignUp() {
-        JFrame registerGUI = new UserLoginGUI();
-        view.onCancel();
+    private void onSignUp() {
+        view.close();
+        new UserLoginGUI();
     }
 
-    public void loginResult(UserLoginResponse response) {
-        if (response.user() == null) {
-            view.showFailedLogin();
+    private void loginResult(UserLoginResponse response) {
+        User user = response.user();
+
+        if (user == null) {
+            view.presentFailedLogin();
         } else {
-            view.showSuccessLogin(response.user().getUsername());
-            //view.onCancel();
+            view.close();
+            new PortfolioCreationPresenter(
+                    OuterLayerFactory.instance.getUserGUI(
+                            user.getUsername(),
+                            new ArrayList<>(user.getPortfolioNames()),
+                            user.getLastLogin()),
+                    user);
         }
     }
 

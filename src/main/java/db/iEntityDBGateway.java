@@ -26,6 +26,8 @@ public interface iEntityDBGateway {
      */
     UserDSResponse findUser(String username, String password);
 
+    UserDSResponse findUserPortfolios(String username, String password);
+
     /**
      * Deletes user from the database based on username, if it exists
      */
