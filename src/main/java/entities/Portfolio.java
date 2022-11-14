@@ -13,8 +13,8 @@ public class Portfolio {
     private StockFactory stockFactory = new StockFactory();
     private iEntityDBGateway dbGateWay;
 
-    public Portfolio(String name, iEntityDBGateway dbGateway) {
-        balance = 0;
+    public Portfolio(double balance, String name, iEntityDBGateway dbGateway) {
+        this.balance = balance;
         this.name = name;
         symbolToStock = new HashMap<>();
         this.dbGateWay = dbGateway;
@@ -39,7 +39,6 @@ public class Portfolio {
         return symbolToStock;
     }
 
-
     /**
      * <p>
      *     adds *quantity* amount of the stock to user's portfolio if user has sufficent funds and returns true,
@@ -49,7 +48,7 @@ public class Portfolio {
      * @param value non-negative number
      * @param quantity positive integer
      */
-    public boolean addStock(String symbol, double value, int quantity) {
+    public boolean addStock(String symbol, double value, int quantity, String username) {
         Stock stock = symbolToStock.get(symbol);
 
         if (balance < value * quantity) {
@@ -57,12 +56,13 @@ public class Portfolio {
         }
 
         if (stock != null) {
-            stock.addQuantity(quantity);
+            stock.addQuantity(quantity, username, name);
         } else {
-            symbolToStock.put(symbol, stockFactory.createStock(symbol, value, quantity));
+            symbolToStock.put(symbol, stockFactory.createStock(symbol, value, quantity, username, name, dbGateWay));
         }
 
         balance -= value * quantity;
+        dbGateWay.updatePortfolioBalance(name, balance, username);
 
         return true;
     }
@@ -75,7 +75,7 @@ public class Portfolio {
      * @param symbol non-empty string
      * @param quantity positive int
      */
-    public boolean sellStock(String symbol, int quantity) {
+    public boolean sellStock(String symbol, int quantity, String username) {
         Stock stock = symbolToStock.get(symbol);
 
         if (stock.getQuantity() < quantity) {
@@ -83,11 +83,13 @@ public class Portfolio {
         }
 
         balance += quantity * stock.getValue();
+        dbGateWay.updatePortfolioBalance(name, balance, username);
 
         if (quantity == stock.getQuantity()) {
             symbolToStock.remove(symbol);
+            dbGateWay.deleteStock(symbol, username, name);
         } else {
-            stock.addQuantity(-quantity);
+            stock.addQuantity(-quantity, username, name);
         }
 
         return true;
@@ -101,7 +103,7 @@ public class Portfolio {
         }
     }
 
-    public Stock convertStockDSResponse(StockDSResponse dsResponse) {
-        return stockFactory.createStock(dsResponse.symbol(), dsResponse.value(), dsResponse.quantity());
+    private Stock convertStockDSResponse(StockDSResponse dsResponse) {
+        return stockFactory.createStock(dsResponse.symbol(), dsResponse.value(), dsResponse.quantity(), dbGateWay);
     }
 }
