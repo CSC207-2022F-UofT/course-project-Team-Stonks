@@ -1,5 +1,6 @@
 package entities;
 
+import db.PortfolioDSRequest;
 import db.StockDSResponse;
 import db.iEntityDBGateway;
 
@@ -9,16 +10,18 @@ import java.util.Map;
 
 public class PortfolioFactory {
     private StockFactory stockFactory = new StockFactory();
+    private final double BALANCE = 10000;
 
-    public Portfolio createPortfolio(String name, iEntityDBGateway dbGateway) {
-        return new Portfolio(name, dbGateway);
+    public Portfolio createPortfolio(String name, String username, iEntityDBGateway dbGateway) {
+        dbGateway.addPortfolio(new PortfolioDSRequest(name, BALANCE, username));
+        return new Portfolio(BALANCE, name, dbGateway);
     }
 
     public Portfolio createPortfolio(double balance, String name, List<StockDSResponse> stocks, iEntityDBGateway dbGateway) {
         Map<String, Stock> symbolToStock = new HashMap<>();
 
         for (StockDSResponse stock : stocks) {
-            Stock newStock = stockFactory.createStock(stock.symbol(), stock.value(), stock.quantity());
+            Stock newStock = stockFactory.createStock(stock.symbol(), stock.value(), stock.quantity(), dbGateway);
             symbolToStock.put(stock.symbol(), newStock);
         }
 

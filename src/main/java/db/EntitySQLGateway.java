@@ -3,22 +3,19 @@ package db;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 
 public class EntitySQLGateway implements iEntityDBGateway {
     Connection con;
 
     public EntitySQLGateway() {
-        String connectionUrl =
-                "jdbc:sqlserver://MSI\\SQLEXPRESS;"
-                        + "database=entities;"
-                        + "user=teammate;"
-                        + "password=CSC207Stocks;"
-                        + "encrypt=true;"
-                        + "trustServerCertificate=false;"
-                        + "loginTimeout=30;";
-
+        String dbURL = "jdbc:sqlserver://MSI\\SQLEXPRESS" +
+                ";database=entities;encrypt=true;trustServerCertificate=true;loginTimeout=10;";
+        String user = "teammate";
+        String pass = "CSC207Stocks";
         try {
-            con = DriverManager.getConnection(connectionUrl);
+            DriverManager.registerDriver(new SQLServerDriver());
+            con = DriverManager.getConnection(dbURL, user, pass);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -30,12 +27,12 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void addUser(UserDSRequest newUser) {
         try{
-            PreparedStatement st = con.prepareStatement(
-                    "INSERT INTO Users VALUES (" +
-                            newUser.username() + "," +
-                            newUser.password() + "," +
-                            newUser.lastLogin());
-            st.executeQuery();
+            Statement st = con.createStatement();
+            st.execute(
+                    "INSERT INTO Users VALUES ('" +
+                            newUser.username() + "','" +
+                            newUser.password() + "','" +
+                            newUser.lastLogin() + "')");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -70,7 +67,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
             st.setString(1, username);
             st.setString(2, password);
             ResultSet userRS = st.executeQuery();
-            userRS.next();
+            boolean userFound = userRS.next();
 
             st = con.prepareStatement(
                     "SELECT * FROM Portfolios WHERE username = ?");
@@ -83,11 +80,58 @@ public class EntitySQLGateway implements iEntityDBGateway {
                      portfolioRS.getString(3)
                 ));
             }
+            if (userFound) {
+                return new UserDSResponse(userRS.getString(1),
+                        userRS.getString(2),
+                        userRS.getDate(3),
+                        portfolioDSResponses);
+            }
 
-            return new UserDSResponse(userRS.getString(1),
-                    userRS.getString(2),
-                    userRS.getDate(3),
-                    portfolioDSResponses);
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * @param username
+     * @param password
+     * @return
+     */
+    @Override
+    public UserDSResponse findUserPortfolios(String username, String password) {
+        try{
+            List<PortfolioDSResponse> portfolioDSResponses = new ArrayList<>();
+
+            PreparedStatement st = con.prepareStatement(
+                    "SELECT * FROM Users WHERE " +
+                            "username = ? AND " +
+                            "password = ?");
+            st.setString(1, username);
+            st.setString(2, password);
+            ResultSet userRS = st.executeQuery();
+            boolean userFound = userRS.next();
+
+            st = con.prepareStatement(
+                    "SELECT name, balance FROM Portfolios WHERE username = ?");
+            st.setString(1, username);
+            ResultSet portfolioRS = st.executeQuery();
+
+            while (portfolioRS.next()) {
+                portfolioDSResponses.add(new PortfolioDSResponse(
+                        portfolioRS.getString(1),
+                        portfolioRS.getDouble(2),
+                        new ArrayList<>()
+                ));
+            }
+            if (userFound) {
+                return new UserDSResponse(userRS.getString(1),
+                        userRS.getString(2),
+                        userRS.getDate(3),
+                        portfolioDSResponses);
+            }
+
+            return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -99,15 +143,10 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void deleteUser(String username) {
         try{
-            PreparedStatement st = con.prepareStatement(
-                    "DELETE User WHERE username = ?");
-            st.setString(1, username);
-            st.executeQuery();
-
-            st = con.prepareStatement(
+            PreparedStatement ps = con.prepareStatement(
                     "SELECT name FROM Portfolios WHERE username = ?");
-            st.setString(1, username);
-            ResultSet portfolioRS = st.executeQuery();
+            ps.setString(1, username);
+            ResultSet portfolioRS = ps.executeQuery();
 
             while (portfolioRS.next()) {
                 deletePortfolio(
@@ -115,6 +154,25 @@ public class EntitySQLGateway implements iEntityDBGateway {
                         username);
             }
 
+            Statement st = con.createStatement();
+            st.execute("DELETE Users WHERE username = '" + username + "'");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * @param username
+     * @param loginDate
+     */
+    @Override
+    public void updateUserLoginDate(String username, Date loginDate) {
+        try{
+            Statement st = con.createStatement();
+            st.execute(
+                    "UPDATE Users SET " +
+                            "lastLogin = '" + loginDate + "' WHERE " +
+                            "username = '" + username + "'");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -126,12 +184,12 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void addPortfolio(PortfolioDSRequest newPortfolio) {
         try{
-            PreparedStatement st = con.prepareStatement(
-                    "INSERT INTO Portfolios VALUES (" +
-                            newPortfolio.name() + "," +
-                            newPortfolio.balance() + "," +
-                            newPortfolio.username());
-            st.executeQuery();
+            Statement st = con.createStatement();
+            st.execute(
+                    "INSERT INTO Portfolios VALUES ('" +
+                            newPortfolio.name() + "','" +
+                            newPortfolio.balance() + "','" +
+                            newPortfolio.username() + "')");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -148,16 +206,16 @@ public class EntitySQLGateway implements iEntityDBGateway {
             List<StockDSResponse> stockDSResponses = new ArrayList<>();
 
             PreparedStatement st = con.prepareStatement(
-                    "SELECT * FROM Portfolio WHERE " +
-                            "name = ? AND" +
+                    "SELECT * FROM Portfolios WHERE " +
+                            "name = ? AND " +
                             "username = ?");
             st.setString(1, portfolioName);
             st.setString(2, username);
             ResultSet portfolioRS = st.executeQuery();
-            portfolioRS.next();
+            boolean portfolioFound = portfolioRS.next();
 
-            st = con.prepareStatement("SELECT stockName FROM PortfolioStock WHERE" +
-                    "portfolioName = ? AND" +
+            st = con.prepareStatement("SELECT stockName FROM PortfolioStock WHERE " +
+                    "portfolioName = ? AND " +
                     "username = ?");
             st.setString(1, portfolioName);
             st.setString(2, username);
@@ -170,10 +228,14 @@ public class EntitySQLGateway implements iEntityDBGateway {
                         portfolioName));
             }
 
-            return new PortfolioDSResponse(
-                    portfolioRS.getString(1),
-                    portfolioRS.getDouble(2),
-                    stockDSResponses);
+            if (portfolioFound) {
+                return new PortfolioDSResponse(
+                        portfolioRS.getString(1),
+                        portfolioRS.getDouble(2),
+                        stockDSResponses);
+            }
+
+            return null;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -187,20 +249,12 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void deletePortfolio(String name, String username) {
         try{
-            PreparedStatement st = con.prepareStatement(
-                    "DELETE Portfolio WHERE" +
-                            "name = ? AND" +
-                            "username = ?");
-            st.setString(1, name);
-            st.setString(2, username);
-            st.executeQuery();
-
-            st = con.prepareStatement("SELECT stockName FROM PortfolioStock WHERE" +
-                    "portfolioName = ? AND" +
+            PreparedStatement ps = con.prepareStatement("SELECT stockName FROM PortfolioStock WHERE " +
+                    "portfolioName = ? AND " +
                     "username = ?");
-            st.setString(1, name);
-            st.setString(2, username);
-            ResultSet stockRS = st.executeQuery();
+            ps.setString(1, name);
+            ps.setString(2, username);
+            ResultSet stockRS = ps.executeQuery();
 
             while (stockRS.next()) {
                 deleteStock(
@@ -209,6 +263,26 @@ public class EntitySQLGateway implements iEntityDBGateway {
                         name);
             }
 
+            Statement st = con.createStatement();
+            st.execute(
+                    "DELETE Portfolios WHERE " +
+                            "name = '" + name + "' AND " +
+                            "username = '" + username + "'");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updatePortfolioBalance(String name, double newBalance, String username) {
+        try{
+            Statement st = con.createStatement();
+            st.execute(
+                    "UPDATE Portfolios SET " +
+                            "balance = '" + newBalance + "' WHERE " +
+                            "name = '" + name + "' AND " +
+                            "username = '" + username + "'");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -220,18 +294,23 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void addStock(StockDSRequest newStock) {
         try{
-            PreparedStatement st = con.prepareStatement(
-                    "INSERT INTO Stocks VALUES (" +
-                            newStock.symbol() + "," +
-                            newStock.value());
-            st.executeQuery();
-            st = con.prepareStatement(
-                    "INSERT INTO PortfolioStock VALUES (" +
-                            newStock.portfolioName() + "," +
-                            newStock.symbol() + "," +
-                            newStock.quantity() + "," +
-                            newStock.username());
-            st.executeQuery();
+            Statement st;
+
+            if (!findStock(newStock.symbol())){
+                st = con.createStatement();
+                st.execute(
+                        "INSERT INTO Stocks VALUES ('" +
+                                newStock.symbol() + "','" +
+                                newStock.value() + "')");
+            }
+
+            st = con.createStatement();
+            st.execute(
+                    "INSERT INTO PortfolioStock VALUES ('" +
+                            newStock.portfolioName() + "','" +
+                            newStock.symbol() + "','" +
+                            newStock.quantity() + "','" +
+                            newStock.username() + "')");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -255,12 +334,30 @@ public class EntitySQLGateway implements iEntityDBGateway {
             st.setString(2, symbol);
             st.setString(3, username);
             ResultSet portfolioStockRS = st.executeQuery();
-            portfolioStockRS.next();
 
-            return new StockDSResponse(
-                    stockRS.getString(1),
-                    stockRS.getDouble(2),
-                    portfolioStockRS.getInt(1));
+            if (portfolioStockRS.next()) {
+                return new StockDSResponse(
+                        stockRS.getString(1),
+                        stockRS.getDouble(2),
+                        portfolioStockRS.getInt(1));
+            }
+
+            return null;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean findStock(String symbol) {
+        try{
+            PreparedStatement st = con.prepareStatement(
+                    "SELECT * FROM Stocks WHERE symbol = ?");
+            st.setString(1, symbol);
+
+            return st.executeQuery().isBeforeFirst();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -270,25 +367,21 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void deleteStock(String symbol, String username, String portfolioName) {
         try{
-            PreparedStatement st = con.prepareStatement(
-                    "DELETE PortfolioStock WHERE" +
-                            "portfolioName = ? AND" +
-                            "stockName = ? AND" +
-                            "username = ?");
-            st.setString(1, portfolioName);
-            st.setString(2, symbol);
-            st.setString(3, username);
-            st.executeQuery();
+            Statement st = con.createStatement();
+            st.execute(
+                    "DELETE PortfolioStock WHERE " +
+                            "portfolioName = '" + portfolioName + "' AND " +
+                            "stockName = '" + symbol + "' AND " +
+                            "username = '" + username + "'");
 
-            st = con.prepareStatement("SELECT * FROM PortfolioStock WHERE" +
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM PortfolioStock WHERE " +
                     "stockName = ?");
-            st.setString(1, symbol);
+            ps.setString(1, symbol);
 
-            if (!st.executeQuery().isBeforeFirst()) {
-                st = con.prepareStatement("DELETE Stocks WHERE" +
-                        "symbol = ?");
-                st.setString(1, symbol);
-                st.executeQuery();
+            if (!ps.executeQuery().isBeforeFirst()) {
+                st = con.createStatement();
+                st.execute("DELETE Stocks WHERE " +
+                        "symbol = '" + symbol + "'");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -298,13 +391,11 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void updateStockValue(String symbol, double newValue) {
         try{
-            PreparedStatement st = con.prepareStatement(
+            Statement st = con.createStatement();
+            st.execute(
                     "UPDATE Stocks SET " +
-                            "value = ? WHERE" +
-                            "symbol = ?");
-            st.setDouble(1, newValue);
-            st.setString(2, symbol);
-            st.executeQuery();
+                            "value = '" + newValue + "' WHERE" +
+                            "symbol = '" + symbol + "'");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -319,17 +410,13 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void updateStockQuantity(String symbol, int newQuantity, String username, String portfolioName) {
         try{
-            PreparedStatement st = con.prepareStatement(
+            Statement st = con.createStatement();
+            st.execute(
                     "UPDATE PortfolioStock SET " +
-                            "quantity = ? WHERE" +
-                            "portfolioName = ? AND " +
-                            "stockName = ? AND " +
-                            "username = ?");
-            st.setInt(1, newQuantity);
-            st.setString(2, portfolioName);
-            st.setString(3, symbol);
-            st.setString(4, username);
-            st.executeQuery();
+                            "quantity = '" + newQuantity + "' WHERE " +
+                            "portfolioName = '" + portfolioName + "' AND " +
+                            "stockName = '" + symbol + "' AND " +
+                            "username = '" + username + "'");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
