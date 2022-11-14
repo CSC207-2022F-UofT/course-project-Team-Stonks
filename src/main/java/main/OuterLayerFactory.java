@@ -6,6 +6,8 @@ import LoginUseCase.UserLoginGUI;
 import LoginUseCase.iUserLoginGUI;
 import PortfolioCreationUseCase.UserGUI;
 import PortfolioCreationUseCase.iUserGUI;
+import RegisterUseCase.RegistrationPage;
+import RegisterUseCase.iRegisterGUI;
 import db.EntitySQLGateway;
 import db.iEntityDBGateway;
 
@@ -29,5 +31,9 @@ public class OuterLayerFactory {
 
     public iPortfolioGUI getPortfolioGUI(String portfolioName, double balance, String username) {
         return new PortfolioGUI(portfolioName, balance, username);
+    }
+
+    public iRegisterGUI getRegisterGUI() {
+        return new RegistrationPage();
     }
 }

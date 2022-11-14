@@ -1,9 +1,10 @@
 package db;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDriver;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 
 public class EntitySQLGateway implements iEntityDBGateway {
     Connection con;
@@ -22,7 +23,6 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param newUser
      */
     @Override
     public void addUser(UserDSRequest newUser) {

@@ -1,6 +1,5 @@
 package LoginUseCase;
 
-import db.EntitySQLGateway;
 import entities.EntityHolder;
 import entities.User;
 import entities.UserManager;
@@ -14,8 +13,7 @@ public class UserLoginInteractor {
         userManager = EntityHolder.instance.getUserManager();
     }
 
-    public UserLoginResponse loginUser(String username, String password, Date loginDate) {
-         return new UserLoginResponse(
-                 userManager.getUser(username, password, loginDate));
+    public User loginUser(String username, String password, Date loginDate) {
+         return userManager.getUser(username, password, loginDate);
     }
 }

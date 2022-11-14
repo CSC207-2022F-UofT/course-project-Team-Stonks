@@ -1,12 +1,10 @@
 package LoginUseCase;
 
 import PortfolioCreationUseCase.PortfolioCreationPresenter;
-import PortfolioCreationUseCase.UserGUI;
+import RegisterUseCase.RegisterPresenter;
 import entities.User;
 import main.OuterLayerFactory;
-import main.StockSimulator;
 
-import javax.swing.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,8 +17,8 @@ public class UserLoginPresenter {
         this.view = view;
         controller = new UserLoginController();
 
-        view.addLoginAction(() -> onLogin());
-        view.addSignUpAction(() -> onSignUp());
+        view.addLoginAction(this::onLogin);
+        view.addSignUpAction(this::onSignUp);
     }
 
     private void onLogin() {
@@ -36,7 +34,7 @@ public class UserLoginPresenter {
 
     private void onSignUp() {
         view.close();
-        new UserLoginGUI();
+        new RegisterPresenter(OuterLayerFactory.instance.getRegisterGUI());
     }
 
     private void loginResult(UserLoginResponse response) {
@@ -54,6 +52,4 @@ public class UserLoginPresenter {
                     user);
         }
     }
-
-
 }

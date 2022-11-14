@@ -55,7 +55,7 @@ public class UserLoginGUI extends JFrame implements iUserLoginGUI {
     public void presentFailedLogin() {
         JOptionPane.showMessageDialog(
                 null,
-                "Login failed: either username or password are incorrect");
+                "Login failed: either username or password are incorrect!");
     }
 
     {
@@ -104,7 +104,8 @@ public class UserLoginGUI extends JFrame implements iUserLoginGUI {
         panel3.add(label2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         title = new JLabel();
         Font titleFont = this.$$$getFont$$$(null, Font.BOLD, 36, title.getFont());
-        if (titleFont != null) title.setFont(titleFont);
+        if (titleFont != null)
+            title.setFont(titleFont);
         title.setText("Stock Simulator");
         title.putClientProperty("html.disable", Boolean.FALSE);
         loginPanel.add(title, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -114,7 +115,8 @@ public class UserLoginGUI extends JFrame implements iUserLoginGUI {
      * @noinspection ALL
      */
     private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
+        if (currentFont == null)
+            return null;
         String resultName;
         if (fontName == null) {
             resultName = currentFont.getName();

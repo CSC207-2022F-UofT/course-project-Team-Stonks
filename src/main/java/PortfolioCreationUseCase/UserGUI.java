@@ -15,7 +15,7 @@ import java.util.List;
 public class UserGUI extends JFrame implements iUserGUI {
     private JPanel userPanel;
     private JLabel username;
-    private JList portfolios;
+    private JList<String> portfolios;
     private JLabel portfoliosTitle;
     private JButton logOut;
     private JLabel lastLogin;
@@ -48,7 +48,7 @@ public class UserGUI extends JFrame implements iUserGUI {
 
     @Override
     public String getPortfolioSelected() {
-        return (String) portfolios.getSelectedValue();
+        return portfolios.getSelectedValue();
     }
 
     /**
