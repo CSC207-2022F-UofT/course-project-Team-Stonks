@@ -1,7 +1,11 @@
+package RegisterUseCase;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.sql.Date;
+import db.EntitySQLGateway;
+import db.UserDSRequest;
 public class RegistrationPage extends JFrame {
     private JPanel RegistrationPage;
     private JLabel stonksLabel;
@@ -27,6 +31,14 @@ public class RegistrationPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = txtUserName.getText();
+                Boolean possible = true;
+                // User exists in DB
+                if (new EntitySQLGateway().findUser(username)) {
+                    JOptionPane.showMessageDialog(null, "Username already exists");
+                    possible = false;
+                }
+
+
                 char[] password;
                 password = pfPwd.getPassword();
                 char[] passwordConfirm;
@@ -39,20 +51,28 @@ public class RegistrationPage extends JFrame {
                 for (char c : passwordConfirm) {
                     sb2.append(c);
                 }
+
                 String passwordString = sb.toString();
                 String passwordConfirmString = sb2.toString();
                 if (passwordString.equals(passwordConfirmString)) {
                     JOptionPane.showMessageDialog(null, "Registration Successful!");
                 } else {
                     JOptionPane.showMessageDialog(null, "Passwords do not match!");
+                    possible = false;
                 }
+                if (possible) {
+                    new EntitySQLGateway().addUser(new UserDSRequest(username, passwordString, new Date(System.currentTimeMillis())));
+                    dispose();
+                }
+
+
             }
         });
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Open StarterLogin.java and close RegistrationPage.java
-                StarterLogin starterLogin = new StarterLogin();
+
                 dispose();
             }
         });
