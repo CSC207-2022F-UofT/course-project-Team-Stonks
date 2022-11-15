@@ -9,8 +9,8 @@ public class BuyInputRequest {
      */
 
     private String symbol;
-    int buy_quantity;
-    Portfolio port;
+    private int buy_quantity;
+    private Portfolio port;
 
     public BuyInputRequest(String symbol, int buy_quantity, Portfolio port){
         this.symbol = symbol;
