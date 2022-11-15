@@ -102,6 +102,6 @@ public class Portfolio {
     }
 
     public Stock convertStockDSResponse(StockDSResponse dsResponse) {
-        return stockFactory.createStock(dsResponse.symbol(), dsResponse.value(), dsResponse.quantity());
+        return stockFactory.createStock(dsResponse.getSymbol(), dsResponse.getValue(), dsResponse.getQuantity());
     }
 }

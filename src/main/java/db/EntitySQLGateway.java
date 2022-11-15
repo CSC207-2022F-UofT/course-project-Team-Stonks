@@ -32,9 +32,9 @@ public class EntitySQLGateway implements iEntityDBGateway {
         try{
             PreparedStatement st = con.prepareStatement(
                     "INSERT INTO Users VALUES (" +
-                            newUser.username() + "," +
-                            newUser.password() + "," +
-                            newUser.lastLogin());
+                            newUser.getUsername() + "," +
+                            newUser.getPassword() + "," +
+                            newUser.getLastLogin());
             st.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -128,9 +128,9 @@ public class EntitySQLGateway implements iEntityDBGateway {
         try{
             PreparedStatement st = con.prepareStatement(
                     "INSERT INTO Portfolios VALUES (" +
-                            newPortfolio.name() + "," +
-                            newPortfolio.balance() + "," +
-                            newPortfolio.username());
+                            newPortfolio.name + "," +
+                            newPortfolio.balance + "," +
+                            newPortfolio.username);
             st.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -222,15 +222,15 @@ public class EntitySQLGateway implements iEntityDBGateway {
         try{
             PreparedStatement st = con.prepareStatement(
                     "INSERT INTO Stocks VALUES (" +
-                            newStock.symbol() + "," +
-                            newStock.value());
+                            newStock.getSymbol() + "," +
+                            newStock.getValue());
             st.executeQuery();
             st = con.prepareStatement(
                     "INSERT INTO PortfolioStock VALUES (" +
-                            newStock.portfolioName() + "," +
-                            newStock.symbol() + "," +
-                            newStock.quantity() + "," +
-                            newStock.username());
+                            newStock.getPortfolioName() + "," +
+                            newStock.getSymbol() + "," +
+                            newStock.getQuantity() + "," +
+                            newStock.getUsername());
             st.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);
