@@ -1,9 +1,9 @@
 package db;
 
 public class PortfolioDSRequest {
-    public String name;
-    public double balance;
-    public String username;
+    private String name;
+    private double balance;
+    private String username;
     
     public PortfolioDSRequest(String name, double balance, String username){
         this.name = name;

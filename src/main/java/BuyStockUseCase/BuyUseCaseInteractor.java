@@ -24,7 +24,7 @@ public class BuyUseCaseInteractor {
 
         // Checks if user input is valid, prompts the user if not
         if (buy_quantity < 1) {
-            return new BuyOutputResponse("Purchase failed. Please input a number greater than 0.");
+            return new BuyOutputResponse(false);
         }
 
         // Accesses stock price from API
@@ -35,9 +35,9 @@ public class BuyUseCaseInteractor {
         // Passes parameters to Portfolio, outputs results
         boolean result = port.addStock(symbol, price, buy_quantity);
         if (result) {
-            return new BuyOutputResponse("Purchase successful!");
+            return new BuyOutputResponse(true);
         } else {
-            return new BuyOutputResponse("Purchase failed. Insufficient balance.");
+            return new BuyOutputResponse(false);
         }
     }
 }

@@ -1,9 +1,9 @@
 package db;
 
 public class StockDSResponse {
-    String symbol;
-    double value;
-    int quantity;
+    private String symbol;
+    private double value;
+    private int quantity;
 
     public StockDSResponse (String symbol, double value, int quantity){
         this.symbol = symbol;

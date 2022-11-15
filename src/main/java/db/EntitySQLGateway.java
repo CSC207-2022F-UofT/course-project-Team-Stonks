@@ -128,9 +128,9 @@ public class EntitySQLGateway implements iEntityDBGateway {
         try{
             PreparedStatement st = con.prepareStatement(
                     "INSERT INTO Portfolios VALUES (" +
-                            newPortfolio.name + "," +
-                            newPortfolio.balance + "," +
-                            newPortfolio.username);
+                            newPortfolio.getName() + "," +
+                            newPortfolio.getBalance() + "," +
+                            newPortfolio.getUsername());
             st.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);

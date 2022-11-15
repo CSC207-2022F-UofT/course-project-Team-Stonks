@@ -1,11 +1,11 @@
 package db;
 
 public class StockDSRequest {
-    String symbol;
-    double value;
-    int quantity;
-    String username;
-    String portfolioName;
+    private String symbol;
+    private double value;
+    private int quantity;
+    private String username;
+    private String portfolioName;
 
     public StockDSRequest(String symbol, double value, int quantity, String username, String portfolioName){
         this.symbol = symbol;

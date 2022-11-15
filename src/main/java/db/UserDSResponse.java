@@ -4,10 +4,10 @@ import java.sql.Date;
 import java.util.List;
 
 public class UserDSResponse {
-    String username;
-    String password;
-    Date lastLogin;
-    List<PortfolioDSResponse> portfolios;
+    private String username;
+    private String password;
+    private Date lastLogin;
+    private List<PortfolioDSResponse> portfolios;
 
     public UserDSResponse(String username, String password, Date lastLogin, List<PortfolioDSResponse> portfolios) {
         this.username = username;

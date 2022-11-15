@@ -1,7 +1,7 @@
 package APIInterface;
 
 public class StockAPIResponse {
-    double price;
+    private double price;
     public StockAPIResponse(double price){
         this.price = price;
     }
