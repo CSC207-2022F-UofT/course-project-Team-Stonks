@@ -17,21 +17,7 @@ public interface iEntityDBGateway {
      */
     boolean findUser(String username);
 
-    /**
-     * <pre>
-     * Searches for user in database based on given username and password
-     *
-     * Returns User object if it is found, null otherwise
-     * </pre>
-     */
-    UserDSResponse findUser(String username, String password);
-
     UserDSResponse findUserPortfolios(String username, String password);
-
-    /**
-     * Deletes user from the database based on username, if it exists
-     */
-    void deleteUser(String username);
 
     void updateUserLoginDate(String username, Date loginDate);
 

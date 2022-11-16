@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PortfolioFactory {
-    private StockFactory stockFactory = new StockFactory();
+    private final StockFactory stockFactory = new StockFactory();
     private final double BALANCE = 10000;
 
     public Portfolio createPortfolio(String name, String username, iEntityDBGateway dbGateway) {

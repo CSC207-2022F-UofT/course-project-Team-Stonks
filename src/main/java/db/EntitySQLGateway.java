@@ -55,44 +55,6 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
-    @Override
-    public UserDSResponse findUser(String username, String password) {
-        try{
-            List<PortfolioDSResponse> portfolioDSResponses = new ArrayList<>();
-
-            PreparedStatement st = con.prepareStatement(
-                    "SELECT * FROM Users WHERE " +
-                            "username = ? AND " +
-                            "password = ?");
-            st.setString(1, username);
-            st.setString(2, password);
-            ResultSet userRS = st.executeQuery();
-            boolean userFound = userRS.next();
-
-            st = con.prepareStatement(
-                    "SELECT * FROM Portfolios WHERE username = ?");
-            st.setString(1, username);
-            ResultSet portfolioRS = st.executeQuery();
-
-            while (portfolioRS.next()) {
-                portfolioDSResponses.add(findPortfolio(
-                     portfolioRS.getString(1),
-                     portfolioRS.getString(3)
-                ));
-            }
-            if (userFound) {
-                return new UserDSResponse(userRS.getString(1),
-                        userRS.getString(2),
-                        userRS.getDate(3),
-                        portfolioDSResponses);
-            }
-
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      * @param username
      * @param password
@@ -132,30 +94,6 @@ public class EntitySQLGateway implements iEntityDBGateway {
             }
 
             return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * @param username
-     */
-    @Override
-    public void deleteUser(String username) {
-        try{
-            PreparedStatement ps = con.prepareStatement(
-                    "SELECT name FROM Portfolios WHERE username = ?");
-            ps.setString(1, username);
-            ResultSet portfolioRS = ps.executeQuery();
-
-            while (portfolioRS.next()) {
-                deletePortfolio(
-                        portfolioRS.getString(1),
-                        username);
-            }
-
-            Statement st = con.createStatement();
-            st.execute("DELETE Users WHERE username = '" + username + "'");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

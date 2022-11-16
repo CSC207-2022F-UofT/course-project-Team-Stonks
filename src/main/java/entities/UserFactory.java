@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UserFactory {
-    private PortfolioFactory portfolioFactory = new PortfolioFactory();
+    private final PortfolioFactory portfolioFactory = new PortfolioFactory();
 
     public User createUser(String username, String password, Date creationTime, iEntityDBGateway dbGateway) {
         dbGateway.addUser(new UserDSRequest(username, password, creationTime));

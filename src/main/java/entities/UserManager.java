@@ -3,15 +3,14 @@ package entities;
 import db.UserDSResponse;
 import db.iEntityDBGateway;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserManager {
-    private List<User> users;
-    private iEntityDBGateway dbGateway;
-    private UserFactory userFactory = new UserFactory();
+    private final List<User> users;
+    private final iEntityDBGateway dbGateway;
+    private final UserFactory userFactory = new UserFactory();
 
     public UserManager(iEntityDBGateway dbGateway) {
         users = new ArrayList<>();
@@ -26,7 +25,7 @@ public class UserManager {
      */
     public User getUser(String username, String password, Date loginDate) {
         for (User user : users) {
-            if (user.getUsername() == username) {
+            if (user.getUsername().equals(username)) {
                 if (user.isPassword(password)) {
                     user.updateLoginDate(loginDate);
                     return user;
@@ -52,7 +51,7 @@ public class UserManager {
      */
     public boolean userExists(String username) {
         for (User user : users) {
-            if (user.getUsername() == username) {
+            if (user.getUsername().equals(username)) {
                 return true;
             }
         }

@@ -3,10 +3,10 @@ package entities;
 import db.iEntityDBGateway;
 
 public class Stock {
-    private String symbol;
+    private final String symbol;
     private double value;
     private int quantity;
-    private iEntityDBGateway dbGateway;
+    private final iEntityDBGateway dbGateway;
 
     public Stock(String symbol, double value, int quantity, iEntityDBGateway dbGateway) {
         this.symbol = symbol;

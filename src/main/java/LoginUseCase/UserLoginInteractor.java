@@ -7,7 +7,7 @@ import entities.UserManager;
 import java.sql.Date;
 
 public class UserLoginInteractor {
-    private UserManager userManager;
+    private final UserManager userManager;
 
     public UserLoginInteractor() {
         userManager = EntityHolder.instance.getUserManager();

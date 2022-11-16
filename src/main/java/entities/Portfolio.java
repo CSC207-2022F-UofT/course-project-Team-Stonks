@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class Portfolio {
     private double balance;
-    private String name;
-    private Map<String, Stock> symbolToStock;
-    private StockFactory stockFactory = new StockFactory();
-    private iEntityDBGateway dbGateWay;
+    private final String name;
+    private final Map<String, Stock> symbolToStock;
+    private final StockFactory stockFactory = new StockFactory();
+    private final iEntityDBGateway dbGateWay;
 
     public Portfolio(double balance, String name, iEntityDBGateway dbGateway) {
         this.balance = balance;
