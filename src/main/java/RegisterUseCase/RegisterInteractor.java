@@ -6,7 +6,7 @@ import entities.UserManager;
 import java.sql.Date;
 
 public class RegisterInteractor {
-    private UserManager userManager;
+    private final UserManager userManager;
     private final int VALID_PASS_LENGTH = 8;
 
     public RegisterInteractor() {

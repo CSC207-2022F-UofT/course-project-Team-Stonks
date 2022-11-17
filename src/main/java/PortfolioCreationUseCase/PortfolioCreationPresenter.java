@@ -2,14 +2,13 @@ package PortfolioCreationUseCase;
 
 import BuyStockUseCase.PortfolioPresenter;
 import LoginUseCase.UserLoginPresenter;
-import entities.EntityHolder;
 import entities.User;
 import main.OuterLayerFactory;
 
 public class PortfolioCreationPresenter {
-    private iUserGUI view;
-    private PortfolioCreationController controller;
-    private User user;
+    private final iUserGUI view;
+    private final PortfolioCreationController controller;
+    private final User user;
 
 
     public PortfolioCreationPresenter(iUserGUI view, User user) {
@@ -18,8 +17,8 @@ public class PortfolioCreationPresenter {
         controller = new PortfolioCreationController();
 
 
-        view.addLogoutAction(() -> onLogout());
-        view.addPortfolioSelectedAction(() -> onPortfolioSelected());
+        view.addLogoutAction(this::onLogout);
+        view.addPortfolioSelectedAction(this::onPortfolioSelected);
     }
 
     private void onLogout() {

@@ -1,7 +1,7 @@
 package BuyStockUseCase;
 
 public class PortfolioPresenter {
-    private iPortfolioGUI view;
+    private final iPortfolioGUI view;
 
     public PortfolioPresenter(iPortfolioGUI view) {
         this.view = view;

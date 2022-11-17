@@ -1,7 +1,7 @@
 package RegisterUseCase;
 
 public class RegisterController {
-    private RegisterInteractor interactor;
+    private final RegisterInteractor interactor;
 
     public RegisterController() {
         interactor = new RegisterInteractor();

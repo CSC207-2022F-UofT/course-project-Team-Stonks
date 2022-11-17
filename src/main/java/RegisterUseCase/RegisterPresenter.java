@@ -7,8 +7,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 public class RegisterPresenter {
-    private iRegisterGUI view;
-    private RegisterController controller;
+    private final iRegisterGUI view;
+    private final RegisterController controller;
 
     public RegisterPresenter(iRegisterGUI view) {
         this.view = view;
