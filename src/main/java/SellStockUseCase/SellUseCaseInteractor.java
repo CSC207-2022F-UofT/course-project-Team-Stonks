@@ -21,9 +21,9 @@ public class SellUseCaseInteractor {
         boolean possible = portfolio.sellStock(symbol, quantity);
         StockAPIAccess stockAPIAccess = new StockAPIAccess();
         StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
-        StockAPIResponse stockAPIResponse = stockAPIAccess.accessAPI(stockAPIRequest);
+        StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
         if(possible){
-            double totalValue = stockAPIResponse.price * quantity;
+            double totalValue = stockAPIResponse.getPrice() * quantity;
             return new SellOutputResponse("Sale successful", totalValue, quantity, symbol);
         }
         else{
