@@ -4,5 +4,7 @@ import java.io.IOException;
 
 public interface StockDatabaseAccess {
 
-    StockAPIResponse accessAPI(StockAPIRequest req) throws IOException;
+    StockAPIResponse getPrice(StockAPIRequest req) throws IOException;
+
+    BulkStockAPIResponse getBulkPrices(BulkStockAPIRequest req) throws IOException;
 }

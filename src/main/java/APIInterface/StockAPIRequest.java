@@ -1,6 +1,10 @@
 package APIInterface;
 
 public class StockAPIRequest {
+    /**
+     * Request model class containing input for an individual price request to the
+     * stock price API.
+     */
     private String symbol;
     
     public StockAPIRequest(String symbol){
