@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class Portfolio {
     private double balance;
-    private final String name;
-    private final Map<String, Stock> symbolToStock;
-    private final StockFactory stockFactory = new StockFactory();
-    private final iEntityDBGateway dbGateWay;
+    private String name;
+    private Map<String, Stock> symbolToStock;
+    private StockFactory stockFactory = new StockFactory();
+    private iEntityDBGateway dbGateWay;
 
     public Portfolio(double balance, String name, iEntityDBGateway dbGateway) {
         this.balance = balance;
@@ -39,6 +39,7 @@ public class Portfolio {
         return symbolToStock;
     }
 
+
     /**
      * <p>
      *     adds *quantity* amount of the stock to user's portfolio if user has sufficent funds and returns true,
@@ -62,7 +63,6 @@ public class Portfolio {
         }
 
         balance -= value * quantity;
-        dbGateWay.updatePortfolioBalance(name, balance, username);
 
         return true;
     }
@@ -103,7 +103,7 @@ public class Portfolio {
         }
     }
 
-    private Stock convertStockDSResponse(StockDSResponse dsResponse) {
-        return stockFactory.createStock(dsResponse.symbol(), dsResponse.value(), dsResponse.quantity(), dbGateWay);
+    public Stock convertStockDSResponse(StockDSResponse dsResponse) {
+        return stockFactory.createStock(dsResponse.getSymbol(), dsResponse.getValue(), dsResponse.getQuantity());
     }
 }

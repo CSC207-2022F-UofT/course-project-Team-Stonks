@@ -1,6 +1,5 @@
 package entities;
 
-import db.PortfolioDSRequest;
 import db.StockDSResponse;
 import db.iEntityDBGateway;
 
@@ -21,8 +20,8 @@ public class PortfolioFactory {
         Map<String, Stock> symbolToStock = new HashMap<>();
 
         for (StockDSResponse stock : stocks) {
-            Stock newStock = stockFactory.createStock(stock.symbol(), stock.value(), stock.quantity(), dbGateway);
-            symbolToStock.put(stock.symbol(), newStock);
+            Stock newStock = stockFactory.createStock(stock.getSymbol(), stock.getValue(), stock.getQuantity());
+            symbolToStock.put(stock.getSymbol(), newStock);
         }
 
         return new Portfolio(balance, name, symbolToStock, dbGateway);

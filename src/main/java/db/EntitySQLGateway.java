@@ -1,7 +1,5 @@
 package db;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDriver;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +21,17 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
+     * @param newUser
      */
     @Override
     public void addUser(UserDSRequest newUser) {
         try{
-            Statement st = con.createStatement();
-            st.execute(
-                    "INSERT INTO Users VALUES ('" +
-                            newUser.username() + "','" +
-                            newUser.password() + "','" +
-                            newUser.lastLogin() + "')");
+            PreparedStatement st = con.prepareStatement(
+                    "INSERT INTO Users VALUES (" +
+                            newUser.getUsername() + "," +
+                            newUser.getPassword() + "," +
+                            newUser.getLastLogin());
+            st.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -55,13 +54,8 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
-    /**
-     * @param username
-     * @param password
-     * @return
-     */
     @Override
-    public UserDSResponse findUserPortfolios(String username, String password) {
+    public UserDSResponse findUser(String username, String password) {
         try{
             List<PortfolioDSResponse> portfolioDSResponses = new ArrayList<>();
 
@@ -101,7 +95,6 @@ public class EntitySQLGateway implements iEntityDBGateway {
 
     /**
      * @param username
-     * @param loginDate
      */
     @Override
     public void updateUserLoginDate(String username, Date loginDate) {
@@ -122,12 +115,12 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void addPortfolio(PortfolioDSRequest newPortfolio) {
         try{
-            Statement st = con.createStatement();
-            st.execute(
-                    "INSERT INTO Portfolios VALUES ('" +
-                            newPortfolio.name() + "','" +
-                            newPortfolio.balance() + "','" +
-                            newPortfolio.username() + "')");
+            PreparedStatement st = con.prepareStatement(
+                    "INSERT INTO Portfolios VALUES (" +
+                            newPortfolio.getName() + "," +
+                            newPortfolio.getBalance() + "," +
+                            newPortfolio.getUsername());
+            st.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
