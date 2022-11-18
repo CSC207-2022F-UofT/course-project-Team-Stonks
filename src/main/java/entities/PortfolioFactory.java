@@ -14,10 +14,10 @@ public class PortfolioFactory {
 
     public Portfolio createPortfolio(String name, String username, iEntityDBGateway dbGateway) {
         dbGateway.addPortfolio(new PortfolioDSRequest(name, BALANCE, username));
-        return new Portfolio(BALANCE, name, dbGateway);
+        return new Portfolio(BALANCE, name, dbGateway, username);
     }
 
-    public Portfolio createPortfolio(double balance, String name, List<StockDSResponse> stocks, iEntityDBGateway dbGateway) {
+    public Portfolio createPortfolio(double balance, String name, String username, List<StockDSResponse> stocks, iEntityDBGateway dbGateway) {
         Map<String, Stock> symbolToStock = new HashMap<>();
 
         for (StockDSResponse stock : stocks) {
@@ -25,6 +25,6 @@ public class PortfolioFactory {
             symbolToStock.put(stock.getSymbol(), newStock);
         }
 
-        return new Portfolio(balance, name, symbolToStock, dbGateway);
+        return new Portfolio(balance, name, symbolToStock, dbGateway, username);
     }
 }

@@ -10,22 +10,25 @@ import java.util.Map;
 public class Portfolio {
     private double balance;
     private final String name;
+    private final String username;
     private final Map<String, Stock> symbolToStock;
     private final StockFactory stockFactory = new StockFactory();
     private final iEntityDBGateway dbGateWay;
 
-    public Portfolio(double balance, String name, iEntityDBGateway dbGateway) {
+    public Portfolio(double balance, String name, iEntityDBGateway dbGateway, String username) {
         this.balance = balance;
         this.name = name;
         symbolToStock = new HashMap<>();
         this.dbGateWay = dbGateway;
+        this.username = username;
     }
 
-    public Portfolio(double balance, String name, Map<String, Stock> symbolToStock, iEntityDBGateway dbGateway) {
+    public Portfolio(double balance, String name, Map<String, Stock> symbolToStock, iEntityDBGateway dbGateway, String username) {
         this.balance = balance;
         this.name = name;
         this.symbolToStock = symbolToStock;
         this.dbGateWay = dbGateway;
+        this.username = username;
     }
 
     public double getBalance() {
@@ -40,6 +43,9 @@ public class Portfolio {
         return symbolToStock;
     }
 
+    public String getUsername() {
+        return username;
+    }
 
     /**
      * <p>

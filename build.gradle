@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'junit:junit:4.13.2'
+    implementation 'junit:junit:5.9.0'
     implementation 'com.microsoft.sqlserver:mssql-jdbc:11.2.1.jre18'
     implementation group: 'com.intellij', name: 'forms_rt', version: '7.0.3'
     implementation 'org.ojalgo:ojalgo-yahoofinance:1.0.1'
@@ -18,7 +18,7 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+    useJUnit()
     testLogging {
         events "passed", "skipped", "failed"
     }
