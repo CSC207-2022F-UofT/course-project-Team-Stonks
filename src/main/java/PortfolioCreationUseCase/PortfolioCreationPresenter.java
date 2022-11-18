@@ -28,8 +28,9 @@ public class PortfolioCreationPresenter {
 
     private void onPortfolioSelected() {
         String portfolioName = view.getPortfolioSelected();
+        PortfolioCreationRequest request = new PortfolioCreationRequest(user, portfolioName);
 
-        //Add call to controller to add the stocks of selected portfolio to user
+        controller.PopulatePortfolio(request);
 
         view.close();
         new PortfolioPresenter(OuterLayerFactory.instance.getPortfolioGUI(

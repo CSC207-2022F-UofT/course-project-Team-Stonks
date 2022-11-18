@@ -4,6 +4,7 @@ import db.StockDSResponse;
 import db.iEntityDBGateway;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Portfolio {
@@ -100,6 +101,12 @@ public class Portfolio {
             Stock dsStock = convertStockDSResponse(
                     dbGateWay.findStock(stock.getSymbol(), username, name));
             stock.setValue(dsStock.getValue());
+        }
+    }
+
+    public void pullStocks(List<Stock> newStocks) {
+        for (Stock stock : newStocks) {
+            symbolToStock.put(stock.getSymbol(), stock);
         }
     }
 
