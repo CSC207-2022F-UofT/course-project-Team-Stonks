@@ -24,10 +24,10 @@ public class SellUseCaseInteractor {
         StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
         if(possible){
             double totalValue = stockAPIResponse.getPrice() * quantity;
-            return new SellOutputResponse("Sale successful", totalValue, quantity, symbol);
+            return new SellOutputResponse("Sale successful", totalValue, quantity, symbol, true);
         }
         else{
-            return new SellOutputResponse("Sale unsuccessful", 0, 0, symbol);
+            return new SellOutputResponse("Sale unsuccessful", 0, 0, symbol, false);
         }
     }
 }
