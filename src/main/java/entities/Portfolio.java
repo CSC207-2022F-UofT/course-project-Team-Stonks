@@ -56,7 +56,7 @@ public class Portfolio {
      * @param value non-negative number
      * @param quantity positive integer
      */
-    public boolean addStock(String symbol, double value, int quantity, String username) {
+    public boolean addStock(String symbol, double value, int quantity) {
         Stock stock = symbolToStock.get(symbol);
 
         if (balance < value * quantity) {
