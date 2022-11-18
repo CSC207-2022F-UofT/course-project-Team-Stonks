@@ -1,12 +1,8 @@
 package entities;
 
-import db.UserDSRequest;
 import db.UserDSResponse;
 import db.iEntityDBGateway;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +14,6 @@ public class UserManager {
 
     public UserManager(iEntityDBGateway dbGateway) {
         users = new ArrayList<>();
-        this.dbGateway = dbGateway;
-    }
-
-    public UserManager(iEntityDBGateway dbGateway, List<User> users) {
-        this.users = users;
         this.dbGateway = dbGateway;
     }
 
@@ -87,6 +78,6 @@ public class UserManager {
             return null;
         }
 
-        return userFactory.createUser(userDSResponse.username(), userDSResponse.password(), userDSResponse.lastLogin(), userDSResponse.portfolios(), dbGateway);
+        return userFactory.createUser(userDSResponse.getUsername(), userDSResponse.getPassword(), userDSResponse.getLastLogin(), userDSResponse.getPortfolios(), dbGateway);
     }
 }

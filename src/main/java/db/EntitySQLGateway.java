@@ -1,5 +1,7 @@
 package db;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDriver;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +56,13 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
+    /**
+     * @param username
+     * @param password
+     * @return
+     */
     @Override
-    public UserDSResponse findUser(String username, String password) {
+    public UserDSResponse findUserPortfolios(String username, String password) {
         try{
             List<PortfolioDSResponse> portfolioDSResponses = new ArrayList<>();
 
@@ -227,21 +234,21 @@ public class EntitySQLGateway implements iEntityDBGateway {
         try{
             Statement st;
 
-            if (!findStock(newStock.symbol())){
+            if (!findStock(newStock.getSymbol())){
                 st = con.createStatement();
                 st.execute(
                         "INSERT INTO Stocks VALUES ('" +
-                                newStock.symbol() + "','" +
-                                newStock.value() + "')");
+                                newStock.getSymbol() + "','" +
+                                newStock.getValue() + "')");
             }
 
             st = con.createStatement();
             st.execute(
                     "INSERT INTO PortfolioStock VALUES ('" +
-                            newStock.portfolioName() + "','" +
-                            newStock.symbol() + "','" +
-                            newStock.quantity() + "','" +
-                            newStock.username() + "')");
+                            newStock.getPortfolioName() + "','" +
+                            newStock.getSymbol() + "','" +
+                            newStock.getQuantity() + "','" +
+                            newStock.getUsername() + "')");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
