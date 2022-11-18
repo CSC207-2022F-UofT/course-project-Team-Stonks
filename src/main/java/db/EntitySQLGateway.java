@@ -1,7 +1,5 @@
 package db;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDriver;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,6 @@ public class EntitySQLGateway implements iEntityDBGateway {
         String user = "teammate";
         String pass = "CSC207Stocks";
         try {
-            DriverManager.registerDriver(new SQLServerDriver());
             con = DriverManager.getConnection(dbURL, user, pass);
         } catch (SQLException e) {
             e.printStackTrace();
