@@ -25,12 +25,11 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void addUser(UserDSRequest newUser) {
         try{
-            PreparedStatement st = con.prepareStatement(
-                    "INSERT INTO Users VALUES (" +
-                            newUser.getUsername() + "," +
-                            newUser.getPassword() + "," +
-                            newUser.getLastLogin());
-            st.executeQuery();
+            Statement st = con.createStatement();
+            st.executeQuery("INSERT INTO Users VALUES ('" +
+                    newUser.getUsername() + "','" +
+                    newUser.getPassword() + "','" +
+                    newUser.getLastLogin() + "')");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -119,12 +118,11 @@ public class EntitySQLGateway implements iEntityDBGateway {
     @Override
     public void addPortfolio(PortfolioDSRequest newPortfolio) {
         try{
-            PreparedStatement st = con.prepareStatement(
-                    "INSERT INTO Portfolios VALUES (" +
-                            newPortfolio.getName() + "," +
-                            newPortfolio.getBalance() + "," +
-                            newPortfolio.getUsername());
-            st.executeQuery();
+            Statement st = con.createStatement();
+            st.executeQuery("INSERT INTO Portfolios VALUES ('" +
+                    newPortfolio.getName() + "','" +
+                    newPortfolio.getBalance() + "','" +
+                    newPortfolio.getUsername() + "')");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

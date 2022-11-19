@@ -2,9 +2,7 @@ package PortfolioCreationUseCase;
 
 import db.StockDSResponse;
 import db.iEntityDBGateway;
-import entities.Stock;
-import entities.StockFactory;
-import entities.User;
+import entities.*;
 import main.OuterLayerFactory;
 
 import java.util.ArrayList;
@@ -31,6 +29,7 @@ public class PortfolioCreationInteractor {
                     dbGateway));
         }
 
-        user.getPortfolio(portfolioName).pullStocks(stocks);
+        user.setCurPortfolio(portfolioName);
+        user.getCurPortfolio().pullStocks(stocks);
     }
 }

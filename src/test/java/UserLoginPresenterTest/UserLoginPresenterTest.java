@@ -1,4 +1,4 @@
-package login_user_use_case_test;
+package UserLoginPresenterTest;
 
 import LoginUseCase.UserLoginController;
 import LoginUseCase.UserLoginRequest;
@@ -9,10 +9,10 @@ import entities.EntityHolder;
 import entities.User;
 import entities.UserManager;
 import main.OuterLayerFactory;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -20,63 +20,56 @@ import java.time.LocalDate;
 public class UserLoginPresenterTest {
     private UserLoginController controller;
     private UserManager userManager;
-    private iEntityDBGateway dbGateway;
-    private final String correctUsernameInSystem = "system";
+    private final String correctUsername = "database";
     private final String correctPassword = "password";
 
-
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         controller = new UserLoginController();
         userManager = EntityHolder.instance.getUserManager();
-        dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
 
-        if (!userManager.userExists(correctUsernameInSystem)) {
-            userManager.createUser(correctUsernameInSystem, correctPassword, Date.valueOf(LocalDate.now()));
-        }
-
-        String correctUsernameInDB = "database";
-        if (!userManager.userExists(correctUsernameInDB)) {
-            dbGateway.addUser(new UserDSRequest(correctUsernameInDB, correctPassword, Date.valueOf(LocalDate.now())));
+        if (!userManager.userExists(correctUsername)) {
+            dbGateway.addUser(new UserDSRequest(correctUsername, correctPassword, Date.valueOf(LocalDate.now())));
         }
     }
 
     @Test
-    void testLoginFalseUsername() {
+    public void testLoginFalseUsername() {
         UserLoginRequest request = new UserLoginRequest(
                 "userDoesn'tExist",
                 "password",
                 Date.valueOf(LocalDate.now()));
 
         UserLoginResponse response = controller.loginUser(request);
-        Assertions.assertNull(response.user());
+        Assert.assertNull(response.user());
     }
 
     @Test
-    void testLoginFalsePassword() {
+    public void testLoginFalsePassword() {
         UserLoginRequest request = new UserLoginRequest(
                 "username",
                 "wrongPassword",
                 Date.valueOf(LocalDate.now()));
 
         UserLoginResponse response = controller.loginUser(request);
-        Assertions.assertNull(response.user());
+        Assert.assertNull(response.user());
     }
 
     @Test
-    void testLoginUserExistsInSystem() {
+    public void testLoginUserExists() {
         UserLoginRequest request = new UserLoginRequest(
-                correctUsernameInSystem,
+                correctUsername,
                 correctPassword,
                 Date.valueOf(LocalDate.now()));
 
         UserLoginResponse response = controller.loginUser(request);
         User user = response.user();
-        Assertions.assertEquals(user.getUsername(), correctUsernameInSystem);
-        Assertions.assertTrue(user.isPassword(correctPassword));
+        Assert.assertEquals(user.getUsername(), correctUsername);
+        Assert.assertTrue(user.isPassword(correctPassword));
     }
 
-    @AfterEach
-    void tearDown() {
+    @After
+    public void tearDown() {
     }
 }
