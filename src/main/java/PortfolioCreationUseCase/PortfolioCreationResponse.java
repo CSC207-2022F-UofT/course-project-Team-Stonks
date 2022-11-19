@@ -1,4 +1,4 @@
 package PortfolioCreationUseCase;
 
-public record PortfolioCreationResponse() {
+public record PortfolioCreationResponse(PortfolioCreationError portfolioCreated) {
 }

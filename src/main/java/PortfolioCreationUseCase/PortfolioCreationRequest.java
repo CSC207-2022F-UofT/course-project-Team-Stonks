@@ -1,4 +1,4 @@
 package PortfolioCreationUseCase;
 
-public record PortfolioCreationRequest() {
+public record PortfolioCreationRequest(String portfolioName) {
 }

@@ -1,5 +1,7 @@
 package PortfolioCreationUseCase;
 
+import RegisterUseCase.RegisterError;
+
 public class PortfolioCreationController {
     private PortfolioCreationInteractor pInteractor;
 
@@ -8,6 +10,8 @@ public class PortfolioCreationController {
     }
 
     public PortfolioCreationResponse createPortfolio(PortfolioCreationRequest request) {
-        return new PortfolioCreationResponse();
+        PortfolioCreationError portfolioCreated = pInteractor.makeNewPortfolio(request.portfolioName());
+
+        return new PortfolioCreationResponse(portfolioCreated);
     }
 }
