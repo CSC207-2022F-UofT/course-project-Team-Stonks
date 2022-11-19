@@ -29,6 +29,6 @@ public class RegisterInteractor {
 
     public boolean passwordValid(String password) {
 
-        return (password.length() >= VALID_PASS_LENGTH && password.contains("ABCDEFGHIJKLMNOPQRSTUVWXYZ") && password.contains("abcdefghijklmnopqrstuvwxyz") && password.contains("0123456789"));
+        return password.length() >= VALID_PASS_LENGTH;
     }
 }
