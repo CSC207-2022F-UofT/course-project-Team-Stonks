@@ -3,9 +3,9 @@ package db;
 import java.sql.Date;
 
 public class UserDSRequest {
-    private String username;
-    private String password;
-    private Date lastLogin;
+    private final String username;
+    private final String password;
+    private final Date lastLogin;
 
     public UserDSRequest (String username, String password, Date lastLogin){
         this.username = username;
