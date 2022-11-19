@@ -14,6 +14,7 @@ public class PortfolioCreationPresenter {
 
     public PortfolioCreationPresenter(iUserGUI view, User user) {
         this.view = view;
+
         this.user = user;
         controller = new PortfolioCreationController();
 
