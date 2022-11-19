@@ -14,7 +14,6 @@ dependencies {
     implementation 'org.ojalgo:ojalgo-yahoofinance:1.0.1'
     implementation 'com.github.kedarkulk7:yahooFinanceAPI:1.0.0'
     implementation group: 'com.yahoofinance-api', name: 'YahooFinanceAPI', version: '3.17.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter:4.13.2'
 }
 
 test {
