@@ -1,6 +1,7 @@
 package SellStockUseCase;
 
 import entities.Portfolio;
+import entities.User;
 import java.io.IOException;
 
 public class SellStockPresenter {
@@ -8,10 +9,10 @@ public class SellStockPresenter {
     private final Portfolio portfolio;
     private final SellStockController controller;
 
-    public SellStockPresenter(iSellStockGUI view, Portfolio portfolio) {
+    public SellStockPresenter(iSellStockGUI view, User user) {
         this.view = view;
         controller = new SellStockController();
-        this.portfolio = portfolio;
+        this.portfolio = user.getPortfolio();
         view.addSellAction(this::onSell);
         view.addGoBackAction(this::onBack);
     }
