@@ -8,9 +8,9 @@ public class BuyInputRequest {
      * Request model class, carries user input to be passed to the BuyUseCaseInteractor.
      */
 
-    private String symbol;
-    private int buy_quantity;
-    private Portfolio port;
+    private final String symbol;
+    private final int buy_quantity;
+    private final Portfolio port;
 
     public BuyInputRequest(String symbol, int buy_quantity, Portfolio port){
         this.symbol = symbol;

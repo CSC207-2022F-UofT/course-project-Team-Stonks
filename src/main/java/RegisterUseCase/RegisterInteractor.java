@@ -27,17 +27,15 @@ public class RegisterInteractor {
         return RegisterError.NONE;
     }
 
-
-    public boolean usernameValid(String username) {
+    private boolean usernameValid(String username) {
         return userManager.userExists(username) || username.equals("") || username.contains(" ");
     }
-    public boolean passwordValid(String password) {
+    private boolean passwordValid(String password) {
 
         return password.length() >= VALID_PASS_LENGTH;
     }
 
-    public boolean passwordMatch(String password, String passwordConfirm) {
+    private boolean passwordMatch(String password, String passwordConfirm) {
         return password.equals(passwordConfirm);
     }
-
 }

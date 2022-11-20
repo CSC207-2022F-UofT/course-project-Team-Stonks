@@ -11,8 +11,8 @@ public class StockAPIResponse {
      * For more information on the HistoricalQuote class and its attributes,
      * see <a href="https://financequotes-api.com/javadoc/yahoofinance/histquotes/HistoricalQuote.html">its documentation.</a>.
      */
-    private double price;
-    private List<HistoricalQuote> histData;
+    private final double price;
+    private final List<HistoricalQuote> histData;
     
     public StockAPIResponse(double price, List<HistoricalQuote> histData){
         this.price = price;

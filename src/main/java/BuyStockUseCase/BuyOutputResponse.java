@@ -6,7 +6,7 @@ public class BuyOutputResponse {
      * Response model class, carries output from BuyUseCaseInteractor to be displayed to the user.
      */
 
-    private boolean output;
+    private final boolean output;
 
     public BuyOutputResponse(boolean output_text){
         this.output = output_text;
@@ -16,4 +16,3 @@ public class BuyOutputResponse {
         return this.output;
     }
 }
-
