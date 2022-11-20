@@ -1,25 +1,35 @@
 package PortfolioCreationUseCase;
 
-import entities.User;
+import db.StockDSResponse;
+import db.iEntityDBGateway;
+import entities.*;
+import main.OuterLayerFactory;
 
-public class PortfolioCreationInteractor {
-    private final User user;
+import java.util.ArrayList;
+import java.util.List;
 
-    public PortfolioCreationInteractor(User user) {
-        this.user = user;
+public class PortfolioSelectedInteractor {
+    private final iEntityDBGateway dbGateway;
+    private final StockFactory stockFactory;
+
+    public PortfolioSelectedInteractor() {
+        dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        stockFactory = new StockFactory();
     }
 
-    public PortfolioCreationError makeNewPortfolio(String newPortfolioName) {
-        if (newPortfolioName.equals("")) {
-            return PortfolioCreationError.INVALID_NAME;
+    public void populatePortfolio(User user, String portfolioName) {
+        List<StockDSResponse> stockDSResponses = dbGateway.findPortfolio(portfolioName, user.getUsername()).getStocks();
+        List<Stock> stocks = new ArrayList<>();
+
+        for (StockDSResponse stock : stockDSResponses) {
+            stocks.add(stockFactory.createStock(
+                    stock.getSymbol(),
+                    stock.getValue(),
+                    stock.getQuantity(),
+                    dbGateway));
         }
-        else if (user.getPortfolioNames().contains(newPortfolioName)) {
-            return PortfolioCreationError.DUPLICATE_NAME;
-        }
 
-        user.addPortfolio(newPortfolioName);
-
-        return PortfolioCreationError.NONE;
-
+        user.setCurPortfolio(portfolioName);
+        user.getCurPortfolio().pullStocks(stocks);
     }
 }

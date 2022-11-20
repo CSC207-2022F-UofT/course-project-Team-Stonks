@@ -48,7 +48,7 @@ public class UserGUI extends JFrame implements iUserGUI {
     }
 
     @Override
-    public void createPortfolioAction(Runnable onCreatePortfolio){
+    public void createPortfolioAction(Runnable onCreatePortfolio) {
         createPortfolio.addActionListener(e -> onCreatePortfolio.run());
     }
 
@@ -81,7 +81,7 @@ public class UserGUI extends JFrame implements iUserGUI {
      */
     private void $$$setupUI$$$() {
         userPanel = new JPanel();
-        userPanel.setLayout(new GridLayoutManager(4, 2, new Insets(1, 1, 1, 1), -1, -1));
+        userPanel.setLayout(new GridLayoutManager(4, 3, new Insets(1, 1, 1, 1), -1, -1));
         userPanel.setAlignmentX(0.5f);
         userPanel.setForeground(new Color(-67841));
         userPanel.setMinimumSize(new Dimension(650, 400));
@@ -98,14 +98,14 @@ public class UserGUI extends JFrame implements iUserGUI {
         portfolios.setModel(defaultListModel1);
         portfolios.setSelectionForeground(new Color(-16761413));
         portfolios.setSelectionMode(0);
-        userPanel.add(portfolios, new GridConstraints(1, 1, 3, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 250), new Dimension(250, 250), null, 0, false));
+        userPanel.add(portfolios, new GridConstraints(1, 2, 3, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(250, 250), new Dimension(250, 250), null, 0, false));
         logOut = new JButton();
         logOut.setText("Logout");
         userPanel.add(logOut, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.setAutoscrolls(false);
-        userPanel.add(panel1, new GridConstraints(1, 0, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(50, 400), null, 0, false));
+        userPanel.add(panel1, new GridConstraints(1, 0, 2, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(50, 400), null, 0, false));
         portfoliosTitle = new JLabel();
         Font portfoliosTitleFont = this.$$$getFont$$$(null, Font.BOLD, 22, portfoliosTitle.getFont());
         if (portfoliosTitleFont != null)
@@ -114,7 +114,7 @@ public class UserGUI extends JFrame implements iUserGUI {
         panel1.add(portfoliosTitle, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(324, 10), null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        userPanel.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(50, 20), null, 0, false));
+        userPanel.add(panel2, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(50, 20), null, 0, false));
         username = new JLabel();
         Font usernameFont = this.$$$getFont$$$(null, Font.BOLD, 26, username.getFont());
         if (usernameFont != null)
@@ -127,7 +127,10 @@ public class UserGUI extends JFrame implements iUserGUI {
             lastLogin.setFont(lastLoginFont);
         lastLogin.setHorizontalAlignment(10);
         lastLogin.setText("Last login: ");
-        userPanel.add(lastLogin, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        userPanel.add(lastLogin, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createPortfolio = new JButton();
+        createPortfolio.setText("New Portfolio");
+        userPanel.add(createPortfolio, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
     }
 
     /**

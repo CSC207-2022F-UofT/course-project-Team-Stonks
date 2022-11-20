@@ -7,7 +7,7 @@ import main.OuterLayerFactory;
 
 public class UserPresenter {
     private final iUserGUI view;
-    private PortfolioCreationController controller;
+    private final PortfolioSelectedController controller;
     private final User user;
 
 
@@ -15,7 +15,7 @@ public class UserPresenter {
         this.view = view;
 
         this.user = user;
-        controller = new PortfolioCreationController(user);
+        controller = new PortfolioSelectedController();
 
 
         view.addLogoutAction(this::onLogout);
@@ -31,7 +31,7 @@ public class UserPresenter {
     private void onPortfolioSelected() {
         String portfolioName = view.getPortfolioSelected();
 
-        //Add call to controller to add the stocks of selected portfolio to user
+        controller.PopulatePortfolio(new PortfolioSelectedRequest(user, portfolioName));
 
         view.close();
         new PortfolioPresenter(
