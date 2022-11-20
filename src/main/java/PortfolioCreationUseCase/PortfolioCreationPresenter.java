@@ -6,16 +6,16 @@ import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
 
-public class UserPresenter {
+public class PortfolioCreationPresenter {
     private final iUserGUI view;
-    private final PortfolioSelectedController controller;
+    private final PortfolioCreationController controller;
     private final User user;
 
 
-    public UserPresenter(iUserGUI view, User user) {
+    public PortfolioCreationPresenter(iUserGUI view, User user) {
         this.view = view;
         this.user = user;
-        controller = new PortfolioSelectedController();
+        controller = new PortfolioCreationController();
 
 
         view.addLogoutAction(this::onLogout);
@@ -29,7 +29,7 @@ public class UserPresenter {
 
     private void onPortfolioSelected() {
         Portfolio portfolio = user.getPortfolio(view.getPortfolioSelected());
-        PortfolioSelectedRequest request = new PortfolioSelectedRequest(user, portfolio.getName());
+        PortfolioCreationRequest request = new PortfolioCreationRequest(user, portfolio.getName());
         controller.PopulatePortfolio(request);
 
         view.close();
@@ -39,10 +39,10 @@ public class UserPresenter {
                         portfolio.getBalance(),
                         user.getUsername()),
                 portfolio
-        );
+                );
     }
 
     private void onCreatePortfolio() {
-        view.close();
+        //TODO
     }
 }

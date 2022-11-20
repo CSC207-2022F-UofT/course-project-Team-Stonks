@@ -2,11 +2,11 @@ package PortfolioCreationUseCase;
 
 import entities.User;
 
-public final class PortfolioSelectedRequest {
+public final class PortfolioCreationRequest {
     private final User user;
     private final String portfolioName;
 
-    public PortfolioSelectedRequest(
+    public PortfolioCreationRequest(
             User user, String portfolioName) {
         this.user = user;
         this.portfolioName = portfolioName;
