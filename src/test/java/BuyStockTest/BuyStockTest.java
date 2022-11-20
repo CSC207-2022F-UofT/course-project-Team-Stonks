@@ -26,10 +26,18 @@ public class BuyStockTest {
 
     @BeforeAll
     public static void setUp() {
+        UserFactory ufactory = new UserFactory();
         PortfolioFactory factory = new PortfolioFactory();
         EntitySQLGateway gate = new EntitySQLGateway();
 
-        port = factory.createPortfolio("name", "user", gate);
+        Date date = new Date(2022, 7, 13);
+
+        ArrayList<PortfolioDSResponse> list2 = new ArrayList<>();
+
+        User user = ufactory.createUser("testUser25", "password", date, list2, gate);
+
+        user.addPortfolio("newPortfolio");
+        port = user.getPortfolio("newPortfolio");
 
         interactor = new BuyUseCaseInteractor();
     }
