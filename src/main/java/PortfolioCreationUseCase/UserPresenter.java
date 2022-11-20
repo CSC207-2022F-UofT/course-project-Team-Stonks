@@ -43,6 +43,6 @@ public class UserPresenter {
 
     private void onCreatePortfolio() {
         view.close();
-        new PortfolioCreationPresenter(OuterLayerFactory.instance.getPortfolioCreationGUI(), view, user);
+        new PortfolioCreationPresenter(OuterLayerFactory.instance.getPortfolioCreationGUI(), user);
     }
 }

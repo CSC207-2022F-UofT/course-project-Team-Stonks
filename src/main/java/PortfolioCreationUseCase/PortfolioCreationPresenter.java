@@ -1,16 +1,17 @@
 package PortfolioCreationUseCase;
 
 import entities.User;
+import main.OuterLayerFactory;
+
+import java.util.ArrayList;
 
 public class PortfolioCreationPresenter {
     private final iPortfolioCreationGUI view;
-    private final iUserGUI upper;
     private final PortfolioCreationController controller;
     private final User user;
 
-    public PortfolioCreationPresenter(iPortfolioCreationGUI view, iUserGUI upper, User user) {
+    public PortfolioCreationPresenter(iPortfolioCreationGUI view, User user) {
         this.view = view;
-        this.upper = upper;
         this.user = user;
         controller = new PortfolioCreationController(user);
 
@@ -32,6 +33,11 @@ public class PortfolioCreationPresenter {
 
     private void onBack(){
         view.close();
-        new UserPresenter(upper, user);
+        new UserPresenter(
+                OuterLayerFactory.instance.getUserGUI(
+                        user.getUsername(),
+                        new ArrayList<>(user.getPortfolioNames()),
+                        user.getLastLogin()),
+                user);
     }
 }
