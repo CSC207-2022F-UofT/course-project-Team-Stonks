@@ -1,6 +1,8 @@
 package main;
 
+import BuyStockUseCase.BuyStockGUI;
 import BuyStockUseCase.PortfolioGUI;
+import BuyStockUseCase.iBuyStockGUI;
 import BuyStockUseCase.iPortfolioGUI;
 import LoginUseCase.UserLoginGUI;
 import LoginUseCase.iUserLoginGUI;
@@ -40,5 +42,9 @@ public class OuterLayerFactory {
 
     public iRegisterGUI getRegisterGUI() {
         return new RegistrationPage();
+    }
+
+    public iBuyStockGUI getBuyGUI(String symbol) {
+        return new BuyStockGUI(symbol);
     }
 }
