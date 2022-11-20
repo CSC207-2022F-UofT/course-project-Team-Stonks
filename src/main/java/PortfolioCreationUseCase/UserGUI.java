@@ -19,6 +19,7 @@ public class UserGUI extends JFrame implements iUserGUI {
     private JLabel portfoliosTitle;
     private JButton logOut;
     private JLabel lastLogin;
+    private JButton createPortfolio;
 
     public UserGUI(String username, List<String> portfolioNames, Date lastLogin) {
         super();
@@ -44,6 +45,11 @@ public class UserGUI extends JFrame implements iUserGUI {
     @Override
     public void addPortfolioSelectedAction(Runnable onPortfolioSelected) {
         portfolios.addListSelectionListener(e -> onPortfolioSelected.run());
+    }
+
+    @Override
+    public void createPortfolioAction(Runnable onCreatePortfolio){
+        createPortfolio.addActionListener(e -> onCreatePortfolio.run());
     }
 
     @Override

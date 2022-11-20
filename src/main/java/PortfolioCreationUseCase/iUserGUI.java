@@ -5,6 +5,8 @@ public interface iUserGUI {
 
     void addPortfolioSelectedAction(Runnable onPortfolioSelected);
 
+    void createPortfolioAction(Runnable onCreatePortfolio);
+
     String getPortfolioSelected();
 
     void close();

@@ -6,6 +6,8 @@ import LoginUseCase.UserLoginGUI;
 import LoginUseCase.iUserLoginGUI;
 import PortfolioCreationUseCase.UserGUI;
 import PortfolioCreationUseCase.iUserGUI;
+import PortfolioCreationUseCase.PortfolioCreationGUI;
+import PortfolioCreationUseCase.iPortfolioCreationGUI;
 import RegisterUseCase.RegistrationPage;
 import RegisterUseCase.iRegisterGUI;
 import db.EntitySQLGateway;
@@ -28,6 +30,8 @@ public class OuterLayerFactory {
     public iUserGUI getUserGUI(String username, List<String> portfolioNames, Date lastLogin) {
         return new UserGUI(username, portfolioNames, lastLogin);
     }
+
+    public iPortfolioCreationGUI getPortfolioCreationGUI() {return new PortfolioCreationGUI();}
 
     public iPortfolioGUI getPortfolioGUI(String portfolioName, double balance, String username) {
         return new PortfolioGUI(portfolioName, balance, username);

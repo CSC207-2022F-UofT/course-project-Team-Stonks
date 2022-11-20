@@ -1,12 +1,13 @@
 package PortfolioCreationUseCase;
 
 import RegisterUseCase.RegisterError;
+import entities.User;
 
 public class PortfolioCreationController {
     private PortfolioCreationInteractor pInteractor;
 
-    public PortfolioCreationController() {
-        pInteractor = new PortfolioCreationInteractor();
+    public PortfolioCreationController(User user) {
+        pInteractor = new PortfolioCreationInteractor(user);
     }
 
     public PortfolioCreationResponse createPortfolio(PortfolioCreationRequest request) {

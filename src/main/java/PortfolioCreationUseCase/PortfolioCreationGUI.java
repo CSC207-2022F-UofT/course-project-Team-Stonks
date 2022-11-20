@@ -24,22 +24,27 @@ public class PortfolioCreationGUI extends JFrame implements iPortfolioCreationGU
     }
 
     @Override
-    public void addPortfolioAction() {
+    public void addCreatePortfolioAction(Runnable onCreate) {
+        btnContinue.addActionListener(e -> onCreate.run());
+    }
 
+    @Override
+    public void addBackAction(Runnable onBack) {
+        btnBack.addActionListener(e -> onBack.run());
     }
 
     @Override
     public void presentNameInvalidError() {
-
+        JOptionPane.showMessageDialog(null, "Portfolio Name Invalid!");
     }
 
     @Override
     public void presentDuplicateNameError() {
-
+        JOptionPane.showMessageDialog(null, "There already exists a portfolio with this name!");
     }
 
     @Override
     public void close() {
-
+        dispose();
     }
 }

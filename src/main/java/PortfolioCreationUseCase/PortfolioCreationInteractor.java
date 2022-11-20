@@ -8,7 +8,8 @@ import java.sql.Date;
 public class PortfolioCreationInteractor {
     private User user;
 
-    public PortfolioCreationInteractor() {
+    public PortfolioCreationInteractor(User user) {
+        this.user = user;
     }
 
     public PortfolioCreationError makeNewPortfolio(String newPortfolioName) {

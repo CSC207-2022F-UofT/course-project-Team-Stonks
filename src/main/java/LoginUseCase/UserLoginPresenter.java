@@ -1,6 +1,6 @@
 package LoginUseCase;
 
-import PortfolioCreationUseCase.PortfolioCreationPresenter;
+import PortfolioCreationUseCase.UserPresenter;
 import RegisterUseCase.RegisterPresenter;
 import entities.User;
 import main.OuterLayerFactory;
@@ -44,7 +44,7 @@ public class UserLoginPresenter {
             view.presentFailedLogin();
         } else {
             view.close();
-            new PortfolioCreationPresenter(
+            new UserPresenter(
                     OuterLayerFactory.instance.getUserGUI(
                             user.getUsername(),
                             new ArrayList<>(user.getPortfolioNames()),

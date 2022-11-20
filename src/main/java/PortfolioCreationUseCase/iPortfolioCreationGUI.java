@@ -3,7 +3,9 @@ package PortfolioCreationUseCase;
 public interface iPortfolioCreationGUI {
     String getNewPortfolioName();
 
-    void addPortfolioAction();
+    void addCreatePortfolioAction(Runnable onCreate);
+
+    void addBackAction(Runnable onBack);
 
     void presentNameInvalidError();
 
