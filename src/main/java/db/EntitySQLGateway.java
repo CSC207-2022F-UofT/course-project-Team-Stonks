@@ -8,10 +8,10 @@ public class EntitySQLGateway implements iEntityDBGateway {
     Connection con;
 
     public EntitySQLGateway() {
-        String dbURL = "jdbc:sqlserver://MSI\\SQLEXPRESS" +
-                ";database=entities;encrypt=true;trustServerCertificate=true;loginTimeout=10;";
-        String user = "teammate";
-        String pass = "CSC207Stocks";
+        String dbURL = "db-mysql-nyc1-71885-do-user-10038162-0.b.db.ondigitalocean.com" +
+                ";database=defaultdb;encrypt=true;trustServerCertificate=true;loginTimeout=10;";
+        String user = "doadmin";
+        String pass = "AVNS_3ACCOAF3QXEZedJQXcx";
         try {
             con = DriverManager.getConnection(dbURL, user, pass);
         } catch (SQLException e) {
