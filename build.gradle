@@ -15,10 +15,11 @@ dependencies {
     implementation 'com.github.kedarkulk7:yahooFinanceAPI:1.0.0'
     implementation group: 'com.yahoofinance-api', name: 'YahooFinanceAPI', version: '3.17.0'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.31'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 test {
-    useJUnit()
+    useJUnitPlatform()
     testLogging {
         events "passed", "skipped", "failed"
     }
