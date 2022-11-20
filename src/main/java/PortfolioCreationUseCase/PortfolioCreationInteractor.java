@@ -8,11 +8,11 @@ import main.OuterLayerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PortfolioSelectedInteractor {
+public class PortfolioCreationInteractor {
     private final iEntityDBGateway dbGateway;
     private final StockFactory stockFactory;
 
-    public PortfolioSelectedInteractor() {
+    public PortfolioCreationInteractor() {
         dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         stockFactory = new StockFactory();
     }

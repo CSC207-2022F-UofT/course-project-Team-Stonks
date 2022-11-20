@@ -8,12 +8,5 @@
       <jdbc-url>jdbc:sqlserver://MSI\SQLEXPRESS</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="defaultdb@db-mysql-nyc1-71885-do-user-10038162-0.b.db.ondigitalocean.com" uuid="97a00810-1989-4b2f-acf3-b44f5aff99a5">
-      <driver-ref>mysql.8.0.12</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://db-mysql-nyc1-71885-do-user-10038162-0.b.db.ondigitalocean.com:25060/defaultdb</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
   </component>
 </project>
