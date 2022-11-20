@@ -18,7 +18,7 @@ public class BuyUseCaseInteractor {
      * @throws IOException when there's a connection problem with the API
      */
 
-    BuyOutputResponse buyStock(BuyInputRequest req) throws IOException {
+    public BuyOutputResponse buyStock(BuyInputRequest req) throws IOException {
         int buy_quantity = req.getQuantity();
         String symbol = req.getSymbol();
         Portfolio port = req.getPort();
