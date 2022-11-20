@@ -12,7 +12,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
         String user = "doadmin";
         String pass = "AVNS_3ACCOAF3QXEZedJQXcx";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(dbURL, user, pass);
         } catch (SQLException e) {
             e.printStackTrace();
