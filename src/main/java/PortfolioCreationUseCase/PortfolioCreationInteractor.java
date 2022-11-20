@@ -24,6 +24,5 @@ public class PortfolioCreationInteractor {
 
         return PortfolioCreationError.NONE;
 
-
     }
 }
