@@ -4,6 +4,8 @@ import BuyStockUseCase.BuyStockGUI;
 import BuyStockUseCase.PortfolioGUI;
 import BuyStockUseCase.iBuyStockGUI;
 import BuyStockUseCase.iPortfolioGUI;
+import SellStockUseCase.SellStockGUI;
+import SellStockUseCase.iSellStockGUI;
 import LoginUseCase.UserLoginGUI;
 import LoginUseCase.iUserLoginGUI;
 import PortfolioCreationUseCase.UserGUI;
@@ -46,5 +48,8 @@ public class OuterLayerFactory {
 
     public iBuyStockGUI getBuyGUI(String symbol) {
         return new BuyStockGUI(symbol);
+    }
+    public iSellStockGUI getSellGUI(String symbol) {
+        return new SellStockGUI(symbol);
     }
 }

@@ -7,12 +7,14 @@ public class SellStockGUI extends JFrame implements iSellStockGUI{
     private JTextField quantityBox;
     private JButton sellButton;
     private JButton backButton;
+    private JLabel symbol;
     private JLabel symbolLabel;
 
-    public SellStockGUI() {
-
+    public SellStockGUI(String symbol) {
+        super();
         this.setContentPane(SellStockPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.symbol.setText(symbol);
         this.pack();
         this.setVisible(true);
     }
@@ -50,6 +52,6 @@ public class SellStockGUI extends JFrame implements iSellStockGUI{
                 "Sale successful!");
     }
     public String getSymbol() {
-        return symbolLabel.getText();
+        return symbol.getText();
     }
 }

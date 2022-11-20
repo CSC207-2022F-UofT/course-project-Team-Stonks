@@ -9,10 +9,10 @@ public class SellStockPresenter {
     private final Portfolio portfolio;
     private final SellStockController controller;
 
-    public SellStockPresenter(iSellStockGUI view, User user) {
+    public SellStockPresenter(iSellStockGUI view, Portfolio portfolio) {
         this.view = view;
         controller = new SellStockController();
-        this.portfolio = user.getPortfolio();
+        this.portfolio = portfolio;
         view.addSellAction(this::onSell);
         view.addGoBackAction(this::onBack);
     }
