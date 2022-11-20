@@ -8,8 +8,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     Connection con;
 
     public EntitySQLGateway() {
-        String dbURL = "db-mysql-nyc1-71885-do-user-10038162-0.b.db.ondigitalocean.com" +
-                ";database=defaultdb;encrypt=true;trustServerCertificate=true;loginTimeout=10;";
+        String dbURL = "jdbc:mysql://db-mysql-nyc1-71885-do-user-10038162-0.b.db.ondigitalocean.com:25060/defaultdb";
         String user = "doadmin";
         String pass = "AVNS_3ACCOAF3QXEZedJQXcx";
         try {
@@ -26,7 +25,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     public void addUser(UserDSRequest newUser) {
         try{
             Statement st = con.createStatement();
-            st.executeQuery("INSERT INTO Users VALUES ('" +
+            st.executeUpdate("INSERT INTO Users VALUES ('" +
                     newUser.getUsername() + "','" +
                     newUser.getPassword() + "','" +
                     newUser.getLastLogin() + "')");
@@ -103,7 +102,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     public void updateUserLoginDate(String username, Date loginDate) {
         try{
             Statement st = con.createStatement();
-            st.execute(
+            st.executeUpdate(
                     "UPDATE Users SET " +
                             "lastLogin = '" + loginDate + "' WHERE " +
                             "username = '" + username + "'");
@@ -119,7 +118,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     public void addPortfolio(PortfolioDSRequest newPortfolio) {
         try{
             Statement st = con.createStatement();
-            st.executeQuery("INSERT INTO Portfolios VALUES ('" +
+            st.executeUpdate("INSERT INTO Portfolios VALUES ('" +
                     newPortfolio.getName() + "','" +
                     newPortfolio.getBalance() + "','" +
                     newPortfolio.getUsername() + "')");
@@ -211,7 +210,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     public void updatePortfolioBalance(String name, double newBalance, String username) {
         try{
             Statement st = con.createStatement();
-            st.execute(
+            st.executeUpdate(
                     "UPDATE Portfolios SET " +
                             "balance = '" + newBalance + "' WHERE " +
                             "name = '" + name + "' AND " +
@@ -238,7 +237,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
             }
 
             st = con.createStatement();
-            st.execute(
+            st.executeUpdate(
                     "INSERT INTO PortfolioStock VALUES ('" +
                             newStock.getPortfolioName() + "','" +
                             newStock.getSymbol() + "','" +
@@ -301,7 +300,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     public void deleteStock(String symbol, String username, String portfolioName) {
         try{
             Statement st = con.createStatement();
-            st.execute(
+            st.executeUpdate(
                     "DELETE PortfolioStock WHERE " +
                             "portfolioName = '" + portfolioName + "' AND " +
                             "stockName = '" + symbol + "' AND " +
@@ -313,7 +312,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
 
             if (!ps.executeQuery().isBeforeFirst()) {
                 st = con.createStatement();
-                st.execute("DELETE Stocks WHERE " +
+                st.executeUpdate("DELETE Stocks WHERE " +
                         "symbol = '" + symbol + "'");
             }
         } catch (SQLException e) {
@@ -325,7 +324,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     public void updateStockValue(String symbol, double newValue) {
         try{
             Statement st = con.createStatement();
-            st.execute(
+            st.executeUpdate(
                     "UPDATE Stocks SET " +
                             "value = '" + newValue + "' WHERE" +
                             "symbol = '" + symbol + "'");
@@ -344,7 +343,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     public void updateStockQuantity(String symbol, int newQuantity, String username, String portfolioName) {
         try{
             Statement st = con.createStatement();
-            st.execute(
+            st.executeUpdate(
                     "UPDATE PortfolioStock SET " +
                             "quantity = '" + newQuantity + "' WHERE " +
                             "portfolioName = '" + portfolioName + "' AND " +
