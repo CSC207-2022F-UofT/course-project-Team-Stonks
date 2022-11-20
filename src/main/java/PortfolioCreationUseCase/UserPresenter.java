@@ -39,10 +39,10 @@ public class UserPresenter {
                         portfolio.getBalance(),
                         user.getUsername()),
                 portfolio
-                );
+        );
     }
 
     private void onCreatePortfolio() {
-        //TODO
+        view.close();
     }
 }
