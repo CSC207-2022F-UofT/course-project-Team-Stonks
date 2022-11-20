@@ -42,6 +42,5 @@ public class RegisterPresenter {
     private void onBack() {
         view.close();
         new UserLoginPresenter(OuterLayerFactory.instance.getUserLoginGUI());
-
     }
 }
