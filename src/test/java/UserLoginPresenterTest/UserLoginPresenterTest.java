@@ -9,22 +9,21 @@ import entities.EntityHolder;
 import entities.User;
 import entities.UserManager;
 import main.OuterLayerFactory;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
 import java.time.LocalDate;
 
 public class UserLoginPresenterTest {
-    private UserLoginController controller;
-    private UserManager userManager;
-    private final String correctUsername = "database";
-    private final String correctPassword = "password";
+    private static UserLoginController controller;
+    private static UserManager userManager;
+    private static final String correctUsername = "database";
+    private static final String correctPassword = "password";
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    public static void setUp() {
         controller = new UserLoginController();
         userManager = EntityHolder.instance.getUserManager();
         iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
@@ -42,7 +41,7 @@ public class UserLoginPresenterTest {
                 Date.valueOf(LocalDate.now()));
 
         UserLoginResponse response = controller.loginUser(request);
-        Assert.assertNull(response.user());
+        Assertions.assertNull(response.user());
     }
 
     @Test
@@ -53,7 +52,7 @@ public class UserLoginPresenterTest {
                 Date.valueOf(LocalDate.now()));
 
         UserLoginResponse response = controller.loginUser(request);
-        Assert.assertNull(response.user());
+        Assertions.assertNull(response.user());
     }
 
     @Test
@@ -65,11 +64,7 @@ public class UserLoginPresenterTest {
 
         UserLoginResponse response = controller.loginUser(request);
         User user = response.user();
-        Assert.assertEquals(user.getUsername(), correctUsername);
-        Assert.assertTrue(user.isPassword(correctPassword));
-    }
-
-    @After
-    public void tearDown() {
+        Assertions.assertEquals(user.getUsername(), correctUsername);
+        Assertions.assertTrue(user.isPassword(correctPassword));
     }
 }
