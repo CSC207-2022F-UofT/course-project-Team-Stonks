@@ -3,25 +3,17 @@ package entities;
 import db.iEntityDBGateway;
 
 import java.sql.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class User {
-    private String username;
-    private String password;
-    private Map<String, Portfolio> nameToPortfolio;
-    private Date lastLogin;
-    private PortfolioFactory portfolioFactory = new PortfolioFactory();
-    private iEntityDBGateway dbGateway;
-
-    public User(String username, String password, Date lastLogin, iEntityDBGateway dbGateway) {
-        this.username = username;
-        this.password = password;
-        this.lastLogin = lastLogin;
-        nameToPortfolio = new HashMap<>();
-        this.dbGateway = dbGateway;
-    }
+    private final String username;
+    private final String password;
+    private final Map<String, Portfolio> nameToPortfolio;
+    private String curPortfolio;
+    private final Date lastLogin;
+    private final PortfolioFactory portfolioFactory = new PortfolioFactory();
+    private final iEntityDBGateway dbGateway;
 
     public User(String username, String password, Date lastLogin, Map<String, Portfolio> nameToPortfolio, iEntityDBGateway dbGateway) {
         this.username = username;
@@ -52,7 +44,7 @@ public class User {
     }
 
     public boolean isPassword(String password) {
-        return this.password == password;
+        return this.password.equals(password);
     }
 
     public void updatePortfolioStockValues(String portfolioName) {
@@ -61,5 +53,13 @@ public class User {
 
     public void updateLoginDate(Date loginDate) {
         dbGateway.updateUserLoginDate(username, loginDate);
+    }
+
+    public Portfolio getCurPortfolio() {
+        return nameToPortfolio.get(curPortfolio);
+    }
+
+    public void setCurPortfolio(String curPortfolio) {
+        this.curPortfolio = curPortfolio;
     }
 }

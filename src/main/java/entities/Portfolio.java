@@ -4,27 +4,31 @@ import db.StockDSResponse;
 import db.iEntityDBGateway;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Portfolio {
     private double balance;
-    private String name;
-    private Map<String, Stock> symbolToStock;
-    private StockFactory stockFactory = new StockFactory();
-    private iEntityDBGateway dbGateWay;
+    private final String name;
+    private final String username;
+    private final Map<String, Stock> symbolToStock;
+    private final StockFactory stockFactory = new StockFactory();
+    private final iEntityDBGateway dbGateWay;
 
-    public Portfolio(double balance, String name, iEntityDBGateway dbGateway) {
+    public Portfolio(double balance, String name, iEntityDBGateway dbGateway, String username) {
         this.balance = balance;
         this.name = name;
         symbolToStock = new HashMap<>();
         this.dbGateWay = dbGateway;
+        this.username = username;
     }
 
-    public Portfolio(double balance, String name, Map<String, Stock> symbolToStock, iEntityDBGateway dbGateway) {
+    public Portfolio(double balance, String name, Map<String, Stock> symbolToStock, iEntityDBGateway dbGateway, String username) {
         this.balance = balance;
         this.name = name;
         this.symbolToStock = symbolToStock;
         this.dbGateWay = dbGateway;
+        this.username = username;
     }
 
     public double getBalance() {
@@ -39,6 +43,10 @@ public class Portfolio {
         return symbolToStock;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     /**
      * <p>
      *     adds *quantity* amount of the stock to user's portfolio if user has sufficent funds and returns true,
@@ -48,7 +56,7 @@ public class Portfolio {
      * @param value non-negative number
      * @param quantity positive integer
      */
-    public boolean addStock(String symbol, double value, int quantity, String username) {
+    public boolean addStock(String symbol, double value, int quantity) {
         Stock stock = symbolToStock.get(symbol);
 
         if (balance < value * quantity) {
@@ -62,7 +70,6 @@ public class Portfolio {
         }
 
         balance -= value * quantity;
-        dbGateWay.updatePortfolioBalance(name, balance, username);
 
         return true;
     }
@@ -103,7 +110,13 @@ public class Portfolio {
         }
     }
 
-    private Stock convertStockDSResponse(StockDSResponse dsResponse) {
-        return stockFactory.createStock(dsResponse.symbol(), dsResponse.value(), dsResponse.quantity(), dbGateWay);
+    public void pullStocks(List<Stock> newStocks) {
+        for (Stock stock : newStocks) {
+            symbolToStock.put(stock.getSymbol(), stock);
+        }
+    }
+
+    public Stock convertStockDSResponse(StockDSResponse dsResponse) {
+        return stockFactory.createStock(dsResponse.getSymbol(), dsResponse.getValue(), dsResponse.getQuantity(), dbGateWay);
     }
 }

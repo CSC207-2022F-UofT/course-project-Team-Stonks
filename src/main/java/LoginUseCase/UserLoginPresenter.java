@@ -10,8 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class UserLoginPresenter {
-    private iUserLoginGUI view;
-    private UserLoginController controller;
+    private final iUserLoginGUI view;
+    private final UserLoginController controller;
 
     public UserLoginPresenter(iUserLoginGUI view) {
         this.view = view;

@@ -1,9 +1,13 @@
 package BuyStockUseCase;
 
-public class PortfolioPresenter {
-    private iPortfolioGUI view;
+import entities.Portfolio;
 
-    public PortfolioPresenter(iPortfolioGUI view) {
+public class PortfolioPresenter {
+    private final iPortfolioGUI view;
+    private final Portfolio portfolio;
+
+    public PortfolioPresenter(iPortfolioGUI view, Portfolio portfolio) {
         this.view = view;
+        this.portfolio = portfolio;
     }
 }

@@ -16,9 +16,14 @@ import java.util.List;
 
 public class OuterLayerFactory {
     public static final OuterLayerFactory instance = new OuterLayerFactory();
+    private final iEntityDBGateway entityDBGateway;
+
+    public OuterLayerFactory() {
+        entityDBGateway = new EntitySQLGateway();
+    }
 
     public iEntityDBGateway getEntityDSGateway() {
-        return new EntitySQLGateway();
+        return entityDBGateway;
     }
 
     public iUserLoginGUI getUserLoginGUI() {

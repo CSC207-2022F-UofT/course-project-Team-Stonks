@@ -2,14 +2,14 @@ package PortfolioCreationUseCase;
 
 import BuyStockUseCase.PortfolioPresenter;
 import LoginUseCase.UserLoginPresenter;
-import entities.EntityHolder;
+import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
 
 public class PortfolioCreationPresenter {
-    private iUserGUI view;
-    private PortfolioCreationController controller;
-    private User user;
+    private final iUserGUI view;
+    private final PortfolioCreationController controller;
+    private final User user;
 
 
     public PortfolioCreationPresenter(iUserGUI view, User user) {
@@ -18,8 +18,8 @@ public class PortfolioCreationPresenter {
         controller = new PortfolioCreationController();
 
 
-        view.addLogoutAction(() -> onLogout());
-        view.addPortfolioSelectedAction(() -> onPortfolioSelected());
+        view.addLogoutAction(this::onLogout);
+        view.addPortfolioSelectedAction(this::onPortfolioSelected);
     }
 
     private void onLogout() {
@@ -28,14 +28,18 @@ public class PortfolioCreationPresenter {
     }
 
     private void onPortfolioSelected() {
-        String portfolioName = view.getPortfolioSelected();
-
-        //Add call to controller to add the stocks of selected portfolio to user
+        Portfolio portfolio = user.getPortfolio(view.getPortfolioSelected());
+        PortfolioCreationRequest request = new PortfolioCreationRequest(user, portfolio.getName());
+        controller.PopulatePortfolio(request);
 
         view.close();
-        new PortfolioPresenter(OuterLayerFactory.instance.getPortfolioGUI(
-                portfolioName,
-                user.getPortfolio(portfolioName).getBalance(), user.getUsername()));
+        new PortfolioPresenter(
+                OuterLayerFactory.instance.getPortfolioGUI(
+                        portfolio.getName(),
+                        portfolio.getBalance(),
+                        user.getUsername()),
+                portfolio
+                );
     }
 
     private void onCreatePortfolio() {
