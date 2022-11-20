@@ -1,20 +1,17 @@
 package entities;
 
+import db.UserDSRequest;
 import db.UserDSResponse;
 import db.iEntityDBGateway;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.sql.Date;
-import java.util.List;
 
 public class UserManager {
-    private List<User> users;
-    private iEntityDBGateway dbGateway;
-    private UserFactory userFactory = new UserFactory();
+    private User user;
+    private final iEntityDBGateway dbGateway;
+    private final UserFactory userFactory = new UserFactory();
 
     public UserManager(iEntityDBGateway dbGateway) {
-        users = new ArrayList<>();
         this.dbGateway = dbGateway;
     }
 
@@ -25,21 +22,10 @@ public class UserManager {
      * or null if it doesn't exist
      */
     public User getUser(String username, String password, Date loginDate) {
-        for (User user : users) {
-            if (user.getUsername() == username) {
-                if (user.isPassword(password)) {
-                    user.updateLoginDate(loginDate);
-                    return user;
-                }
-
-                return null;
-            }
-        }
-
         User user = convertUserDSResponse(dbGateway.findUserPortfolios(username, password));
 
         if (user != null) {
-            users.add(user);
+            this.user = user;
             user.updateLoginDate(loginDate);
         }
 
@@ -51,10 +37,8 @@ public class UserManager {
      * @return true if a user in the system has a matching username, false otherwise
      */
     public boolean userExists(String username) {
-        for (User user : users) {
-            if (user.getUsername() == username) {
-                return true;
-            }
+        if (user != null && user.getUsername().equals(username)) {
+            return true;
         }
 
         return dbGateway.findUser(username);
@@ -71,7 +55,7 @@ public class UserManager {
      * @param dateCreated String describing a date
      */
     public void createUser(String username, String password, Date dateCreated) {
-        users.add(userFactory.createUser(username, password, dateCreated, dbGateway));
+        dbGateway.addUser(new UserDSRequest(username, password, dateCreated));
     }
 
     private User convertUserDSResponse(UserDSResponse userDSResponse) {
@@ -79,6 +63,10 @@ public class UserManager {
             return null;
         }
 
-        return userFactory.createUser(userDSResponse.username(), userDSResponse.password(), userDSResponse.lastLogin(), userDSResponse.portfolios(), dbGateway);
+        return userFactory.createUser(userDSResponse.getUsername(), userDSResponse.getPassword(), userDSResponse.getLastLogin(), userDSResponse.getPortfolios(), dbGateway);
+    }
+
+    public User getUser() {
+        return user;
     }
 }

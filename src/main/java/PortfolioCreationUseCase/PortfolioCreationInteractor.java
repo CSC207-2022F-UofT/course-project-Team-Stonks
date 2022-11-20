@@ -1,12 +1,9 @@
 package PortfolioCreationUseCase;
 
-import RegisterUseCase.RegisterError;
 import entities.User;
 
-import java.sql.Date;
-
 public class PortfolioCreationInteractor {
-    private User user;
+    private final User user;
 
     public PortfolioCreationInteractor(User user) {
         this.user = user;

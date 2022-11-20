@@ -1,7 +1,7 @@
 package LoginUseCase;
 
 public class UserLoginController {
-    private UserLoginInteractor interactor;
+    private final UserLoginInteractor interactor;
 
     public UserLoginController() {
         interactor = new UserLoginInteractor();

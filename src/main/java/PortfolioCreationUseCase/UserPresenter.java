@@ -6,9 +6,9 @@ import entities.User;
 import main.OuterLayerFactory;
 
 public class UserPresenter {
-    private iUserGUI view;
+    private final iUserGUI view;
     private PortfolioCreationController controller;
-    private User user;
+    private final User user;
 
 
     public UserPresenter(iUserGUI view, User user) {
@@ -18,9 +18,9 @@ public class UserPresenter {
         controller = new PortfolioCreationController(user);
 
 
-        view.addLogoutAction(() -> onLogout());
-        view.addPortfolioSelectedAction(() -> onPortfolioSelected());
-        view.createPortfolioAction(() -> onCreatePortfolio());
+        view.addLogoutAction(this::onLogout);
+        view.addPortfolioSelectedAction(this::onPortfolioSelected);
+        view.createPortfolioAction(this::onCreatePortfolio);
     }
 
     private void onLogout() {
@@ -34,9 +34,11 @@ public class UserPresenter {
         //Add call to controller to add the stocks of selected portfolio to user
 
         view.close();
-        new PortfolioPresenter(OuterLayerFactory.instance.getPortfolioGUI(
-                portfolioName,
-                user.getPortfolio(portfolioName).getBalance(), user.getUsername()));
+        new PortfolioPresenter(
+                OuterLayerFactory.instance.getPortfolioGUI(
+                        portfolioName,
+                        user.getPortfolio(portfolioName).getBalance(), user.getUsername()),
+                user.getPortfolio(portfolioName));
     }
 
     private void onCreatePortfolio() {

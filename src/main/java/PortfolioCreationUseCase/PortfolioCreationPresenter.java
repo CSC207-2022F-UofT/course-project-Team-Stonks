@@ -3,10 +3,10 @@ package PortfolioCreationUseCase;
 import entities.User;
 
 public class PortfolioCreationPresenter {
-    private iPortfolioCreationGUI view;
-    private iUserGUI upper;
-    private PortfolioCreationController controller;
-    private User user;
+    private final iPortfolioCreationGUI view;
+    private final iUserGUI upper;
+    private final PortfolioCreationController controller;
+    private final User user;
 
     public PortfolioCreationPresenter(iPortfolioCreationGUI view, iUserGUI upper, User user) {
         this.view = view;
@@ -14,8 +14,8 @@ public class PortfolioCreationPresenter {
         this.user = user;
         controller = new PortfolioCreationController(user);
 
-        view.addCreatePortfolioAction(() -> createPortfolio());
-        view.addBackAction(() -> onBack());
+        view.addCreatePortfolioAction(this::createPortfolio);
+        view.addBackAction(this::onBack);
     }
 
     private void createPortfolio(){

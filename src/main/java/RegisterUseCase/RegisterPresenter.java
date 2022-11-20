@@ -7,8 +7,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 public class RegisterPresenter {
-    private iRegisterGUI view;
-    private RegisterController controller;
+    private final iRegisterGUI view;
+    private final RegisterController controller;
 
     public RegisterPresenter(iRegisterGUI view) {
         this.view = view;
@@ -26,12 +26,16 @@ public class RegisterPresenter {
                 Date.valueOf(LocalDate.now()));
 
         RegisterResponse response = controller.signUpUser(request);
+        RegisterError userSignedUp = response.userSignedUp();
 
-        switch (response.userSignedUp()){
-            case USERNAME -> view.presentUsernameError();
-            case PASSWORD_INVALID -> view.presentPasswordInvalidError();
-            case PASSWORD_NOT_MATCH -> view.presentPasswordNotMatchError();
-            default -> onBack();
+        if (userSignedUp == RegisterError.USERNAME) {
+            view.presentUsernameError();
+        } else if (userSignedUp == RegisterError.PASSWORD_INVALID) {
+            view.presentPasswordInvalidError();
+        } else if (userSignedUp == RegisterError.PASSWORD_NOT_MATCH) {
+            view.presentPasswordNotMatchError();
+        } else {
+            onBack();
         }
     }
 
