@@ -24,10 +24,12 @@ public class PortfolioCreationPresenter {
 
         PortfolioCreationResponse response = controller.createPortfolio(request);
 
-        switch (response.portfolioCreated()){
-            case DUPLICATE_NAME -> view.presentDuplicateNameError();
-            case INVALID_NAME -> view.presentNameInvalidError();
-            default -> onBack();
+        if (response.portfolioCreated() == PortfolioCreationError.DUPLICATE_NAME) {
+            view.presentDuplicateNameError();
+        } else if (response.portfolioCreated() == PortfolioCreationError.INVALID_NAME) {
+            view.presentNameInvalidError();
+        } else {
+            onBack();
         }
     }
 
