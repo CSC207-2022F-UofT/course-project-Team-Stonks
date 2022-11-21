@@ -17,8 +17,9 @@ public class SellUseCaseInteractor {
     public SellOutputResponse sellStock(SellInputRequest sell) throws IOException {
         Portfolio portfolio = sell.getPortfolio();
         String symbol = sell.getSymbol();
+        String username = portfolio.getUsername();
         int quantity = sell.getQuantity();
-        boolean possible = portfolio.sellStock(symbol, quantity);
+        boolean possible = portfolio.sellStock(symbol, quantity, username);
         StockAPIAccess stockAPIAccess = new StockAPIAccess();
         StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
         StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
