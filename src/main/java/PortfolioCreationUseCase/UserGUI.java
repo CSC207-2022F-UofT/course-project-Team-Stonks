@@ -20,6 +20,7 @@ public class UserGUI extends JFrame implements iUserGUI {
     private JButton logOut;
     private JLabel lastLogin;
     private JButton createPortfolio;
+    private JButton watchlistButton;
 
     public UserGUI(String username, List<String> portfolioNames, Date lastLogin) {
         super();
