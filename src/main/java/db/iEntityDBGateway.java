@@ -1,8 +1,11 @@
 package db;
 
 import java.sql.Date;
+import java.util.List;
 
 public interface iEntityDBGateway {
+    List<UserDSResponse> getAllUsers();
+
     /**
      * Adds user to database
      */
