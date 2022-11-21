@@ -8,7 +8,6 @@ public class SellStockGUI extends JFrame implements iSellStockGUI{
     private JButton sellButton;
     private JButton backButton;
     private JLabel symbol;
-    private JLabel symbolLabel;
 
     public SellStockGUI(String symbol) {
         super();
@@ -54,4 +53,7 @@ public class SellStockGUI extends JFrame implements iSellStockGUI{
     public String getSymbol() {
         return symbol.getText();
     }
+
 }
+
+

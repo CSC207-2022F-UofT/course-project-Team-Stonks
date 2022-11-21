@@ -8,14 +8,14 @@ public class SellInputRequest {
      * @param symbol The symbol of the stock to sell
      * @param quantity The quantity of stocks to sell
      */
-    private Portfolio portfolio;
-    private String symbol;
-    private int quantity;
+    private final Portfolio portfolio;
+    private final String symbol;
+    private final int quantity;
 
-    public SellInputRequest(Portfolio portfolio, String symbol, int quantity) {
+    public SellInputRequest(Portfolio portfolio, String symbol) {
         this.portfolio = portfolio;
         this.symbol = symbol;
-        this.quantity = quantity;
+        this.quantity = portfolio.getStockQuantity(symbol);
     }
     public Portfolio getPortfolio() {
         return portfolio;

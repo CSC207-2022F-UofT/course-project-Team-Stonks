@@ -22,7 +22,7 @@ public class SellStockPresenter {
         String symbol = view.getSymbol();
         int quantity = view.getQuantity();
         try {
-            SellOutputResponse response = controller.sellStock(new SellInputRequest(portfolio, symbol, quantity));
+            SellOutputResponse response = controller.sellStock(new SellInputRequest(portfolio, symbol));
             if (response.possible()) {
                 view.displaySuccess();
             } else {
