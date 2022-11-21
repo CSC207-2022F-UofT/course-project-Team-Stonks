@@ -3,27 +3,30 @@ package entities;
 import db.UserDSRequest;
 import db.UserDSResponse;
 import db.iEntityDBGateway;
+import main.OuterLayerFactory;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserManager {
-    List<User> users;
-    iEntityDBGateway dbGateway;
-    UserFactory userFactory = new UserFactory();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss");
+    public static UserManager instance = new UserManager(OuterLayerFactory.instance.getEntityDSGateway());
+    private User user;
+    private final iEntityDBGateway dbGateway;
+    private final UserFactory userFactory = new UserFactory();
 
     public UserManager(iEntityDBGateway dbGateway) {
-        users = new ArrayList<>();
         this.dbGateway = dbGateway;
     }
 
-    public UserManager(iEntityDBGateway dbGateway, List<User> users) {
-        this.users = users;
-        this.dbGateway = dbGateway;
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+
+        for (UserDSResponse userDSResponse : dbGateway.getAllUsers()) {
+            users.add(convertUserDSResponse(userDSResponse));
+        }
+
+        return users;
     }
 
     /**
@@ -32,18 +35,15 @@ public class UserManager {
      * @return the user from the system that has the given username password pair
      * or null if it doesn't exist
      */
-    public User getUser(String username, String password) throws ParseException {
-        for (User user : users) {
-            if (user.getUsername() == username) {
-                if (user.isPassword(password)) {
-                    return user;
-                }
+    public User getUser(String username, String password, Date loginDate) {
+        User user = convertUserDSResponse(dbGateway.findUserPortfolios(username, password));
 
-                return null;
-            }
+        if (user != null) {
+            this.user = user;
+            user.updateLoginDate(loginDate);
         }
 
-        return convertUserDSResponse(dbGateway.findUser(username, password));
+        return user;
     }
 
     /**
@@ -51,10 +51,8 @@ public class UserManager {
      * @return true if a user in the system has a matching username, false otherwise
      */
     public boolean userExists(String username) {
-        for (User user : users) {
-            if (user.getUsername() == username) {
-                return true;
-            }
+        if (user != null && user.getUsername().equals(username)) {
+            return true;
         }
 
         return dbGateway.findUser(username);
@@ -71,11 +69,23 @@ public class UserManager {
      * @param dateCreated String describing a date
      */
     public void createUser(String username, String password, Date dateCreated) {
-        users.add(userFactory.createUser(username, password, dateCreated, dbGateway));
         dbGateway.addUser(new UserDSRequest(username, password, dateCreated));
     }
 
-    public User convertUserDSResponse(UserDSResponse userDSResponse) throws ParseException {
-        return userFactory.createUser(userDSResponse.username(), userDSResponse.password(), userDSResponse.lastLogin(), userDSResponse.portfolios(), dbGateway);
+    private User convertUserDSResponse(UserDSResponse userDSResponse) {
+        if (userDSResponse == null) {
+            return null;
+        }
+
+        return userFactory.createUser(
+                userDSResponse.getUsername(),
+                userDSResponse.getPassword(),
+                userDSResponse.getLastLogin(),
+                userDSResponse.getPortfolios(),
+                dbGateway);
+    }
+
+    public User getUser() {
+        return user;
     }
 }
