@@ -13,9 +13,9 @@ public class RegisterInteractor {
     }
 
     public RegisterError signUpUser(String username, String password, String passwordConfirm, Date loginDate) {
-        if (userManager.userExists(username)) {
+        if (usernameValid(username)) {
             return RegisterError.USERNAME;
-        }else if (!password.equals(passwordConfirm)) {
+        }else if (passwordMatch(password, passwordConfirm)) {
             return RegisterError.PASSWORD_NOT_MATCH;
         } else if (!passwordValid(password)) {
             return RegisterError.PASSWORD_INVALID;
@@ -26,7 +26,15 @@ public class RegisterInteractor {
         return RegisterError.NONE;
     }
 
-    public boolean passwordValid(String password) {
+    private boolean usernameValid(String username) {
+        return userManager.userExists(username) || username.equals("") || username.contains(" ");
+    }
+    private boolean passwordValid(String password) {
+
         return password.length() >= VALID_PASS_LENGTH;
+    }
+
+    private boolean passwordMatch(String password, String passwordConfirm) {
+        return password.equals(passwordConfirm);
     }
 }
