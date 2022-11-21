@@ -2,7 +2,6 @@ package PortfolioCreationUseCase;
 
 import BuyStockUseCase.PortfolioPresenter;
 import LoginUseCase.UserLoginPresenter;
-import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
 
@@ -14,12 +13,14 @@ public class UserPresenter {
 
     public UserPresenter(iUserGUI view, User user) {
         this.view = view;
+
         this.user = user;
         controller = new PortfolioSelectedController();
 
 
         view.addLogoutAction(this::onLogout);
         view.addPortfolioSelectedAction(this::onPortfolioSelected);
+        view.createPortfolioAction(this::onCreatePortfolio);
     }
 
     private void onLogout() {
@@ -28,21 +29,20 @@ public class UserPresenter {
     }
 
     private void onPortfolioSelected() {
-        Portfolio portfolio = user.getPortfolio(view.getPortfolioSelected());
-        PortfolioSelectedRequest request = new PortfolioSelectedRequest(user, portfolio.getName());
-        controller.PopulatePortfolio(request);
+        String portfolioName = view.getPortfolioSelected();
+
+        controller.PopulatePortfolio(new PortfolioSelectedRequest(user, portfolioName));
 
         view.close();
         new PortfolioPresenter(
                 OuterLayerFactory.instance.getPortfolioGUI(
-                        portfolio.getName(),
-                        portfolio.getBalance(),
-                        user.getUsername()),
-                portfolio
-        );
+                        portfolioName,
+                        user.getPortfolio(portfolioName).getBalance(), user.getUsername()),
+                user.getPortfolio(portfolioName));
     }
 
     private void onCreatePortfolio() {
         view.close();
+        new PortfolioCreationPresenter(OuterLayerFactory.instance.getPortfolioCreationGUI(), user);
     }
 }

@@ -5,7 +5,7 @@ public class BulkStockAPIRequest {
      * Request model class containing input for a bulk price request to the
      * stock price API.
      */
-    private String[] symbols;
+    private final String[] symbols;
 
     public BulkStockAPIRequest(String[] symbols) {
         this.symbols = symbols;
