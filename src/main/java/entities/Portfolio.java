@@ -4,27 +4,31 @@ import db.StockDSResponse;
 import db.iEntityDBGateway;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Portfolio {
     private double balance;
-    private String name;
-    private Map<String, Stock> symbolToStock;
-    private StockFactory stockFactory = new StockFactory();
-    private iEntityDBGateway dbGateWay;
+    private final String name;
+    private final String username;
+    private final Map<String, Stock> symbolToStock;
+    private final StockFactory stockFactory = new StockFactory();
+    private final iEntityDBGateway dbGateWay;
 
-    public Portfolio(String name, iEntityDBGateway dbGateway) {
-        balance = 0;
+    public Portfolio(double balance, String name, iEntityDBGateway dbGateway, String username) {
+        this.balance = balance;
         this.name = name;
         symbolToStock = new HashMap<>();
         this.dbGateWay = dbGateway;
+        this.username = username;
     }
 
-    public Portfolio(double balance, String name, Map<String, Stock> symbolToStock, iEntityDBGateway dbGateway) {
+    public Portfolio(double balance, String name, Map<String, Stock> symbolToStock, iEntityDBGateway dbGateway, String username) {
         this.balance = balance;
         this.name = name;
         this.symbolToStock = symbolToStock;
         this.dbGateWay = dbGateway;
+        this.username = username;
     }
 
     public double getBalance() {
@@ -39,6 +43,9 @@ public class Portfolio {
         return symbolToStock;
     }
 
+    public String getUsername() {
+        return username;
+    }
 
     /**
      * <p>
@@ -57,9 +64,9 @@ public class Portfolio {
         }
 
         if (stock != null) {
-            stock.addQuantity(quantity);
+            stock.addQuantity(quantity, username, name);
         } else {
-            symbolToStock.put(symbol, stockFactory.createStock(symbol, value, quantity));
+            symbolToStock.put(symbol, stockFactory.createStock(symbol, value, quantity, username, name, dbGateWay));
         }
 
         balance -= value * quantity;
@@ -75,7 +82,7 @@ public class Portfolio {
      * @param symbol non-empty string
      * @param quantity positive int
      */
-    public boolean sellStock(String symbol, int quantity) {
+    public boolean sellStock(String symbol, int quantity, String username) {
         Stock stock = symbolToStock.get(symbol);
 
         if (stock.getQuantity() < quantity) {
@@ -83,11 +90,13 @@ public class Portfolio {
         }
 
         balance += quantity * stock.getValue();
+        dbGateWay.updatePortfolioBalance(name, balance, username);
 
         if (quantity == stock.getQuantity()) {
             symbolToStock.remove(symbol);
+            dbGateWay.deleteStock(symbol, username, name);
         } else {
-            stock.addQuantity(-quantity);
+            stock.addQuantity(-quantity, username, name);
         }
 
         return true;
@@ -101,7 +110,13 @@ public class Portfolio {
         }
     }
 
+    public void pullStocks(List<Stock> newStocks) {
+        for (Stock stock : newStocks) {
+            symbolToStock.put(stock.getSymbol(), stock);
+        }
+    }
+
     public Stock convertStockDSResponse(StockDSResponse dsResponse) {
-        return stockFactory.createStock(dsResponse.symbol(), dsResponse.value(), dsResponse.quantity());
+        return stockFactory.createStock(dsResponse.getSymbol(), dsResponse.getValue(), dsResponse.getQuantity(), dbGateWay);
     }
 }
