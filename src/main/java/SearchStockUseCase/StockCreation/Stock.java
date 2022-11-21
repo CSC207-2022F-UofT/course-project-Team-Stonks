@@ -14,6 +14,7 @@ public class Stock {
 
     public Stock(String symbol, double value) {
         this.symbol = symbol;
+        this.value = value;
 
     }
 
