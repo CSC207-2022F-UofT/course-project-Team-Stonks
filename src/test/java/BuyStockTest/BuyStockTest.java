@@ -3,41 +3,42 @@ package BuyStockTest;
 import BuyStockUseCase.BuyInputRequest;
 import BuyStockUseCase.BuyOutputResponse;
 import BuyStockUseCase.BuyUseCaseInteractor;
-import db.EntitySQLGateway;
-import db.PortfolioDSResponse;
-import db.StockDSResponse;
-import db.UserDSResponse;
+import LoginUseCase.UserLoginInteractor;
+import PortfolioCreationUseCase.PortfolioCreationError;
+import PortfolioCreationUseCase.PortfolioCreationInteractor;
+import RegisterUseCase.RegisterInteractor;
 import entities.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 
 public class BuyStockTest {
 
     private static Portfolio port;
     private static final String symbol = "TSLA";
+    private static final String symbol2 = "AMZN";
     private static BuyUseCaseInteractor interactor;
 
 
     @BeforeAll
     public static void setUp() {
-        UserFactory ufactory = new UserFactory();
-        PortfolioFactory factory = new PortfolioFactory();
-        EntitySQLGateway gate = new EntitySQLGateway();
+        Date date = new Date(100);
+        RegisterInteractor interactor1 = new RegisterInteractor();
+        interactor1.signUpUser("TestUser2", "password", "password", date);
 
-        Date date = new Date(2022, 7, 13);
+        UserLoginInteractor interactor2 = new UserLoginInteractor();
+        User user = interactor2.loginUser("TestUser", "password", date);
 
-        ArrayList<PortfolioDSResponse> list2 = new ArrayList<>();
+        PortfolioCreationInteractor interactor3 = new PortfolioCreationInteractor(user);
+        int tag = 0;
+        while (interactor3.makeNewPortfolio("newPortfolio" + tag) == PortfolioCreationError.DUPLICATE_NAME){
+            tag += 1;
+        }
 
-        User user = ufactory.createUser("testUser25", "password", date, list2, gate);
-
-        user.addPortfolio("newPortfolio");
-        port = user.getPortfolio("newPortfolio");
+        port = user.getPortfolio("newPortfolio" + tag);
 
         interactor = new BuyUseCaseInteractor();
     }
@@ -45,9 +46,8 @@ public class BuyStockTest {
     @Test
     public void buyTSLAStockTest() {
         BuyInputRequest req = new BuyInputRequest(symbol, 5,port);
-        BuyOutputResponse res;
         try {
-            res = interactor.buyStock(req);
+            interactor.buyStock(req);
         } catch(IOException ignored) {}
 
         Map<String, Stock> map = port.getSymbolToStock();
@@ -55,5 +55,21 @@ public class BuyStockTest {
         Stock stock = map.get("TSLA");
 
         assert stock.getQuantity() == 5;
+    }
+
+    @Test
+    public void buyStockInsufficientFundsTest() {
+        BuyInputRequest req = new BuyInputRequest(symbol2, 1000,port);
+        BuyOutputResponse res = new BuyOutputResponse(true);
+        try {
+            res = interactor.buyStock(req);
+        } catch(IOException ignored) {}
+
+        Map<String, Stock> map = port.getSymbolToStock();
+
+        Stock stock = map.get("AMZN");
+
+        assert !res.getOutput();
+        assert stock == null;
     }
 }
