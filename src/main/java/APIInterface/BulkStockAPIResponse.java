@@ -7,7 +7,7 @@ public class BulkStockAPIResponse {
      * Response model class containing output from a bulk price request to the
      * stock price API.
      */
-    private Map<String, Double> symbolToPrice;
+    private final Map<String, Double> symbolToPrice;
 
     public BulkStockAPIResponse(Map<String, Double> symbolToPrice) {
         this.symbolToPrice = symbolToPrice;
