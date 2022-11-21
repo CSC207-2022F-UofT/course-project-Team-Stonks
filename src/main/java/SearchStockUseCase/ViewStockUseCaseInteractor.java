@@ -15,7 +15,7 @@ public class ViewStockUseCaseInteractor {
         }catch(IOException e){
             throw new IOException(String.format("Incorrect symbol: %s", symbol));
         }
-        SearchStockGUI searchStockGUI = new SearchStockGUI(stock);
+        ViewStockPresenter viewStockPresenter = new ViewStockPresenter(stock);
     }
 
 }

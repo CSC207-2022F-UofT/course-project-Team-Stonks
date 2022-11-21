@@ -15,6 +15,6 @@ public class StockFactory {
         } catch (IOException e) {
             throw new Exception(String.format("Invalid stock Symbol %s", symbol));
         }
-        return new Stock(symbol, stockAPIResponse.getPrice());
+        return new Stock(symbol, stockAPIResponse.getPrice(), stockAPIResponse.getHistData());
     }
 }
