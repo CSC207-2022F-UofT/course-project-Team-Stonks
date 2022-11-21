@@ -94,7 +94,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="647e5" class="javax.swing.JLabel">
+          <component id="647e5" class="javax.swing.JLabel" binding="currentPrice">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -102,7 +102,7 @@
               <text value="Current"/>
             </properties>
           </component>
-          <component id="d1d10" class="javax.swing.JLabel">
+          <component id="d1d10" class="javax.swing.JLabel" binding="up_down">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -110,7 +110,7 @@
               <text value="Up/Down"/>
             </properties>
           </component>
-          <component id="dbccd" class="javax.swing.JLabel">
+          <component id="dbccd" class="javax.swing.JLabel" binding="curr_high">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -118,7 +118,7 @@
               <text value="High"/>
             </properties>
           </component>
-          <component id="25117" class="javax.swing.JLabel">
+          <component id="25117" class="javax.swing.JLabel" binding="curr_low">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
