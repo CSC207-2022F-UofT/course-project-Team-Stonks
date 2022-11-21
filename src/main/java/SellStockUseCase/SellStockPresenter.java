@@ -1,8 +1,7 @@
 package SellStockUseCase;
 
 import entities.Portfolio;
-import entities.User;
-import java.io.IOException;
+
 
 public class SellStockPresenter {
     private final iSellStockGUI view;
