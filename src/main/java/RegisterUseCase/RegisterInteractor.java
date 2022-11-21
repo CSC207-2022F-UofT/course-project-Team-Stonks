@@ -1,6 +1,5 @@
 package RegisterUseCase;
 
-import entities.EntityHolder;
 import entities.UserManager;
 
 import java.sql.Date;
@@ -10,7 +9,7 @@ public class RegisterInteractor {
     private final int VALID_PASS_LENGTH = 8;
 
     public RegisterInteractor() {
-        userManager = EntityHolder.instance.getUserManager();
+        userManager = UserManager.instance;
     }
 
     public RegisterError signUpUser(String username, String password, String passwordConfirm, Date loginDate) {

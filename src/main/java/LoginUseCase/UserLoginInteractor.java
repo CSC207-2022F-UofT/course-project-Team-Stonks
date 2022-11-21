@@ -1,6 +1,5 @@
 package LoginUseCase;
 
-import entities.EntityHolder;
 import entities.User;
 import entities.UserManager;
 
@@ -10,7 +9,7 @@ public class UserLoginInteractor {
     private final UserManager userManager;
 
     public UserLoginInteractor() {
-        userManager = EntityHolder.instance.getUserManager();
+        userManager = UserManager.instance;
     }
 
     public User loginUser(String username, String password, Date loginDate) {
