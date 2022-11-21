@@ -119,4 +119,13 @@ public class Portfolio {
     public Stock convertStockDSResponse(StockDSResponse dsResponse) {
         return stockFactory.createStock(dsResponse.getSymbol(), dsResponse.getValue(), dsResponse.getQuantity(), dbGateWay);
     }
+
+    public double getNetValue() {
+        double total = 0;
+        for (Stock stock : symbolToStock.values()) {
+            total += stock.getValue();
+        }
+        total += balance;
+        return total;
+    }
 }

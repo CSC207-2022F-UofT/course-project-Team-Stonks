@@ -14,6 +14,7 @@ public class User {
     private final Date lastLogin;
     private final PortfolioFactory portfolioFactory = new PortfolioFactory();
     private final iEntityDBGateway dbGateway;
+    private String compPortfolio;
 
     public User(String username, String password, Date lastLogin, Map<String, Portfolio> nameToPortfolio, iEntityDBGateway dbGateway) {
         this.username = username;
@@ -28,7 +29,11 @@ public class User {
     }
 
     public void addPortfolio(String name) {
+        if (nameToPortfolio.isEmpty()) {
+            compPortfolio = name;
+        }
         nameToPortfolio.put(name, portfolioFactory.createPortfolio(name, username, dbGateway));
+
     }
 
     public Portfolio getPortfolio(String portfolioName) {
@@ -59,7 +64,15 @@ public class User {
         return nameToPortfolio.get(curPortfolio);
     }
 
+    public Portfolio getCompPortfolio() {
+        return nameToPortfolio.get(compPortfolio);
+    }
+
     public void setCurPortfolio(String curPortfolio) {
         this.curPortfolio = curPortfolio;
+    }
+
+    public void setCompPortfolio(String compPortfolio) {
+        this.compPortfolio = compPortfolio;
     }
 }
