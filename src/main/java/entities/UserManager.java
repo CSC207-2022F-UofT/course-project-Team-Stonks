@@ -3,16 +3,30 @@ package entities;
 import db.UserDSRequest;
 import db.UserDSResponse;
 import db.iEntityDBGateway;
+import main.OuterLayerFactory;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserManager {
+    public static UserManager instance = new UserManager(OuterLayerFactory.instance.getEntityDSGateway());
     private User user;
     private final iEntityDBGateway dbGateway;
     private final UserFactory userFactory = new UserFactory();
 
     public UserManager(iEntityDBGateway dbGateway) {
         this.dbGateway = dbGateway;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+
+        for (UserDSResponse userDSResponse : dbGateway.getAllUsers()) {
+            users.add(convertUserDSResponse(userDSResponse));
+        }
+
+        return users;
     }
 
     /**
@@ -63,7 +77,12 @@ public class UserManager {
             return null;
         }
 
-        return userFactory.createUser(userDSResponse.getUsername(), userDSResponse.getPassword(), userDSResponse.getLastLogin(), userDSResponse.getPortfolios(), dbGateway);
+        return userFactory.createUser(
+                userDSResponse.getUsername(),
+                userDSResponse.getPassword(),
+                userDSResponse.getLastLogin(),
+                userDSResponse.getPortfolios(),
+                dbGateway);
     }
 
     public User getUser() {

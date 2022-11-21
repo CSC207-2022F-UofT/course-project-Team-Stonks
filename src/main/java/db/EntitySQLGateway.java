@@ -22,6 +22,27 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
+    @Override
+    public List<UserDSResponse> getAllUsers() {
+        try{
+            List<UserDSResponse> userDSResponses = new ArrayList<>();
+
+            PreparedStatement st = con.prepareStatement(
+                    "SELECT username, password FROM Users");
+            ResultSet userRS = st.executeQuery();
+            while (userRS.next()) {
+                userDSResponses.add(findUserPortfolios(
+                        userRS.getString(1),
+                        userRS.getString(2))
+                );
+            }
+            return userDSResponses;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     /**
      * @param newUser
      */
