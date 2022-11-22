@@ -7,6 +7,10 @@ public final class RegisterResponse {
         this.userSignedUp = userSignedUp;
     }
 
+    /**
+     * A getter for the userSignedUp
+     * @return RegisterError type of the userSignedUp
+     */
     public RegisterError userSignedUp() {
         return userSignedUp;
     }

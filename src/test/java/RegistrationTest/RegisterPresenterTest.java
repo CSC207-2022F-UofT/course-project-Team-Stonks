@@ -17,7 +17,6 @@ import java.time.LocalDate;
 class RegisterPresenterTest {
 
     private static RegisterController controller;
-    private static RegisterPresenter presenter;
     private static UserManager userManager;
     private static final String correctUsername = "database";
     private static final String correctPassword = "password";
@@ -49,8 +48,6 @@ class RegisterPresenterTest {
                 "password",
                 "password",
                 Date.valueOf(LocalDate.now()));
-
-
 
         RegisterResponse response = controller.signUpUser(request);
         Assertions.assertEquals(response.userSignedUp(), RegisterError.NONE);
@@ -102,6 +99,41 @@ class RegisterPresenterTest {
 
         RegisterResponse response = controller.signUpUser(request);
         Assertions.assertEquals(response.userSignedUp(), RegisterError.PASSWORD_NOT_MATCH);
+
+    }
+
+
+    /**
+     * Space in Username
+     */
+    @Test
+    public void testSpacedUsername() {
+        RegisterRequest request = new RegisterRequest(
+                "Random Name",
+                "PasswordNotSame",
+                "PasswordIsSame",
+                Date.valueOf(LocalDate.now()));
+
+        RegisterResponse response = controller.signUpUser(request);
+        Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
+
+    }
+    /**
+     * Testing Long Username
+     */
+    @Test
+    public void testLongUsername() {
+        // Building a long username that is 51 characters long
+        StringBuilder longUsername = new StringBuilder("a");
+        longUsername.append("a".repeat(50));
+        RegisterRequest request = new RegisterRequest(
+                longUsername.toString(),
+                "PasswordNotSame",
+                "PasswordIsSame",
+                Date.valueOf(LocalDate.now()));
+
+        RegisterResponse response = controller.signUpUser(request);
+        Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
 
     }
 

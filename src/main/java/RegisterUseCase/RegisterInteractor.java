@@ -7,7 +7,6 @@ import java.sql.Date;
 
 public class RegisterInteractor {
     private final UserManager userManager;
-    private final int VALID_PASS_LENGTH = 8;
 
     /**
      *
@@ -25,6 +24,8 @@ public class RegisterInteractor {
      */
 
     public RegisterError signUpUser(String username, String password, String passwordConfirm, Date loginDate) {
+
+        // Refactored by adding methods to check for errors in order to make the code more readable
         if (usernameInvalid(username)) {
             return RegisterError.USERNAME;
         } else if (!passwordValid(password)) {
@@ -39,14 +40,31 @@ public class RegisterInteractor {
     }
 
 
+    /**
+     * @param username
+     * @return True if the username is invalid
+     * Refactored
+     */
     private boolean usernameInvalid(String username) {
-        return userManager.userExists(username) || username.equals("") || username.contains(" ");
+        // case 1: username is already taken, case 2: username is empty, case 3: username contains spaces
+        // case 4: username is too long (SQL Error)
+        return userManager.userExists(username) || username.equals("") || username.contains(" ") || username.length() > 50 ;
     }
-    private boolean passwordValid(String password) {
 
+    /**
+     * @param password
+     * @return True if password length is greater than or equal to 8, false otherwise
+     */
+    private boolean passwordValid(String password) {
+        int VALID_PASS_LENGTH = 8;
         return password.length() >= VALID_PASS_LENGTH;
     }
 
+    /**
+     * @param password
+     * @param passwordConfirm
+     * @return True if password and passwordConfirm match, else false
+     */
     private boolean passwordMatch(String password, String passwordConfirm) {
         return password.equals(passwordConfirm);
     }
