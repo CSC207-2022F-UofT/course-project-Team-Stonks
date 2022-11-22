@@ -9,6 +9,9 @@ public class RegisterInteractor {
     private final UserManager userManager;
     private final int VALID_PASS_LENGTH = 8;
 
+    /**
+     *
+     */
     public RegisterInteractor() {
         userManager = EntityHolder.instance.getUserManager();
     }
