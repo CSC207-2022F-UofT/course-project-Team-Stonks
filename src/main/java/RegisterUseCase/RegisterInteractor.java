@@ -53,11 +53,13 @@ public class RegisterInteractor {
 
     /**
      * @param password
-     * @return True if password length is greater than or equal to 8, false otherwise
+     * @return True if password length is in range [8, 50] otherwise false
      */
     private boolean passwordValid(String password) {
-        int VALID_PASS_LENGTH = 8;
-        return password.length() >= VALID_PASS_LENGTH;
+        int minLength = 8;
+        int maxLength = 50;
+
+        return password.length() >= minLength && password.length() <= maxLength;
     }
 
     /**

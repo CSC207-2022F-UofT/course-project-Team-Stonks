@@ -137,4 +137,23 @@ class RegisterPresenterTest {
 
     }
 
+    /**
+     * Testing Long Username
+     */
+    @Test
+    public void testLongPassword() {
+        // Building a long username that is 51 characters long
+        StringBuilder longPassword = new StringBuilder("a");
+        longPassword.append("a".repeat(50));
+        RegisterRequest request = new RegisterRequest(
+                "username",
+                longPassword.toString(),
+                longPassword.toString(),
+                Date.valueOf(LocalDate.now()));
+
+        RegisterResponse response = controller.signUpUser(request);
+        Assertions.assertEquals(response.userSignedUp(), RegisterError.PASSWORD_INVALID);
+
+    }
+
 }
