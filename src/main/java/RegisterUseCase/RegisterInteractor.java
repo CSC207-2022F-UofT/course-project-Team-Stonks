@@ -16,6 +16,14 @@ public class RegisterInteractor {
         userManager = EntityHolder.instance.getUserManager();
     }
 
+    /**
+     * @param username
+     * @param password
+     * @param passwordConfirm
+     * @param loginDate
+     * @return RegisterError type such that it can be a Username or Password error or no error
+     */
+
     public RegisterError signUpUser(String username, String password, String passwordConfirm, Date loginDate) {
         if (usernameInvalid(username)) {
             return RegisterError.USERNAME;
@@ -24,11 +32,12 @@ public class RegisterInteractor {
         }else if (!passwordMatch(password, passwordConfirm)) {
             return RegisterError.PASSWORD_NOT_MATCH;
         }
-
-        userManager.createUser(username, password, loginDate);
-
-        return RegisterError.NONE;
+        else {
+            userManager.createUser(username, password, loginDate);
+            return RegisterError.NONE;
+        }
     }
+
 
     private boolean usernameInvalid(String username) {
         return userManager.userExists(username) || username.equals("") || username.contains(" ");
