@@ -17,12 +17,12 @@ public class RegisterInteractor {
     }
 
     public RegisterError signUpUser(String username, String password, String passwordConfirm, Date loginDate) {
-        if (usernameValid(username)) {
+        if (usernameInvalid(username)) {
             return RegisterError.USERNAME;
-        }else if (passwordMatch(password, passwordConfirm)) {
-            return RegisterError.PASSWORD_NOT_MATCH;
         } else if (!passwordValid(password)) {
             return RegisterError.PASSWORD_INVALID;
+        }else if (!passwordMatch(password, passwordConfirm)) {
+            return RegisterError.PASSWORD_NOT_MATCH;
         }
 
         userManager.createUser(username, password, loginDate);
@@ -30,7 +30,7 @@ public class RegisterInteractor {
         return RegisterError.NONE;
     }
 
-    private boolean usernameValid(String username) {
+    private boolean usernameInvalid(String username) {
         return userManager.userExists(username) || username.equals("") || username.contains(" ");
     }
     private boolean passwordValid(String password) {

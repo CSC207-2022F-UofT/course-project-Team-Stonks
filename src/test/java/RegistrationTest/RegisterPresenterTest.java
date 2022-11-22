@@ -1,13 +1,9 @@
 package RegistrationTest;
 
-import LoginUseCase.UserLoginController;
-import LoginUseCase.UserLoginRequest;
-import LoginUseCase.UserLoginResponse;
 import RegisterUseCase.*;
 import db.UserDSRequest;
 import db.iEntityDBGateway;
 import entities.EntityHolder;
-import entities.User;
 import entities.UserManager;
 import main.OuterLayerFactory;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import java.sql.Date;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class RegisterPresenterTest {
 
@@ -39,10 +34,18 @@ class RegisterPresenterTest {
         }
     }
 
+    /**
+     * Inputs a correct combination with no issues to return RegisterError.NONE
+     */
     @Test
-    public void testLoginFalseUsername() {
+    public void testNoIssue() {
+        // make a random name
+        String username = "username" + (int)(Math.random() * 100000);
+        while (userManager.userExists(username)) { // creating a unique username that hasn't been used
+            username = "username" + (int)(Math.random() * 100000);
+        }
         RegisterRequest request = new RegisterRequest(
-                "userDoesn'tExist",
+                username,
                 "password",
                 "password",
                 Date.valueOf(LocalDate.now()));
@@ -50,24 +53,31 @@ class RegisterPresenterTest {
 
 
         RegisterResponse response = controller.signUpUser(request);
-        Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
-//        Assertions.assertNull(response.userSignedUp());
+        Assertions.assertEquals(response.userSignedUp(), RegisterError.NONE);
+
     }
 
+    /**
+     * Inputs invalid passwords to receive RegisterError.PASSWORD_INVALID
+     */
     @Test
-    public void testLoginFalsePassword() {
+    public void testShortPassword() {
         RegisterRequest request = new RegisterRequest(
                 "userDoesn'tExist",
-                "password",
-                "password",
+                "h1",
+                "h1",
                 Date.valueOf(LocalDate.now()));
 
         RegisterResponse response = controller.signUpUser(request);
-        Assertions.assertNull(response.userSignedUp());
+        Assertions.assertEquals(response.userSignedUp(), RegisterError.PASSWORD_INVALID);
     }
 
+
+    /**
+     * Inputs a username that is already taken
+     */
     @Test
-    public void testLoginUserExists() {
+    public void testUserExistsError() {
         RegisterRequest request = new RegisterRequest(
                 correctUsername,
                 correctPassword,
@@ -75,10 +85,24 @@ class RegisterPresenterTest {
                 Date.valueOf(LocalDate.now()));
 
         RegisterResponse response = controller.signUpUser(request);
+        Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
 
-//        User user = response.user();
-//        Assertions.assertEquals(user.getUsername(), correctUsername);
-//        Assertions.assertTrue(user.isPassword(correctPassword));
+    }
+
+    /**
+     * Inputs different passwords to receive RegisterError.PASSWORD_NOT_MATCH
+     */
+    @Test
+    public void testDifferentPasswordsError() {
+        RegisterRequest request = new RegisterRequest(
+                "RandomName",
+                "PasswordNotSame",
+                "PasswordIsSame",
+                Date.valueOf(LocalDate.now()));
+
+        RegisterResponse response = controller.signUpUser(request);
+        Assertions.assertEquals(response.userSignedUp(), RegisterError.PASSWORD_NOT_MATCH);
+
     }
 
 }
