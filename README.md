@@ -1,8 +1,6 @@
-# Project Template
+# Stock Market Simulation
 
-This is a template repository for CSC 207 projects. 
-This repository contains starter code for a gradle project.
-It also contains workflow documents that give instructions on how to manage your Github repository and how to use Github Projects for efficient collaboration.
+The Stockmarket Simulator is a program that allows a user to simulate the environment of stock investments. It allows a user to register an account and then have the options to buy/sell/watchlist a stock 
 
 ## Checklist For Your Project
 - [ ] Verify the correct settings for your project repository
