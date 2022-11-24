@@ -58,6 +58,5 @@ public class UserLoginPresenterTest {
         User user = response.user();
         Assertions.assertEquals(user.getUsername(), correctUsername);
         Assertions.assertTrue(user.isPassword(correctPassword));
-        Assertions.assertEquals(user.getLastLogin(), loginTime);
     }
 }
