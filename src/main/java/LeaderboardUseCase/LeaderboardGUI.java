@@ -4,11 +4,12 @@ import javax.swing.*;
 import entities.User;
 import java.util.ArrayList;
 
-public class LeaderboardGUI {
+public class LeaderboardGUI implements iLeaderboardGUI {
 
     JFrame frame = new JFrame("Storage");
     private JPanel panel1;
     JList<User> list = new JList<>();
+    private JButton backButton;
     DefaultListModel<User> model = new DefaultListModel<>();
 
     JLabel label = new JLabel();
@@ -29,8 +30,8 @@ public class LeaderboardGUI {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(LeaderboardGUI::new);
+    @Override
+    public void addBackAction(Runnable backAction) {
+        backButton.addActionListener(e -> backAction.run());
     }
-
 }

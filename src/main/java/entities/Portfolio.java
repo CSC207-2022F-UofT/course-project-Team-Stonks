@@ -123,7 +123,7 @@ public class Portfolio {
     public double getNetValue() {
         double total = 0;
         for (Stock stock : symbolToStock.values()) {
-            total += stock.getValue();
+            total += stock.getValue() * stock.getQuantity();
         }
         total += balance;
         return total;

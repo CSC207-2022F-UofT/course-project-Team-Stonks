@@ -8,8 +8,7 @@ import entities.User;
 import entities.Portfolio;
 
 public class LeaderboardUseCaseInteractor {
-
-    public static int indexMax(double[] arr) {
+    public int indexMax(double[] arr) {
         double maxNum = -1;
         int result = -1;
         for(int i=0; i < arr.length; i++) {
@@ -21,7 +20,7 @@ public class LeaderboardUseCaseInteractor {
         return result;
     }
 
-    public static Leaderboard updateLeaderboard() {
+    public Leaderboard updateLeaderboard() {
         ArrayList<User> listOfUsers = (ArrayList<User>) UserManager.instance.getAllUsers();
         double[] listOfVals =  new double[listOfUsers.size()];
         int i = 0;
