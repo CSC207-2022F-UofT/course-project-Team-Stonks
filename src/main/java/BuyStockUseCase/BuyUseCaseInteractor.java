@@ -35,10 +35,6 @@ public class BuyUseCaseInteractor {
 
         // Passes parameters to Portfolio, outputs results
         boolean result = port.addStock(symbol, price, buy_quantity);
-        if (result) {
-            return new BuyOutputResponse(true);
-        } else {
-            return new BuyOutputResponse(false);
-        }
+        return new BuyOutputResponse(result);
     }
 }
