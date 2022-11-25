@@ -1,6 +1,8 @@
 package SearchStockUseCase;
 
-import SearchStockUseCase.StockCreation.*;
+import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIRequest;
+import APIInterface.StockAPIResponse;
 import yahoofinance.histquotes.HistoricalQuote;
 
 import javax.swing.*;
@@ -8,12 +10,16 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
 public class SearchStockGUI extends JFrame{
-    private Stock stock;
+    private StockAPIResponse stock;
+    private String stockSymbol;
     private List<HistoricalQuote> histData;
     private JPanel mainPanel;
     private JLabel stockLabel;
@@ -32,15 +38,16 @@ public class SearchStockGUI extends JFrame{
     private JTable priceTable;
     private JScrollPane tableScrollPane;
 
-    SearchStockGUI(Stock searchStock){
-        this.stock = searchStock;
+    SearchStockGUI(StockAPIResponse stockResponse, String symbol) throws Exception {
+        this.stock = stockResponse;
+        this.stockSymbol = symbol;
         this.histData = stock.getHistData();
         curr_high.setText("High: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getHigh()));
         curr_low.setText("Low: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getLow()));
         double last_close = histData.get(histData.size() - 2).getClose().doubleValue();
-        up_down.setText("Up/Down: " + new DecimalFormat("0.00").format(stock.getValue() - last_close));
-        stockLabel.setText(stock.getSymbol());
-        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(stock.getValue()));
+        up_down.setText("Up/Down: " + new DecimalFormat("0.00").format(updatePrice() - last_close));
+        stockLabel.setText(this.stockSymbol);
+        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(updatePrice()));
         buyStockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,20 +64,20 @@ public class SearchStockGUI extends JFrame{
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateValues();
+//                updateValues();
             }
         });
+        String[][] data = new String[histData.size()][2];
+        int row = 0;
         for (HistoricalQuote q:histData) {
-            System.out.println(q);
+            data[row][0] = new SimpleDateFormat("dd/MM/yyyy").format(q.getDate().getTime());
+            data[row][1] = new DecimalFormat("0.00").format(q.getClose());
+            row++;
         }
         // Data to be displayed in the JTable
-        String[][] data = {
-                { "Kundan Kumar Jha", "4031", "CSE" },
-                { "Anand Jha", "6014", "IT" }
-        };
 
         // Column Names
-        String[] columnNames = { "Name", "Roll Number", "Department" };
+        String[] columnNames = { "Date", "Stock Price"};
 
         // Initializing the JTable
         priceTable.setModel(new DefaultTableModel(data,columnNames));
@@ -80,16 +87,26 @@ public class SearchStockGUI extends JFrame{
         this.pack();
         this.setVisible(true);
     }
-
-    private void updateValues() {
-        curr_high.setText("High: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getHigh()));
-        curr_low.setText("Low: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getLow()));
-        stockLabel.setText(stock.getSymbol());
+    public double updatePrice() throws Exception {
+        /* This function should only be called periodically every minute*/
+        StockAPIResponse stockAPIResponse;
         try {
-            currentPrice.setText("Current: " + new DecimalFormat("0.00").format(stock.updatePrice()));
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            stockAPIResponse = new StockAPIAccess().getPrice(new StockAPIRequest(this.stockSymbol));
+        } catch (IOException e) {
+            throw new Exception(String.format("Invalid stock Symbol %s", this.stockSymbol));
         }
+        return stockAPIResponse.getPrice();
     }
+
+//    private void updateValues() {
+//        curr_high.setText("High: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getHigh()));
+//        curr_low.setText("Low: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getLow()));
+//        stockLabel.setText(stock.getSymbol());
+//        try {
+//            currentPrice.setText("Current: " + new DecimalFormat("0.00").format(stock.updatePrice()));
+//        } catch (Exception ex) {
+//            throw new RuntimeException(ex);
+//        }
+//    }
 
 }

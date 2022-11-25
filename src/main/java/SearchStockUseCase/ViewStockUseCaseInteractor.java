@@ -1,21 +1,20 @@
 package SearchStockUseCase;
+import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIRequest;
+import APIInterface.StockAPIResponse;
 import LoginUseCase.UserLoginGUI;
 import SearchStockUseCase.StockCreation.*;
+import yahoofinance.histquotes.Interval;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 
 public class ViewStockUseCaseInteractor {
-    private final String stockSymbol;
-    public ViewStockUseCaseInteractor(String symbol) throws Exception {
-        this.stockSymbol = symbol;
-        Stock stock;
-        try{
-            stock = new StockFactory().createStock(symbol);
-        }catch(IOException e){
-            throw new IOException(String.format("Incorrect symbol: %s", symbol));
-        }
-        ViewStockPresenter viewStockPresenter = new ViewStockPresenter(stock);
+    public ViewStockUseCaseInteractor(String symbol, Calendar from, Interval stockPriceInterval) throws Exception {
+        //Calendar.getInstance().add(), Calendar.getInstance(), Interval
+        StockAPIResponse stockResponse = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, from, stockPriceInterval));
+        ViewStockPresenter viewStockPresenter = new ViewStockPresenter(stockResponse, symbol);
     }
 
 }
