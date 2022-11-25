@@ -12,10 +12,10 @@ public class SellInputRequest {
     private final String symbol;
     private final int quantity;
 
-    public SellInputRequest(Portfolio portfolio, String symbol) {
+    public SellInputRequest(Portfolio portfolio, String symbol, int quantity) {
         this.portfolio = portfolio;
         this.symbol = symbol;
-        this.quantity = portfolio.getStockQuantity(symbol);
+        this.quantity = quantity;
     }
     public Portfolio getPortfolio() {
         return portfolio;
