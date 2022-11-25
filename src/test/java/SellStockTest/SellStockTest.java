@@ -65,11 +65,8 @@ public class SellStockTest {
         double balance = portfolio.getBalance();
         SellInputRequest sell = new SellInputRequest(portfolio, symbol, 100);
         SellOutputResponse response = interactor.sellStock(sell);
-        Map<String, Stock> map = portfolio.getSymbolToStock();
         interactor.sellStock(sell);
-        Stock stock = map.get(symbol);
-        assert stock.getQuantity() == quantity;
         assert portfolio.getBalance() == balance;
-        assert Objects.equals(response.getMessage(), "Sale unsuccessful");
+        assert Objects.equals(response.getMessage(), "Sale unsuccessful!");
     }
 }
