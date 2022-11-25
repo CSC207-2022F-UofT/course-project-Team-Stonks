@@ -72,6 +72,10 @@ public class UserManager {
         dbGateway.addUser(new UserDSRequest(username, password, dateCreated));
     }
 
+    /**
+     * @param userDSResponse response from the database
+     * @return a user object from the response
+     */
     private User convertUserDSResponse(UserDSResponse userDSResponse) {
         if (userDSResponse == null) {
             return null;
@@ -84,7 +88,11 @@ public class UserManager {
                 userDSResponse.getPortfolios(),
                 dbGateway);
     }
-
+    
+    /**
+     * Getter for user
+     * @return the user that is currently logged in
+     */
     public User getUser() {
         return user;
     }
