@@ -36,8 +36,7 @@ public class UserPresenter {
         view.close();
         new PortfolioPresenter(
                 OuterLayerFactory.instance.getPortfolioGUI(
-                        portfolioName,
-                        user.getPortfolio(portfolioName).getBalance(), user.getUsername()),
+                        user.getCurPortfolio(), user.getUsername()),
                 user.getPortfolio(portfolioName));
     }
 
