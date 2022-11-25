@@ -67,6 +67,8 @@ public class SellStockTest {
         SellOutputResponse response = interactor.sellStock(sell);
         interactor.sellStock(sell);
         assert portfolio.getBalance() == balance;
-        assert Objects.equals(response.getMessage(), "Sale unsuccessful!");
+
+        assert Objects.equals(response.getMessage(), "Please enter a valid amount.");
+
     }
 }
