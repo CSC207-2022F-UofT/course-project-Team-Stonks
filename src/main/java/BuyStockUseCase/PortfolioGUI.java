@@ -23,6 +23,7 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
     private JComboBox<String> stockComboBox;
     private JButton searchButton;
     private JTextField searchField;
+    private JButton makeCompetitivePortfolioButton;
 
     public PortfolioGUI(Portfolio port, String username) {
         super();
@@ -50,16 +51,22 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
     }
 
     @Override
-    public void addBackAction(Runnable onLogin) {
-        backButton.addActionListener(e -> onLogin.run());
+    public void addBackAction(Runnable onBack) {
+        backButton.addActionListener(e -> onBack.run());
     }
     @Override
     public String getSearchField() {
         return this.searchField.getText();
     }
+    public void addMakeCompPortfolioAction(Runnable onMakeCompPortfolio) {
+        makeCompetitivePortfolioButton.addActionListener(e -> onMakeCompPortfolio.run());
+    }
     @Override
     public void close() {
         dispose();
+    }
+    public void removeCompPortfolioButton() {
+        portfolioPanel.remove(makeCompetitivePortfolioButton);
     }
 
     {
@@ -90,6 +97,9 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         backButton = new JButton();
         backButton.setText("Back");
         portfolioPanel.add(backButton, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_SOUTHEAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
+        makeCompetitivePortfolioButton = new JButton();
+        makeCompetitivePortfolioButton.setText("Make Competitive Portfolio");
+        portfolioPanel.add(makeCompetitivePortfolioButton, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
         portfolioPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

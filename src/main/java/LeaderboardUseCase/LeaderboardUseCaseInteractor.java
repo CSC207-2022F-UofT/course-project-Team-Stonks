@@ -1,5 +1,6 @@
 package LeaderboardUseCase;
 
+import java.sql.Date;
 import java.lang.reflect.Array;
 import java.util.List;
 import java.util.ArrayList;
@@ -34,19 +35,20 @@ public class LeaderboardUseCaseInteractor {
         }
         return maxNum;
     }
+
+    /**
+     * @return Top performing portfolio for each user
+     */
     public double[] topValues() {
         List<User> listOfUsers = UserManager.instance.getAllUsers();
         double[] listOfVals =  new double[listOfUsers.size()];
         int i = 0;
         for(User u : listOfUsers) {
-            ArrayList<String> portfolioNameList = new ArrayList<>(u.getPortfolioNames());
-            double[] portfolioValues = new double[u.getPortfolioNames().size()];
-            int j = 0;
-            for(String pName : portfolioNameList) {
-                portfolioValues[j] = u.getPortfolio(pName).getNetValue();
-                j += 1;
+            if(u.getCompPortfolio() == null) {
+                listOfVals[i] = 0;
+            } else {
+                listOfVals[i] = u.getCompPortfolio().getNetValue();
             }
-            listOfVals[i] = max(portfolioValues);
             i++;
         }
         return listOfVals;

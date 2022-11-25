@@ -20,20 +20,22 @@ public class PortfolioPresenter {
         this.view = view;
         this.portfolio = portfolio;
         this.user = user;
-    }
-    public void onMakeCompPortfolio() {
-        user.setCompPortfolio(portfolio.getName());
-        this.view.addBackAction(this::onBack);
-        this.view.addSearchAction(this::onSearch);
+        view.addBackAction(this::onBack);
+        view.addMakeCompPortfolioAction(this::onMakeCompPortfolio);
     }
     public void onBack() {
         view.close();
         new UserPresenter(OuterLayerFactory.instance.getUserGUI(user.getUsername(),
                 new ArrayList<>(user.getPortfolioNames()), user.getLastLogin()), user);
+
     }
     public void onSearch() {
         // TODO: CONNECT THE SEARCH FEATURE
         String symbol = view.getSearchField();
 
+    }
+    public void onMakeCompPortfolio() {
+        user.setCompPortfolio(portfolio.getName());
+        view.removeCompPortfolioButton();
     }
 }
