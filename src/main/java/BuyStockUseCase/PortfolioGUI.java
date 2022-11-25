@@ -3,38 +3,63 @@ package BuyStockUseCase;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import entities.Portfolio;
+import entities.Stock;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Locale;
+import java.util.Map;
 
 public class PortfolioGUI extends JFrame implements iPortfolioGUI {
+    private final Portfolio port;
     private JLabel portfolioName;
     private JPanel portfolioPanel;
     private JLabel balance;
-    private JButton back;
+    private JButton backButton;
     private JLabel username;
-    private JButton makeCompPortfolioButton;
+    private JComboBox<String> stockComboBox;
+    private JButton searchButton;
+    private JTextField searchField;
 
-
-    public PortfolioGUI(String portfolioName, double balance, String username) {
+    public PortfolioGUI(Portfolio port, String username) {
         super();
-
+        this.port = port;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(portfolioPanel);
         this.pack();
         this.setVisible(true);
-        this.portfolioName.setText(portfolioName);
-        this.balance.setText("Balance: $" + balance);
+        this.portfolioName.setText(port.getName());
+        this.balance.setText("Balance: $" + port.getBalance());
         this.username.setText("Logged in as: " + username);
 
+        Map<String, Stock> map = this.port.getSymbolToStock();
+        for (String str: map.keySet()) {
+            String str2 = str + ":" + map.get(str).getQuantity();
+            stockComboBox.addItem(str2);
+        }
     }
-    public void addMakeCompPortfolioAction(Runnable makeCompPortfolioAction) {
-        makeCompPortfolioButton.addActionListener(e -> makeCompPortfolioAction.run());
+
+
+
+    @Override
+    public void addSearchAction(Runnable onLogin) {
+        searchButton.addActionListener(e -> onLogin.run());
+    }
+
+    @Override
+    public void addBackAction(Runnable onLogin) {
+        backButton.addActionListener(e -> onLogin.run());
+    }
+    @Override
+    public String getSearchField() {
+        return this.searchField.getText();
+    }
+    @Override
+    public void close() {
+        dispose();
     }
 
     {
@@ -62,9 +87,9 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
             username.setFont(usernameFont);
         username.setText("Logged in as: ");
         portfolioPanel.add(username, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        back = new JButton();
-        back.setText("Back");
-        portfolioPanel.add(back, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_SOUTHEAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
+        backButton = new JButton();
+        backButton.setText("Back");
+        portfolioPanel.add(backButton, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_SOUTHEAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
         portfolioPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

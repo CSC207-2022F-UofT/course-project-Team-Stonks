@@ -1,9 +1,9 @@
 package main;
 
 import BuyStockUseCase.BuyStockGUI;
-import BuyStockUseCase.PortfolioGUI;
 import BuyStockUseCase.iBuyStockGUI;
 import BuyStockUseCase.iPortfolioGUI;
+import BuyStockUseCase.PortfolioGUI;
 import SellStockUseCase.SellStockGUI;
 import SellStockUseCase.iSellStockGUI;
 import LoginUseCase.UserLoginGUI;
@@ -18,6 +18,7 @@ import LeaderboardUseCase.iLeaderboardGUI;
 import LeaderboardUseCase.LeaderboardGUI;
 import db.EntitySQLGateway;
 import db.iEntityDBGateway;
+import entities.Portfolio;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -45,8 +46,8 @@ public class OuterLayerFactory {
 
     public iPortfolioCreationGUI getPortfolioCreationGUI() {return new PortfolioCreationGUI();}
 
-    public iPortfolioGUI getPortfolioGUI(String portfolioName, double balance, String username) {
-        return new PortfolioGUI(portfolioName, balance, username);
+    public iPortfolioGUI getPortfolioGUI(Portfolio port, String username) {
+        return new PortfolioGUI(port, username);
     }
 
     public iRegisterGUI getRegisterGUI() {
@@ -59,13 +60,7 @@ public class OuterLayerFactory {
     public iSellStockGUI getSellGUI(String symbol) {
         return new SellStockGUI(symbol);
     }
-    public iLeaderboardGUI getLeaderboardGUI() {
-        ArrayList<String> userList = new ArrayList<String>();
-        userList.add("John");
-        userList.add("Kevin");
-        userList.add("Bob");
-        userList.add("Bartholomew");
-        userList.add("Lisa");
-        return new LeaderboardGUI(userList);
+    public iLeaderboardGUI getLeaderboardGUI(List<String> topUsers) {
+        return new LeaderboardGUI(topUsers);
     }
 }

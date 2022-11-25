@@ -6,6 +6,7 @@ import entities.User;
 import main.OuterLayerFactory;
 import LeaderboardUseCase.LeaderboardPresenter;
 import LeaderboardUseCase.LeaderboardController;
+import java.util.List;
 
 public class UserPresenter {
     private final iUserGUI view;
@@ -40,9 +41,8 @@ public class UserPresenter {
         view.close();
         new PortfolioPresenter(
                 OuterLayerFactory.instance.getPortfolioGUI(
-                        portfolioName,
-                        user.getPortfolio(portfolioName).getBalance(), user.getUsername()),
-                user.getPortfolio(portfolioName), user);
+                        user.getPortfolio(portfolioName),
+                        user.getUsername()), user.getPortfolio(portfolioName), user);
     }
 
     private void onCreatePortfolio() {
@@ -51,6 +51,7 @@ public class UserPresenter {
     }
     private void onGoToLeaderboard() {
         view.close();
-        new LeaderboardPresenter(OuterLayerFactory.instance.getLeaderboardGUI(), user);
+        List<String> topUsers = lController.currLeaderboard().toStringList();
+        new LeaderboardPresenter(OuterLayerFactory.instance.getLeaderboardGUI(topUsers), user);
     }
 }

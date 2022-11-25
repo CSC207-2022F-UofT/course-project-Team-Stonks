@@ -1,5 +1,11 @@
 package BuyStockUseCase;
 
 public interface iPortfolioGUI {
-    void addMakeCompPortfolioAction(Runnable makeCompPortfolioAction);
+    void addSearchAction(Runnable onLogin);
+
+    void addBackAction(Runnable onLogin);
+
+    String getSearchField();
+    void close();
+
 }

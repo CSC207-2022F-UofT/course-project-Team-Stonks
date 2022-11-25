@@ -1,5 +1,6 @@
 package LeaderboardUseCase;
 
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.ArrayList;
 import entities.Leaderboard;
@@ -11,8 +12,8 @@ public class LeaderboardUseCaseInteractor {
 
     public LeaderboardUseCaseInteractor() {}
     public int indexMax(double[] arr) {
-        double maxNum = -1;
-        int result = -1;
+        double maxNum = -2;
+        int result = -3;
         for(int i=0; i < arr.length; i++) {
             if(arr[i] > maxNum) {
                 result = i;
@@ -21,21 +22,44 @@ public class LeaderboardUseCaseInteractor {
         }
         return result;
     }
-
-    public Leaderboard updateLeaderboard() {
-        ArrayList<User> listOfUsers = (ArrayList<User>) UserManager.instance.getAllUsers();
+    public double max(double[] arr) {
+        if (arr.length == 0) {
+            return 0;
+        }
+        double maxNum = arr[0];
+        for(double num : arr) {
+            if(num > maxNum) {
+                maxNum = num;
+            }
+        }
+        return maxNum;
+    }
+    public double[] topValues() {
+        List<User> listOfUsers = UserManager.instance.getAllUsers();
         double[] listOfVals =  new double[listOfUsers.size()];
         int i = 0;
         for(User u : listOfUsers) {
-            Portfolio compPortfolio = u.getCompPortfolio();
-            listOfVals[i] = compPortfolio.getNetValue();
+            ArrayList<String> portfolioNameList = new ArrayList<>(u.getPortfolioNames());
+            double[] portfolioValues = new double[u.getPortfolioNames().size()];
+            int j = 0;
+            for(String pName : portfolioNameList) {
+                portfolioValues[j] = u.getPortfolio(pName).getNetValue();
+                j += 1;
+            }
+            listOfVals[i] = max(portfolioValues);
             i++;
         }
-        ArrayList<User> resultList = new ArrayList<User>();
+        return listOfVals;
+    }
+
+    public Leaderboard updateLeaderboard() {
+        double[] listOfVals = topValues();
+        List<User> listOfUsers = UserManager.instance.getAllUsers();
+        List<User> resultList = new ArrayList<User>();
         for(int j = 0; j < Leaderboard.SIZE; j++) {
             int indexOfMax = indexMax(listOfVals);
             resultList.add(listOfUsers.get(indexOfMax));
-            listOfVals[indexOfMax] = -1;
+            listOfVals[indexOfMax] = -5;
         }
         return new Leaderboard(resultList);
     }

@@ -16,15 +16,16 @@ import java.time.LocalDate;
 class RegisterPresenterTest {
 
     private static RegisterController controller;
-    private static UserManager userManager;
     private static final String correctUsername = "database";
     private static final String correctPassword = "password";
     private static final String correctPasswordConfirm = "password";
 
     @BeforeAll
     public static void setUp() {
+        RegisterInteractor registerInteractor = new RegisterInteractor();
+        registerInteractor.signUpUser(correctUsername, correctPassword, correctPassword, Date.valueOf(LocalDate.now()));
         controller = new RegisterController();
-        userManager = UserManager.instance;
+        UserManager userManager = UserManager.instance;
         iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
 
         if (!userManager.userExists(correctUsername)) {
@@ -39,9 +40,10 @@ class RegisterPresenterTest {
     public void testNoIssue() {
         // make a random name
         String username = "username" + (int)(Math.random() * 100000);
-        while (userManager.userExists(username)) { // creating a unique username that hasn't been used
+        while (UserManager.instance.userExists(username) ) {
             username = "username" + (int)(Math.random() * 100000);
         }
+
         RegisterRequest request = new RegisterRequest(
                 username,
                 "password",
