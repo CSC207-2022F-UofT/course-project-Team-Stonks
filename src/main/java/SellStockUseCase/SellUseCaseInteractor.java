@@ -11,7 +11,7 @@ public class SellUseCaseInteractor {
      * This method is used to sell stocks from a portfolio
      * @param sell The request object containing the portfolio, symbol, and quantity
      * @return The response object containing the portfolio, symbol, quantity, and price
-     * @throws IOException
+     * @throws IOException when there's a connection problem with the API
      */
 
     public SellOutputResponse sellStock(SellInputRequest sell) throws IOException {
