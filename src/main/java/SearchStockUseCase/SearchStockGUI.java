@@ -4,22 +4,24 @@ import APIInterface.StockAPIAccess;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
 import yahoofinance.histquotes.HistoricalQuote;
-
+import yahoofinance.histquotes.Interval;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 
 public class SearchStockGUI extends JFrame{
     private StockAPIResponse stock;
-    private String stockSymbol;
+    private Calendar from = Calendar.getInstance();
+    private Interval stockPriceInterval = Interval.DAILY;
+    private final String stockSymbol;
     private List<HistoricalQuote> histData;
     private JPanel mainPanel;
     private JLabel stockLabel;
@@ -38,16 +40,28 @@ public class SearchStockGUI extends JFrame{
     private JTable priceTable;
     private JScrollPane tableScrollPane;
 
-    SearchStockGUI(StockAPIResponse stockResponse, String symbol) throws Exception {
-        this.stock = stockResponse;
+    SearchStockGUI(String symbol) throws Exception {
+        priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
+
+        this.from.add(Calendar.DATE, -7); //Date of the last 7 days
+        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
         this.stockSymbol = symbol;
         this.histData = stock.getHistData();
-        curr_high.setText("High: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getHigh()));
-        curr_low.setText("Low: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getLow()));
-        double last_close = histData.get(histData.size() - 2).getClose().doubleValue();
+
+        //Setting up labels
+        HistoricalQuote latestValues = histData.get(histData.size() - 1);
+        curr_high.setText("High: " +  new DecimalFormat("0.00").format(latestValues.getHigh()));
+        curr_low.setText("Low: " +  new DecimalFormat("0.00").format(latestValues.getLow()));
+        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stock.getPrice()));
+
+        HistoricalQuote previousDayValues = histData.get(histData.size() - 1);
+        double last_close = previousDayValues.getClose().doubleValue();
         up_down.setText("Up/Down: " + new DecimalFormat("0.00").format(updatePrice() - last_close));
+
         stockLabel.setText(this.stockSymbol);
-        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(updatePrice()));
+
+
+        //Setting up Buttons
         buyStockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,12 +73,15 @@ public class SearchStockGUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(sellStockButton, "Sell Stock");
             }
-        }
-        );
+        });
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                updateValues();
+                try {
+                    updateValues();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         String[][] data = new String[histData.size()][2];
@@ -98,15 +115,17 @@ public class SearchStockGUI extends JFrame{
         return stockAPIResponse.getPrice();
     }
 
-//    private void updateValues() {
-//        curr_high.setText("High: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getHigh()));
-//        curr_low.setText("Low: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getLow()));
-//        stockLabel.setText(stock.getSymbol());
-//        try {
-//            currentPrice.setText("Current: " + new DecimalFormat("0.00").format(stock.updatePrice()));
-//        } catch (Exception ex) {
-//            throw new RuntimeException(ex);
-//        }
-//    }
+    private void updateValues() throws IOException {
+        //Getting updated values from API
+        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
+        this.histData = this.stock.getHistData();
+
+        //Setting up labels
+        HistoricalQuote latestValues = histData.get(histData.size() - 1);
+        curr_high.setText("High: " +  new DecimalFormat("0.00").format(latestValues.getHigh()));
+        curr_low.setText("Low: " +  new DecimalFormat("0.00").format(latestValues.getLow()));
+        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stock.getPrice()));
+
+    }
 
 }
