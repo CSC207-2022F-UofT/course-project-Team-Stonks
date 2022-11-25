@@ -4,15 +4,17 @@ import SearchStockUseCase.StockCreation.*;
 import yahoofinance.histquotes.HistoricalQuote;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
 
+
 public class SearchStockGUI extends JFrame{
-    final private Stock stock;
-    final private List<HistoricalQuote> histData;
+    private Stock stock;
+    private List<HistoricalQuote> histData;
     private JPanel mainPanel;
     private JLabel stockLabel;
     private JButton buyStockButton;
@@ -21,17 +23,18 @@ public class SearchStockGUI extends JFrame{
     private JButton todayButton;
     private JButton weekButton;
     private JButton yearButton;
-    private JPanel plot;
     private JPanel infoPanel;
     private JLabel currentPrice;
     private JLabel up_down;
     private JLabel curr_high;
     private JLabel curr_low;
     private JButton refreshButton;
+    private JTable priceTable;
+    private JScrollPane tableScrollPane;
 
     SearchStockGUI(Stock searchStock){
         this.stock = searchStock;
-        histData = stock.getHistData();
+        this.histData = stock.getHistData();
         curr_high.setText("High: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getHigh()));
         curr_low.setText("Low: " +  new DecimalFormat("0.00").format(histData.get(histData.size() - 1).getLow()));
         double last_close = histData.get(histData.size() - 2).getClose().doubleValue();
@@ -57,6 +60,21 @@ public class SearchStockGUI extends JFrame{
                 updateValues();
             }
         });
+        for (HistoricalQuote q:histData) {
+            System.out.println(q);
+        }
+        // Data to be displayed in the JTable
+        String[][] data = {
+                { "Kundan Kumar Jha", "4031", "CSE" },
+                { "Anand Jha", "6014", "IT" }
+        };
+
+        // Column Names
+        String[] columnNames = { "Name", "Roll Number", "Department" };
+
+        // Initializing the JTable
+        priceTable.setModel(new DefaultTableModel(data,columnNames));
+
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
