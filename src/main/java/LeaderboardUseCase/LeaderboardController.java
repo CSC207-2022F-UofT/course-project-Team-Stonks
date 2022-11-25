@@ -5,4 +5,7 @@ public class LeaderboardController {
     public LeaderboardController() {
         interactor = new LeaderboardUseCaseInteractor();
     }
+    public LeaderboardResponse currLeaderboard() {
+        return new LeaderboardResponse(interactor.updateLeaderboard());
+    }
 }

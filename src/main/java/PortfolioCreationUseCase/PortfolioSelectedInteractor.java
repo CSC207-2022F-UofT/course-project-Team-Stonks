@@ -32,4 +32,7 @@ public class PortfolioSelectedInteractor {
         user.setCurPortfolio(portfolioName);
         user.getCurPortfolio().pullStocks(stocks);
     }
+    public void makeCompPortfolio(User user, String portfolioName) {
+        user.setCompPortfolio(portfolioName);
+    }
 }

@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Locale;
 
 public class PortfolioGUI extends JFrame implements iPortfolioGUI {
@@ -16,6 +18,8 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
     private JLabel balance;
     private JButton back;
     private JLabel username;
+    private JButton makeCompPortfolioButton;
+
 
     public PortfolioGUI(String portfolioName, double balance, String username) {
         super();
@@ -27,6 +31,10 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         this.portfolioName.setText(portfolioName);
         this.balance.setText("Balance: $" + balance);
         this.username.setText("Logged in as: " + username);
+
+    }
+    public void addMakeCompPortfolioAction(Runnable makeCompPortfolioAction) {
+        makeCompPortfolioButton.addActionListener(e -> makeCompPortfolioAction.run());
     }
 
     {

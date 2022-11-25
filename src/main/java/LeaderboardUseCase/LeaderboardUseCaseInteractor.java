@@ -8,6 +8,8 @@ import entities.User;
 import entities.Portfolio;
 
 public class LeaderboardUseCaseInteractor {
+
+    public LeaderboardUseCaseInteractor() {}
     public int indexMax(double[] arr) {
         double maxNum = -1;
         int result = -1;

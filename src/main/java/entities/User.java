@@ -43,7 +43,6 @@ public class User {
     public Set<String> getPortfolioNames() {
         return nameToPortfolio.keySet();
     }
-
     public Date getLastLogin() {
         return lastLogin;
     }

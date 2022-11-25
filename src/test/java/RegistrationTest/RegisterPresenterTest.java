@@ -3,7 +3,6 @@ package RegistrationTest;
 import RegisterUseCase.*;
 import db.UserDSRequest;
 import db.iEntityDBGateway;
-import entities.EntityHolder;
 import entities.UserManager;
 import main.OuterLayerFactory;
 import org.junit.jupiter.api.Assertions;
@@ -25,7 +24,7 @@ class RegisterPresenterTest {
     @BeforeAll
     public static void setUp() {
         controller = new RegisterController();
-        userManager = EntityHolder.instance.getUserManager();
+        userManager = UserManager.instance;
         iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
 
         if (!userManager.userExists(correctUsername)) {

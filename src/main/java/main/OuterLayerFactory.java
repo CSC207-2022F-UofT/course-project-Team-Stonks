@@ -14,10 +14,13 @@ import PortfolioCreationUseCase.PortfolioCreationGUI;
 import PortfolioCreationUseCase.iPortfolioCreationGUI;
 import RegisterUseCase.RegistrationPage;
 import RegisterUseCase.iRegisterGUI;
+import LeaderboardUseCase.iLeaderboardGUI;
+import LeaderboardUseCase.LeaderboardGUI;
 import db.EntitySQLGateway;
 import db.iEntityDBGateway;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OuterLayerFactory {
@@ -55,5 +58,14 @@ public class OuterLayerFactory {
     }
     public iSellStockGUI getSellGUI(String symbol) {
         return new SellStockGUI(symbol);
+    }
+    public iLeaderboardGUI getLeaderboardGUI() {
+        ArrayList<String> userList = new ArrayList<String>();
+        userList.add("John");
+        userList.add("Kevin");
+        userList.add("Bob");
+        userList.add("Bartholomew");
+        userList.add("Lisa");
+        return new LeaderboardGUI(userList);
     }
 }
