@@ -1,6 +1,33 @@
-# Stock Market Simulation
+# Group Members:
+- Inaam (Inaam2)
+- Noel 
+- Elad
+- Hoa
+- Elliot
+- Rohan
+- Ben
+- Jack
+
+## Stock Market Simulation
 
 The Stockmarket Simulator is a program that allows a user to simulate the environment of stock investments. It allows a user to register an account and then have the options to buy/sell/watchlist a stock and naturally develop multiple portfolios and an interest in the investment world!
+
+## Entities
+
+(TODO)
+
+## Use Cases
+
+(TODO)
+
+## Controllers
+(TODO)
+
+## GUI
+(TODO)
+
+
+(TODO)
 
 ## How to install 
 - [ ] Verify the correct settings for your project repository
