@@ -16,7 +16,9 @@ public class SearchStockInteractorTest {
         interactor = new ViewStockUseCaseInteractor();
     }
 
-
+    /**
+     * Inputs invalid symbol to receive an Exception
+     */
     @Test
     public void incorrectSymbol() {
         try {
@@ -27,10 +29,4 @@ public class SearchStockInteractorTest {
         }
     }
 
-    @Test
-    public void correctSymbol() throws Exception {
-        boolean isValid = interactor.searchStock(correctSymbol);
-        assert isValid;
-
-    }
 }
