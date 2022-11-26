@@ -1,8 +1,8 @@
 # Stock Market Simulation
 
-The Stockmarket Simulator is a program that allows a user to simulate the environment of stock investments. It allows a user to register an account and then have the options to buy/sell/watchlist a stock 
+The Stockmarket Simulator is a program that allows a user to simulate the environment of stock investments. It allows a user to register an account and then have the options to buy/sell/watchlist a stock and naturally develop multiple portfolios and an interest in the investment world!
 
-## Checklist For Your Project
+## How to install 
 - [ ] Verify the correct settings for your project repository
 - [ ] Set up Github Projects
 - [ ] Create the implementation plan using issues and Github Projects
