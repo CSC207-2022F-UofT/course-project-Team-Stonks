@@ -17,7 +17,6 @@ public class SearchStockInteractorTest {
     }
 
 
-
     @Test
     public void incorrectSymbol() {
         try {
@@ -29,12 +28,9 @@ public class SearchStockInteractorTest {
     }
 
     @Test
-    public void correctSymbol() {
-        try {
-            boolean isValid = interactor.searchStock(correctSymbol);
-            assert isValid;
-        } catch (Exception e) {
-            assert false;
-        }
+    public void correctSymbol() throws Exception {
+        boolean isValid = interactor.searchStock(correctSymbol);
+        assert isValid;
+
     }
 }
