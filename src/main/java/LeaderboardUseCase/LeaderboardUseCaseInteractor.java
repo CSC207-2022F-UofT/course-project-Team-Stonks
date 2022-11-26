@@ -12,6 +12,11 @@ import entities.Portfolio;
 public class LeaderboardUseCaseInteractor {
 
     public LeaderboardUseCaseInteractor() {}
+
+    /**
+     * @param arr an array of doubles
+     * @return the index of the maximum value in the array
+     */
     public int indexMax(double[] arr) {
         double maxNum = -2;
         int result = -3;
@@ -23,6 +28,11 @@ public class LeaderboardUseCaseInteractor {
         }
         return result;
     }
+
+    /**
+     * @param arr an array of doubles
+     * @return the maximum value of the doubles in arr
+     */
     public double max(double[] arr) {
         if (arr.length == 0) {
             return 0;
@@ -37,7 +47,8 @@ public class LeaderboardUseCaseInteractor {
     }
 
     /**
-     * @return Top performing portfolio for each user
+     * @return an array of doubles, with the doubles representing the values of each of the users' competitive
+     * portfolio values. The order of the array corresponds to the order of the listOfUsers from the getAllUsers call
      */
     public double[] topValues() {
         List<User> listOfUsers = UserManager.instance.getAllUsers();
@@ -54,6 +65,9 @@ public class LeaderboardUseCaseInteractor {
         return listOfVals;
     }
 
+    /**
+     * @return a Leaderboard object with the top users according to the current value of their competitive portfolios
+     */
     public Leaderboard updateLeaderboard() {
         double[] listOfVals = topValues();
         List<User> listOfUsers = UserManager.instance.getAllUsers();

@@ -12,6 +12,11 @@ public class LeaderboardResponse {
     public LeaderboardResponse(Leaderboard board) {
         this.board = board;
     }
+
+    /**
+     * @return a representation of the LeaderboardResponse in the form of a List of Strings, with the Strings
+     * representing the names of the top users, in order of position on the board
+     */
     public List<String> toStringList() {
         List<String> result = new ArrayList<String>();
         int position = 1;

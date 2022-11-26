@@ -32,7 +32,6 @@ public class PortfolioPresenter {
     public void onSearch() {
         // TODO: CONNECT THE SEARCH FEATURE
         String symbol = view.getSearchField();
-
     }
     public void onMakeCompPortfolio() {
         user.setCompPortfolio(portfolio.getName());
