@@ -11,7 +11,7 @@ import java.util.Calendar;
 public class ViewStockController {
     ViewStockController(String symbol) throws Exception {
         ViewStockUseCaseInteractor vsuci = new ViewStockUseCaseInteractor();
-        vsuci.searchStock(symbol);
+        boolean isValid = vsuci.searchStock(symbol);
     }
 
 }

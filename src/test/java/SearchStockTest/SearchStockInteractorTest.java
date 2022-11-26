@@ -16,14 +16,13 @@ public class SearchStockInteractorTest {
         interactor = new ViewStockUseCaseInteractor();
     }
 
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
+
 
     @Test
     public void incorrectSymbol() {
         try {
-            interactor.searchStock(incorrectSymbol);
-            assert false;
+            boolean isValid = interactor.searchStock(incorrectSymbol);
+            assert !isValid;
         } catch (Exception e) {
             assert true;
         }
@@ -32,12 +31,10 @@ public class SearchStockInteractorTest {
     @Test
     public void correctSymbol() {
         try {
-            interactor.searchStock(correctSymbol);
-            assert true;
+            boolean isValid = interactor.searchStock(correctSymbol);
+            assert isValid;
         } catch (Exception e) {
             assert false;
         }
-
-
     }
 }

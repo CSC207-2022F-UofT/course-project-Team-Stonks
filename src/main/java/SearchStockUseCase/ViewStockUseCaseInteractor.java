@@ -9,9 +9,10 @@ import java.util.Calendar;
 
 
 public class ViewStockUseCaseInteractor {
-    public void searchStock(String symbol) throws Exception {
+    public boolean searchStock(String symbol) throws Exception {
         StockAPIResponse stockResponse = new StockAPIAccess().getPrice(new StockAPIRequest(symbol));
         ViewStockPresenter viewStockPresenter = new ViewStockPresenter(symbol);
+        return true;
     }
 
 }
