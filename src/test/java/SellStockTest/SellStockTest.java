@@ -25,6 +25,8 @@ public class SellStockTest {
     private static Portfolio portfolio;
     private static final String symbol = "AAPL";
     private static final int quantity = 10;
+    private static final int sellQuant = 4;
+    private static final int invalidQuant = 100;
 
     @BeforeAll
     public static void SetUp() throws IOException {
@@ -52,18 +54,18 @@ public class SellStockTest {
     @Test
     public void testSellStock() throws IOException {
         double balance = portfolio.getBalance();
-        SellInputRequest sell = new SellInputRequest(portfolio, symbol, 4);
+        SellInputRequest sell = new SellInputRequest(portfolio, symbol, sellQuant);
         Map<String, Stock> map = portfolio.getSymbolToStock();
         interactor.sellStock(sell);
         Stock stock = map.get(symbol);
-        assert stock.getQuantity() == quantity - 4;
-        assert portfolio.getBalance() == balance + 4 * stock.getValue();
+        assert stock.getQuantity() == quantity - sellQuant;
+        assert portfolio.getBalance() == balance + sellQuant * stock.getValue();
     }
 
     @Test
     public void testInvalidSellStock() throws IOException {
         double balance = portfolio.getBalance();
-        SellInputRequest sell = new SellInputRequest(portfolio, symbol, 100);
+        SellInputRequest sell = new SellInputRequest(portfolio, symbol, invalidQuant);
         SellOutputResponse response = interactor.sellStock(sell);
         interactor.sellStock(sell);
         assert portfolio.getBalance() == balance;
