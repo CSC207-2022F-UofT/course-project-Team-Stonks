@@ -16,6 +16,7 @@ import RegisterUseCase.RegistrationPage;
 import RegisterUseCase.iRegisterGUI;
 import db.EntitySQLGateway;
 import db.iEntityDBGateway;
+import entities.Portfolio;
 
 import java.sql.Date;
 import java.util.List;
@@ -42,8 +43,8 @@ public class OuterLayerFactory {
 
     public iPortfolioCreationGUI getPortfolioCreationGUI() {return new PortfolioCreationGUI();}
 
-    public iPortfolioGUI getPortfolioGUI(String portfolioName, double balance, String username) {
-        return new PortfolioGUI(portfolioName, balance, username);
+    public iPortfolioGUI getPortfolioGUI(Portfolio port, String username) {
+        return new PortfolioGUI(port, username);
     }
 
     public iRegisterGUI getRegisterGUI() {
