@@ -9,7 +9,6 @@ import org.junit.rules.ExpectedException;
 public class SearchStockInteractorTest {
     private static ViewStockUseCaseInteractor interactor;
     private static final String incorrectSymbol = "incorrectSymbol";
-    private static final String correctSymbol = "TSLA";
 
     @BeforeAll
     public static void setUp() {
