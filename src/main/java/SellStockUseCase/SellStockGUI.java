@@ -105,8 +105,7 @@ public class SellStockGUI extends JFrame implements iSellStockGUI {
         SellStockPanel.add(backButton, new GridConstraints(3, 2, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         Font label2Font = this.$$$getFont$$$(null, Font.BOLD, 26, label2.getFont());
-        if (label2Font != null)
-            label2.setFont(label2Font);
+        if (label2Font != null) label2.setFont(label2Font);
         label2.setText("Sell Stock");
         SellStockPanel.add(label2, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         symbol = new JLabel();
@@ -118,8 +117,7 @@ public class SellStockGUI extends JFrame implements iSellStockGUI {
      * @noinspection ALL
      */
     private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null)
-            return null;
+        if (currentFont == null) return null;
         String resultName;
         if (fontName == null) {
             resultName = currentFont.getName();
@@ -144,3 +142,5 @@ public class SellStockGUI extends JFrame implements iSellStockGUI {
         return SellStockPanel;
     }
 }
+
+
