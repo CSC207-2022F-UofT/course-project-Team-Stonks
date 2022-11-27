@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BuyStockGUI extends JFrame implements iBuyStockGUI {
+    /**
+     * GUI where the user can purchase stocks
+     */
     private JButton buyButton;
     private JTextField quantityField;
     private JLabel buyStockLabel;

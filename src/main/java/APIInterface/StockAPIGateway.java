@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StockAPIAccess implements StockDatabaseAccess{
+public class StockAPIGateway implements iStockDatabaseGateway{
 
     /**
      * @param req StockAPIRequest containing a String representing the symbol of the stock to be searched

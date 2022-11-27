@@ -1,5 +1,5 @@
 package SellStockUseCase;
-import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
 import entities.Portfolio;
@@ -11,7 +11,7 @@ public class SellUseCaseInteractor {
      * This method is used to sell stocks from a portfolio
      * @param sell The request object containing the portfolio, symbol, and quantity
      * @return The response object containing the portfolio, symbol, quantity, and price
-     * @throws IOException
+     * @throws IOException when there is a connection issue with the API
      */
 
     public SellOutputResponse sellStock(SellInputRequest sell) throws IOException {
@@ -20,7 +20,7 @@ public class SellUseCaseInteractor {
         String username = portfolio.getUsername();
         int quantity = sell.getQuantity();
         boolean possible = portfolio.sellStock(symbol, quantity, username);
-        StockAPIAccess stockAPIAccess = new StockAPIAccess();
+        StockAPIGateway stockAPIAccess = new StockAPIGateway();
         StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
         StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
         if(possible){

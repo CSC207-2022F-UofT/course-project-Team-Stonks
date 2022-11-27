@@ -1,17 +1,15 @@
 package BuyStockUseCase;
 
-import PortfolioCreationUseCase.PortfolioSelectedRequest;
 import PortfolioCreationUseCase.UserPresenter;
-import PortfolioCreationUseCase.iUserGUI;
 import entities.Portfolio;
 import entities.User;
-import PortfolioCreationUseCase.UserGUI;
 import main.OuterLayerFactory;
-import PortfolioCreationUseCase.PortfolioSelectedController;
-import entities.User;
 import java.util.ArrayList;
 
 public class PortfolioPresenter {
+    /**
+     * Presenter for the portfolio GUI
+     */
     private final iPortfolioGUI view;
     private final Portfolio portfolio;
     private final User user;

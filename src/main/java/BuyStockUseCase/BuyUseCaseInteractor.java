@@ -1,6 +1,6 @@
 package BuyStockUseCase;
 
-import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
 import entities.Portfolio;
@@ -29,7 +29,7 @@ public class BuyUseCaseInteractor {
         }
 
         // Accesses stock price from API
-        StockAPIAccess access = new StockAPIAccess();
+        StockAPIGateway access = new StockAPIGateway();
         StockAPIResponse res = access.getPrice(new StockAPIRequest(symbol));
         double price = res.getPrice();
 

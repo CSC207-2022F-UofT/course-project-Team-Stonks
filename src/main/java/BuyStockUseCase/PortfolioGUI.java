@@ -14,6 +14,9 @@ import java.util.Locale;
 import java.util.Map;
 
 public class PortfolioGUI extends JFrame implements iPortfolioGUI {
+    /**
+     * GUI where the user can view their portfolio information
+     */
     private final Portfolio port;
     private JLabel portfolioName;
     private JPanel portfolioPanel;
@@ -28,12 +31,15 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
 
     public PortfolioGUI(Portfolio port, String username, boolean isComp) {
         super();
+        /**
+         * GUI where the user can view their portfolio information
+         */
         this.port = port;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(portfolioPanel);
         this.pack();
         this.setVisible(true);
-        this.portfolioName.setText(port.getName());
+        this.portfolioName.setText(this.port.getName());
         this.netValue.setText("Net Value: $" + port.getNetValue());
         this.balance.setText("Balance: $" + port.getBalance());
         this.username.setText("Logged in as: " + username);
@@ -43,7 +49,7 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
             portfolioPanel.remove(makeCompetitivePortfolioButton);
         }
 
-        Map<String, Stock> map = this.port.getSymbolToStock();
+        Map<String, Stock> map = port.getSymbolToStock();
         for (String str : map.keySet()) {
             String str2 = str + ":" + map.get(str).getQuantity();
             stockComboBox.addItem(str2);
@@ -66,6 +72,7 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         return this.searchField.getText();
     }
 
+    @Override
     public void addMakeCompPortfolioAction(Runnable onMakeCompPortfolio) {
         makeCompetitivePortfolioButton.addActionListener(e -> onMakeCompPortfolio.run());
     }
@@ -75,6 +82,7 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         dispose();
     }
 
+    @Override
     public void removeCompPortfolioButton() {
         portfolioPanel.remove(makeCompetitivePortfolioButton);
         addCompText();
