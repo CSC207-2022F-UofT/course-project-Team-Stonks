@@ -4,16 +4,18 @@ import BuyStockUseCase.BuyStockGUI;
 import BuyStockUseCase.PortfolioGUI;
 import BuyStockUseCase.iBuyStockGUI;
 import BuyStockUseCase.iPortfolioGUI;
-import SellStockUseCase.SellStockGUI;
-import SellStockUseCase.iSellStockGUI;
+import LeaderboardUseCase.LeaderboardGUI;
+import LeaderboardUseCase.iLeaderboardGUI;
 import LoginUseCase.UserLoginGUI;
 import LoginUseCase.iUserLoginGUI;
-import PortfolioCreationUseCase.UserGUI;
-import PortfolioCreationUseCase.iUserGUI;
 import PortfolioCreationUseCase.PortfolioCreationGUI;
+import PortfolioCreationUseCase.UserGUI;
 import PortfolioCreationUseCase.iPortfolioCreationGUI;
+import PortfolioCreationUseCase.iUserGUI;
 import RegisterUseCase.RegistrationPage;
 import RegisterUseCase.iRegisterGUI;
+import SellStockUseCase.SellStockGUI;
+import SellStockUseCase.iSellStockGUI;
 import db.EntitySQLGateway;
 import db.iEntityDBGateway;
 import entities.Portfolio;
@@ -23,14 +25,9 @@ import java.util.List;
 
 public class OuterLayerFactory {
     public static final OuterLayerFactory instance = new OuterLayerFactory();
-    private final iEntityDBGateway entityDBGateway;
-
-    public OuterLayerFactory() {
-        entityDBGateway = new EntitySQLGateway();
-    }
 
     public iEntityDBGateway getEntityDSGateway() {
-        return entityDBGateway;
+        return new EntitySQLGateway();
     }
 
     public iUserLoginGUI getUserLoginGUI() {
@@ -43,8 +40,8 @@ public class OuterLayerFactory {
 
     public iPortfolioCreationGUI getPortfolioCreationGUI() {return new PortfolioCreationGUI();}
 
-    public iPortfolioGUI getPortfolioGUI(Portfolio port, String username) {
-        return new PortfolioGUI(port, username);
+    public iPortfolioGUI getPortfolioGUI(Portfolio port, String username, boolean isComp) {
+        return new PortfolioGUI(port, username, isComp);
     }
 
     public iRegisterGUI getRegisterGUI() {
@@ -56,5 +53,8 @@ public class OuterLayerFactory {
     }
     public iSellStockGUI getSellGUI(String symbol) {
         return new SellStockGUI(symbol);
+    }
+    public iLeaderboardGUI getLeaderboardGUI(List<String> topUsers) {
+        return new LeaderboardGUI(topUsers);
     }
 }
