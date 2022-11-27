@@ -24,7 +24,7 @@ public class LeaderboardResponse {
         double[] topValues = interactor.topValues();
         for(User u : board.getTopUsers()) {
 
-            result.add(position + ". " + u.getUsername() + ":             $"+topValues[position-1]);
+            result.add(position + ". " + u.getUsername() + ":" + " " + new String(new char[(100-u.getUsername().length())]).replace("\0", "-") + "$"+topValues[position-1]);
             position++;
         }
         return result;

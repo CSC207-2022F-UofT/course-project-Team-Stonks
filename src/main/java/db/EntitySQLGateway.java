@@ -135,7 +135,6 @@ public class EntitySQLGateway implements iEntityDBGateway {
             throw new RuntimeException(e);
         }
     }
-
     /**
      * @param newPortfolio
      */

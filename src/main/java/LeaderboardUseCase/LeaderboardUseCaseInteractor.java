@@ -79,4 +79,11 @@ public class LeaderboardUseCaseInteractor {
         }
         return new Leaderboard(resultList);
     }
+
+    public static void main(String[] args) {
+        List<User> listOfUsers = UserManager.instance.getAllUsers();
+        for(User u : listOfUsers) {
+            System.out.println(u.getPortfolioNames());
+        }
+    }
 }
