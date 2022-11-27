@@ -15,18 +15,34 @@ public final class RegisterRequest {
         this.loginDate = loginDate;
     }
 
+    /**
+     * A getter for the username
+     * @return the username
+     */
     public String username() {
         return username;
     }
 
+    /**
+     * A getter for the password
+     * @return the password
+     */
     public String password() {
         return password;
     }
 
+    /**
+     * A getter for the passwordConfirm
+     * @return the passwordConfirm
+     */
     public String passwordConfirm() {
         return passwordConfirm;
     }
 
+    /**
+     * A getter for the loginDate
+     * @return the loginDate
+     */
     public Date loginDate() {
         return loginDate;
     }

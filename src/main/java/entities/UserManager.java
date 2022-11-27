@@ -3,16 +3,32 @@ package entities;
 import db.UserDSRequest;
 import db.UserDSResponse;
 import db.iEntityDBGateway;
+import main.OuterLayerFactory;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserManager {
+    public static UserManager instance =
+            new UserManager(
+                    OuterLayerFactory.instance.getEntityDSGateway());
     private User user;
     private final iEntityDBGateway dbGateway;
     private final UserFactory userFactory = new UserFactory();
 
     public UserManager(iEntityDBGateway dbGateway) {
         this.dbGateway = dbGateway;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+
+        for (UserDSResponse userDSResponse : dbGateway.getAllUsers()) {
+            users.add(convertUserDSResponse(userDSResponse));
+        }
+
+        return users;
     }
 
     /**
@@ -58,14 +74,28 @@ public class UserManager {
         dbGateway.addUser(new UserDSRequest(username, password, dateCreated));
     }
 
+    /**
+     * @param userDSResponse response from the database
+     * @return a user object from the response
+     */
     private User convertUserDSResponse(UserDSResponse userDSResponse) {
         if (userDSResponse == null) {
             return null;
         }
 
-        return userFactory.createUser(userDSResponse.getUsername(), userDSResponse.getPassword(), userDSResponse.getLastLogin(), userDSResponse.getPortfolios(), dbGateway);
+        return userFactory.createUser(
+                userDSResponse.getUsername(),
+                userDSResponse.getPassword(),
+                userDSResponse.getLastLogin(),
+                userDSResponse.getCompPort(),
+                userDSResponse.getPortfolios(),
+                dbGateway);
     }
-
+    
+    /**
+     * Getter for user
+     * @return the user that is currently logged in
+     */
     public User getUser() {
         return user;
     }

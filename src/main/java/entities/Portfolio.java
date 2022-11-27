@@ -47,6 +47,11 @@ public class Portfolio {
         return username;
     }
 
+    public int getStockQuantity(String symbol) {
+        return symbolToStock.get(symbol).getQuantity();
+    }
+
+
     /**
      * <p>
      *     adds *quantity* amount of the stock to user's portfolio if user has sufficent funds and returns true,
@@ -118,5 +123,14 @@ public class Portfolio {
 
     public Stock convertStockDSResponse(StockDSResponse dsResponse) {
         return stockFactory.createStock(dsResponse.getSymbol(), dsResponse.getValue(), dsResponse.getQuantity(), dbGateWay);
+    }
+
+    public double getNetValue() {
+        double total = 0;
+        for (Stock stock : symbolToStock.values()) {
+            total += stock.getValue() * stock.getQuantity();
+        }
+        total += balance;
+        return total;
     }
 }

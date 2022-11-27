@@ -1,8 +1,15 @@
 package db;
 
 import java.sql.Date;
+import java.util.List;
 
 public interface iEntityDBGateway {
+    void addCompPort(String username, String compPort);
+
+    void deleteUser(String username);
+
+    List<UserDSResponse> getAllUsers();
+
     /**
      * Adds user to database
      */

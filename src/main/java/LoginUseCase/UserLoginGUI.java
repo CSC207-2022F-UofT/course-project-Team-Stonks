@@ -114,6 +114,7 @@ public class UserLoginGUI extends JFrame implements iUserLoginGUI {
     /**
      * @noinspection ALL
      */
+
     private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
         if (currentFont == null)
             return null;
