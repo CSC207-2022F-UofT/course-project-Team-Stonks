@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class UserFactory {
+    /**
+     * This class is responsible for creating a User object
+     */
     private final PortfolioFactory portfolioFactory = new PortfolioFactory();
 
     public User createUser(String username, String password, Date creationTime, String compPort, List<PortfolioDSResponse> portfolioResponses, iEntityDBGateway dbGateway) {

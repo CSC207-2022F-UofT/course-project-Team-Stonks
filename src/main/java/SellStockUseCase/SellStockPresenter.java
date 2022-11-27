@@ -4,6 +4,9 @@ import entities.Portfolio;
 
 
 public class SellStockPresenter {
+    /**
+     * This class is used to process the data from the model and display it to the user
+     */
     private final iSellStockGUI view;
     private final Portfolio portfolio;
     private final SellStockController controller;

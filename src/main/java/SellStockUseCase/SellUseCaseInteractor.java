@@ -8,7 +8,8 @@ import java.io.IOException;
 public class SellUseCaseInteractor {
 
     /**
-     * This method is used to sell stocks from a portfolio
+     * The interactor for selling stocks from a portfolio. This class is used to
+     * interact with the API and the portfolio to sell stocks.
      * @param sell The request object containing the portfolio, symbol, and quantity
      * @return The response object containing the portfolio, symbol, quantity, and price
      * @throws IOException when there's a connection problem with the API
@@ -25,10 +26,10 @@ public class SellUseCaseInteractor {
         StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
         if(possible){
             double totalValue = stockAPIResponse.getPrice() * quantity;
-            return new SellOutputResponse("Sale successful!", totalValue, quantity, symbol, true);
+            return new SellOutputResponse("Sale successful!", quantity, symbol, true);
         }
         else{
-            return new SellOutputResponse("Please enter a valid amount.", 0, 0, symbol, false);
+            return new SellOutputResponse("Please enter a valid amount.", 0, symbol, false);
         }
     }
 }
