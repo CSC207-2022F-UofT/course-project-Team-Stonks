@@ -52,7 +52,7 @@ public class SellStockTest {
     }
 
     @Test
-    public void testSellStock() throws IOException {
+    public void testSellStock(){
         double balance = portfolio.getBalance();
         SellInputRequest sell = new SellInputRequest(portfolio, symbol, sellQuant);
         Map<String, Stock> map = portfolio.getSymbolToStock();
@@ -63,7 +63,7 @@ public class SellStockTest {
     }
 
     @Test
-    public void testInvalidSellStock() throws IOException {
+    public void testInvalidSellStock(){
         double balance = portfolio.getBalance();
         SellInputRequest sell = new SellInputRequest(portfolio, symbol, invalidQuant);
         SellOutputResponse response = interactor.sellStock(sell);
@@ -71,6 +71,18 @@ public class SellStockTest {
         assert portfolio.getBalance() == balance;
 
         assert Objects.equals(response.getMessage(), "Please enter a valid amount.");
+
+    }
+    @Test
+    public void testNoStock(){
+        double balance = portfolio.getBalance();
+        SellInputRequest sell = new SellInputRequest(portfolio, "TSLA", sellQuant);
+        interactor.sellStock(sell);
+        SellOutputResponse response = interactor.sellStock(sell);
+
+        assert portfolio.getBalance() == balance;
+
+        assert Objects.equals(response.getMessage(), "You do not own any of this stock");
 
     }
 }
