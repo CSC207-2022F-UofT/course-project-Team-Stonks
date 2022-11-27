@@ -12,8 +12,7 @@ import java.util.List;
 public class UserManager {
     public static UserManager instance =
             new UserManager(
-                    OuterLayerFactory.instance.getEntityDSGateway(
-                            OuterLayerFactory.MAIN_DB));
+                    OuterLayerFactory.instance.getEntityDSGateway());
     private User user;
     private final iEntityDBGateway dbGateway;
     private final UserFactory userFactory = new UserFactory();

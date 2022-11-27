@@ -7,8 +7,8 @@ import java.util.List;
 public class EntitySQLGateway implements iEntityDBGateway {
     Connection con;
 
-    public EntitySQLGateway(String database) {
-        String dbURL = "jdbc:mysql://db-mysql-nyc1-71885-do-user-10038162-0.b.db.ondigitalocean.com:25060/" + database;
+    public EntitySQLGateway() {
+        String dbURL = "jdbc:mysql://db-mysql-nyc1-71885-do-user-10038162-0.b.db.ondigitalocean.com:25060/defaultdb";
         String user = "doadmin";
         String pass = "AVNS_3ACCOAF3QXEZedJQXcx";
         try {
@@ -38,7 +38,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     public void deleteUser(String username) {
         try{
             PreparedStatement ps = con.prepareStatement("SELECT name FROM Portfolios WHERE " +
-                    "username = ");
+                    "username = ?");
             ps.setString(1, username);
             ResultSet portRS = ps.executeQuery();
 
@@ -50,7 +50,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
 
             Statement st = con.createStatement();
             st.execute(
-                    "DELETE Users WHERE " +
+                    "DELETE FROM Users WHERE " +
                             "username = '" + username + "'");
 
         } catch (SQLException e) {
@@ -260,7 +260,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
 
             Statement st = con.createStatement();
             st.execute(
-                    "DELETE Portfolios WHERE " +
+                    "DELETE FROM Portfolios WHERE " +
                             "name = '" + name + "' AND " +
                             "username = '" + username + "'");
 
@@ -364,7 +364,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
         try{
             Statement st = con.createStatement();
             st.executeUpdate(
-                    "DELETE PortfolioStock WHERE " +
+                    "DELETE FROM PortfolioStock WHERE " +
                             "portfolioName = '" + portfolioName + "' AND " +
                             "stockName = '" + symbol + "' AND " +
                             "username = '" + username + "'");
@@ -375,7 +375,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
 
             if (!ps.executeQuery().isBeforeFirst()) {
                 st = con.createStatement();
-                st.executeUpdate("DELETE Stocks WHERE " +
+                st.executeUpdate("DELETE FROM Stocks WHERE " +
                         "symbol = '" + symbol + "'");
             }
         } catch (SQLException e) {

@@ -13,7 +13,7 @@ public class PortfolioSelectedInteractor {
     private final StockFactory stockFactory;
 
     public PortfolioSelectedInteractor() {
-        dbGateway = OuterLayerFactory.instance.getEntityDSGateway(OuterLayerFactory.MAIN_DB);
+        dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         stockFactory = new StockFactory();
     }
 

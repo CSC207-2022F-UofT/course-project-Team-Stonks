@@ -25,11 +25,9 @@ import java.util.List;
 
 public class OuterLayerFactory {
     public static final OuterLayerFactory instance = new OuterLayerFactory();
-    public static final String MAIN_DB = "defaultdb";
-    public static final String TEST_DB = "testdb";
 
-    public iEntityDBGateway getEntityDSGateway(String database) {
-        return new EntitySQLGateway(database);
+    public iEntityDBGateway getEntityDSGateway() {
+        return new EntitySQLGateway();
     }
 
     public iUserLoginGUI getUserLoginGUI() {

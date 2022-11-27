@@ -27,7 +27,7 @@ class RegisterPresenterTest {
         registerInteractor.signUpUser(correctUsername, correctPassword, correctPassword, Date.valueOf(LocalDate.now()));
         controller = new RegisterController();
         UserManager userManager = UserManager.instance;
-        dbGateway = OuterLayerFactory.instance.getEntityDSGateway(OuterLayerFactory.TEST_DB);
+        dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
 
         if (!userManager.userExists(correctUsername)) {
             dbGateway.addUser(new UserDSRequest(correctUsername, correctPassword, Date.valueOf(LocalDate.now())));

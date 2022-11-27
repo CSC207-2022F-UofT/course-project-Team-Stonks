@@ -5,10 +5,13 @@ import BuyStockUseCase.BuyOutputResponse;
 import BuyStockUseCase.BuyUseCaseInteractor;
 import LoginUseCase.UserLoginInteractor;
 import PortfolioCreationUseCase.PortfolioCreationInteractor;
+import PortfolioCreationUseCase.PortfolioSelectedInteractor;
 import RegisterUseCase.RegisterInteractor;
+import db.iEntityDBGateway;
 import entities.Portfolio;
 import entities.Stock;
 import entities.User;
+import main.OuterLayerFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +31,10 @@ public class BuyStockTest {
     public static void setUp() {
         Date date = new Date(100);
         RegisterInteractor interactor1 = new RegisterInteractor();
+
+        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        dbGateway.deleteUser("TestUser");
+
         interactor1.signUpUser("TestUser", "password", "password", date);
 
         UserLoginInteractor interactor2 = new UserLoginInteractor();
@@ -35,6 +42,9 @@ public class BuyStockTest {
 
         PortfolioCreationInteractor interactor3 = new PortfolioCreationInteractor(user);
         interactor3.makeNewPortfolio("newPortfolio");
+
+        PortfolioSelectedInteractor interactor4 = new PortfolioSelectedInteractor();
+        interactor4.populatePortfolio(user, "newPortfolio");
 
         port = user.getPortfolio("newPortfolio");
 
