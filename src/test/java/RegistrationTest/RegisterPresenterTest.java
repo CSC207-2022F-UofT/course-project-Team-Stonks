@@ -1,7 +1,10 @@
 package RegistrationTest;
 
 import RegisterUseCase.*;
+import db.UserDSRequest;
+import db.iEntityDBGateway;
 import entities.UserManager;
+import main.OuterLayerFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,6 +16,7 @@ import java.time.LocalDate;
 class RegisterPresenterTest {
 
     private static RegisterController controller;
+    private static iEntityDBGateway dbGateway;
     private static final String correctUsername = "database";
     private static final String correctPassword = "password";
     private static final String correctPasswordConfirm = "password";
@@ -22,6 +26,12 @@ class RegisterPresenterTest {
         RegisterInteractor registerInteractor = new RegisterInteractor();
         registerInteractor.signUpUser(correctUsername, correctPassword, correctPassword, Date.valueOf(LocalDate.now()));
         controller = new RegisterController();
+        UserManager userManager = UserManager.instance;
+        dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+
+        if (!userManager.userExists(correctUsername)) {
+            dbGateway.addUser(new UserDSRequest(correctUsername, correctPassword, Date.valueOf(LocalDate.now())));
+        }
     }
 
     /**
@@ -30,10 +40,8 @@ class RegisterPresenterTest {
     @Test
     public void testNoIssue() {
         // make a random name
-        String username = "username" + (int)(Math.random() * 100000);
-        while (UserManager.instance.userExists(username) ) {
-            username = "username" + (int)(Math.random() * 100000);
-        }
+        String username = "registrationUser";
+        dbGateway.deleteUser(username);
 
         RegisterRequest request = new RegisterRequest(
                 username,
@@ -116,10 +124,8 @@ class RegisterPresenterTest {
     @Test
     public void testLongUsername() {
         // Building a long username that is 51 characters long
-        StringBuilder longUsername = new StringBuilder("a");
-        longUsername.append("a".repeat(50));
         RegisterRequest request = new RegisterRequest(
-                longUsername.toString(),
+                "a" + "a".repeat(50),
                 "PasswordNotSame",
                 "PasswordIsSame",
                 Date.valueOf(LocalDate.now()));
