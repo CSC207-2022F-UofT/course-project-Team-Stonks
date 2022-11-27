@@ -1,24 +1,24 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class Leaderboard {
-    private List<User> topUsers;
-    public static final int SIZE = 5;
+
+    public static int SIZE = 5;
+    private final Map<User, Double> topUsers;
 
     /**
      * @param topUsers the List representation of the Leaderboard, with the order of users in the List representing
      *                 the positions in the leaderboard
      */
-    public Leaderboard(List<User> topUsers) {
+    public Leaderboard(Map<User, Double> topUsers) {
         this.topUsers = topUsers;
     }
 
     /**
      * @return the topUsers attribute from a leaderboard
      */
-    public List<User> getTopUsers() {
+    public Map<User, Double> getTopUsers() {
         return this.topUsers;
     }
 }

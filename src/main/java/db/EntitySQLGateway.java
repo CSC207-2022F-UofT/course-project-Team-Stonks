@@ -7,8 +7,8 @@ import java.util.List;
 public class EntitySQLGateway implements iEntityDBGateway {
     Connection con;
 
-    public EntitySQLGateway() {
-        String dbURL = "jdbc:mysql://db-mysql-nyc1-71885-do-user-10038162-0.b.db.ondigitalocean.com:25060/defaultdb";
+    public EntitySQLGateway(String database) {
+        String dbURL = "jdbc:mysql://db-mysql-nyc1-71885-do-user-10038162-0.b.db.ondigitalocean.com:25060/" + database;
         String user = "doadmin";
         String pass = "AVNS_3ACCOAF3QXEZedJQXcx";
         try {
@@ -18,6 +18,42 @@ public class EntitySQLGateway implements iEntityDBGateway {
             e.printStackTrace();
         } catch (
                 ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addCompPort(String username, String compPort) {
+        try{
+            Statement st = con.createStatement();
+            st.executeUpdate("UPDATE Users SET " +
+                    "competitivePort = '" + compPort + "' WHERE " +
+                    "username = '" + username + "'");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteUser(String username) {
+        try{
+            PreparedStatement ps = con.prepareStatement("SELECT name FROM Portfolios WHERE " +
+                    "username = ");
+            ps.setString(1, username);
+            ResultSet portRS = ps.executeQuery();
+
+            while (portRS.next()) {
+                deletePortfolio(
+                        portRS.getString(1),
+                        username);
+            }
+
+            Statement st = con.createStatement();
+            st.execute(
+                    "DELETE Users WHERE " +
+                            "username = '" + username + "'");
+
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -53,7 +89,8 @@ public class EntitySQLGateway implements iEntityDBGateway {
             st.executeUpdate("INSERT INTO Users VALUES ('" +
                     newUser.getUsername() + "','" +
                     newUser.getPassword() + "','" +
-                    newUser.getLastLogin() + "')");
+                    newUser.getLastLogin() + "','" +
+                    null + "')");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -111,6 +148,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
                 return new UserDSResponse(userRS.getString(1),
                         userRS.getString(2),
                         userRS.getDate(3),
+                        userRS.getString(4),
                         portfolioDSResponses);
             }
 

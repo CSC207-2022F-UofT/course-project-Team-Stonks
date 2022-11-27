@@ -16,6 +16,7 @@ import java.time.LocalDate;
 class RegisterPresenterTest {
 
     private static RegisterController controller;
+    private static iEntityDBGateway dbGateway;
     private static final String correctUsername = "database";
     private static final String correctPassword = "password";
     private static final String correctPasswordConfirm = "password";
@@ -26,7 +27,7 @@ class RegisterPresenterTest {
         registerInteractor.signUpUser(correctUsername, correctPassword, correctPassword, Date.valueOf(LocalDate.now()));
         controller = new RegisterController();
         UserManager userManager = UserManager.instance;
-        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        dbGateway = OuterLayerFactory.instance.getEntityDSGateway(OuterLayerFactory.TEST_DB);
 
         if (!userManager.userExists(correctUsername)) {
             dbGateway.addUser(new UserDSRequest(correctUsername, correctPassword, Date.valueOf(LocalDate.now())));
@@ -39,10 +40,8 @@ class RegisterPresenterTest {
     @Test
     public void testNoIssue() {
         // make a random name
-        String username = "username" + (int)(Math.random() * 100000);
-        while (UserManager.instance.userExists(username) ) {
-            username = "username" + (int)(Math.random() * 100000);
-        }
+        String username = "registrationUser";
+        dbGateway.deleteUser(username);
 
         RegisterRequest request = new RegisterRequest(
                 username,
@@ -125,10 +124,8 @@ class RegisterPresenterTest {
     @Test
     public void testLongUsername() {
         // Building a long username that is 51 characters long
-        StringBuilder longUsername = new StringBuilder("a");
-        longUsername.append("a".repeat(50));
         RegisterRequest request = new RegisterRequest(
-                longUsername.toString(),
+                "a" + "a".repeat(50),
                 "PasswordNotSame",
                 "PasswordIsSame",
                 Date.valueOf(LocalDate.now()));

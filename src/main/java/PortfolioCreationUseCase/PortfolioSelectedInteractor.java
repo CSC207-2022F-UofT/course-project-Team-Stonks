@@ -13,7 +13,7 @@ public class PortfolioSelectedInteractor {
     private final StockFactory stockFactory;
 
     public PortfolioSelectedInteractor() {
-        dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        dbGateway = OuterLayerFactory.instance.getEntityDSGateway(OuterLayerFactory.MAIN_DB);
         stockFactory = new StockFactory();
     }
 
@@ -31,8 +31,5 @@ public class PortfolioSelectedInteractor {
 
         user.setCurPortfolio(portfolioName);
         user.getCurPortfolio().pullStocks(stocks);
-    }
-    public void makeCompPortfolio(User user, String portfolioName) {
-        user.setCompPortfolio(portfolioName);
     }
 }

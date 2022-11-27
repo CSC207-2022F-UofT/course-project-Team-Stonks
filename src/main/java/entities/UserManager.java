@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserManager {
-    public static UserManager instance = new UserManager(OuterLayerFactory.instance.getEntityDSGateway());
+    public static UserManager instance =
+            new UserManager(
+                    OuterLayerFactory.instance.getEntityDSGateway(
+                            OuterLayerFactory.MAIN_DB));
     private User user;
     private final iEntityDBGateway dbGateway;
     private final UserFactory userFactory = new UserFactory();
@@ -85,6 +88,7 @@ public class UserManager {
                 userDSResponse.getUsername(),
                 userDSResponse.getPassword(),
                 userDSResponse.getLastLogin(),
+                userDSResponse.getCompPort(),
                 userDSResponse.getPortfolios(),
                 dbGateway);
     }

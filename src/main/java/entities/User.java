@@ -16,12 +16,16 @@ public class User {
     private final iEntityDBGateway dbGateway;
     private String compPortfolio;
 
-    public User(String username, String password, Date lastLogin, Map<String, Portfolio> nameToPortfolio, iEntityDBGateway dbGateway) {
+    public User(String username, String password, Date lastLogin, String compPortfolio, Map<String, Portfolio> nameToPortfolio, iEntityDBGateway dbGateway) {
         this.username = username;
         this.password = password;
         this.lastLogin = lastLogin;
         this.nameToPortfolio = nameToPortfolio;
         this.dbGateway = dbGateway;
+
+        if (!compPortfolio.equals("null")) {
+            this.compPortfolio = compPortfolio;
+        }
     }
 
     public String getUsername() {
@@ -67,11 +71,16 @@ public class User {
         return nameToPortfolio.get(compPortfolio);
     }
 
+    public String getCompPortfolioName() {
+        return compPortfolio;
+    }
+
     public void setCurPortfolio(String curPortfolio) {
         this.curPortfolio = curPortfolio;
     }
 
     public void setCompPortfolio(String compPortfolio) {
         this.compPortfolio = compPortfolio;
+        dbGateway.addCompPort(username, compPortfolio);
     }
 }

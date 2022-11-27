@@ -38,11 +38,15 @@ public class UserPresenter {
 
         controller.PopulatePortfolio(new PortfolioSelectedRequest(user, portfolioName));
 
+        boolean isComp = portfolioName.equals(user.getCompPortfolioName());
+
         view.close();
         new PortfolioPresenter(
                 OuterLayerFactory.instance.getPortfolioGUI(
                         user.getPortfolio(portfolioName),
-                        user.getUsername()), user.getPortfolio(portfolioName), user);
+                        user.getUsername(),
+                        isComp),
+                user.getPortfolio(portfolioName), user);
     }
 
     private void onCreatePortfolio() {
