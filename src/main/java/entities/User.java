@@ -14,13 +14,18 @@ public class User {
     private final Date lastLogin;
     private final PortfolioFactory portfolioFactory = new PortfolioFactory();
     private final iEntityDBGateway dbGateway;
+    private String compPortfolio;
 
-    public User(String username, String password, Date lastLogin, Map<String, Portfolio> nameToPortfolio, iEntityDBGateway dbGateway) {
+    public User(String username, String password, Date lastLogin, String compPortfolio, Map<String, Portfolio> nameToPortfolio, iEntityDBGateway dbGateway) {
         this.username = username;
         this.password = password;
         this.lastLogin = lastLogin;
         this.nameToPortfolio = nameToPortfolio;
         this.dbGateway = dbGateway;
+
+        if (!compPortfolio.equals("null")) {
+            this.compPortfolio = compPortfolio;
+        }
     }
 
     public String getUsername() {
@@ -28,7 +33,11 @@ public class User {
     }
 
     public void addPortfolio(String name) {
+        if (nameToPortfolio.isEmpty()) {
+            compPortfolio = name;
+        }
         nameToPortfolio.put(name, portfolioFactory.createPortfolio(name, username, dbGateway));
+
     }
 
     public Portfolio getPortfolio(String portfolioName) {
@@ -38,7 +47,6 @@ public class User {
     public Set<String> getPortfolioNames() {
         return nameToPortfolio.keySet();
     }
-
     public Date getLastLogin() {
         return lastLogin;
     }
@@ -59,7 +67,20 @@ public class User {
         return nameToPortfolio.get(curPortfolio);
     }
 
+    public Portfolio getCompPortfolio() {
+        return nameToPortfolio.get(compPortfolio);
+    }
+
+    public String getCompPortfolioName() {
+        return compPortfolio;
+    }
+
     public void setCurPortfolio(String curPortfolio) {
         this.curPortfolio = curPortfolio;
+    }
+
+    public void setCompPortfolio(String compPortfolio) {
+        this.compPortfolio = compPortfolio;
+        dbGateway.addCompPort(username, compPortfolio);
     }
 }

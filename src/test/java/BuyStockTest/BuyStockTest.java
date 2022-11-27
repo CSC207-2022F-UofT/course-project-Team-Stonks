@@ -4,10 +4,14 @@ import BuyStockUseCase.BuyInputRequest;
 import BuyStockUseCase.BuyOutputResponse;
 import BuyStockUseCase.BuyUseCaseInteractor;
 import LoginUseCase.UserLoginInteractor;
-import PortfolioCreationUseCase.PortfolioCreationError;
 import PortfolioCreationUseCase.PortfolioCreationInteractor;
+import PortfolioCreationUseCase.PortfolioSelectedInteractor;
 import RegisterUseCase.RegisterInteractor;
-import entities.*;
+import db.iEntityDBGateway;
+import entities.Portfolio;
+import entities.Stock;
+import entities.User;
+import main.OuterLayerFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -27,18 +31,22 @@ public class BuyStockTest {
     public static void setUp() {
         Date date = new Date(100);
         RegisterInteractor interactor1 = new RegisterInteractor();
-        interactor1.signUpUser("TestUser2", "password", "password", date);
+
+        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        dbGateway.deleteUser("TestUser");
+
+        interactor1.signUpUser("TestUser", "password", "password", date);
 
         UserLoginInteractor interactor2 = new UserLoginInteractor();
         User user = interactor2.loginUser("TestUser", "password", date);
 
         PortfolioCreationInteractor interactor3 = new PortfolioCreationInteractor(user);
-        int tag = 0;
-        while (interactor3.makeNewPortfolio("newPortfolio" + tag) == PortfolioCreationError.DUPLICATE_NAME){
-            tag += 1;
-        }
+        interactor3.makeNewPortfolio("newPortfolio");
 
-        port = user.getPortfolio("newPortfolio" + tag);
+        PortfolioSelectedInteractor interactor4 = new PortfolioSelectedInteractor();
+        interactor4.populatePortfolio(user, "newPortfolio");
+
+        port = user.getPortfolio("newPortfolio");
 
         interactor = new BuyUseCaseInteractor();
     }
