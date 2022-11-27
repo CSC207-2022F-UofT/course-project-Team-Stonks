@@ -2,13 +2,15 @@ package LeaderboardUseCase;
 
 import entities.Leaderboard;
 import entities.User;
-import LeaderboardUseCase.LeaderboardUseCaseInteractor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LeaderboardResponse {
     private final Leaderboard board;
+
     public LeaderboardResponse(Leaderboard board) {
         this.board = board;
     }
@@ -18,13 +20,10 @@ public class LeaderboardResponse {
      * representing the names of the top users, in order of position on the board
      */
     public List<String> toStringList() {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         int position = 1;
-        LeaderboardUseCaseInteractor interactor = new LeaderboardUseCaseInteractor();
-        double[] topValues = interactor.topValues();
-        for(User u : board.getTopUsers()) {
-
-            result.add(position + ". " + u.getUsername() + ":" + " " + new String(new char[(100-u.getUsername().length())]).replace("\0", "-") + "$"+topValues[position-1]);
+        for (User u : board.getTopUsers().keySet()) {
+            result.add(position + ". " + u.getUsername() + ":             $" + board.getTopUsers().get(u));
             position++;
         }
         return result;

@@ -1,27 +1,25 @@
 package LeaderboardUseCase;
 
-import java.sql.Date;
-import java.lang.reflect.Array;
-import java.util.List;
-import java.util.ArrayList;
 import entities.Leaderboard;
-import entities.UserManager;
 import entities.User;
-import entities.Portfolio;
+import entities.UserManager;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LeaderboardUseCaseInteractor {
-
-    public LeaderboardUseCaseInteractor() {}
+    private List<User> users;
 
     /**
      * @param arr an array of doubles
      * @return the index of the maximum value in the array
      */
-    public int indexMax(double[] arr) {
-        double maxNum = -2;
-        int result = -3;
-        for(int i=0; i < arr.length; i++) {
-            if(arr[i] > maxNum) {
+    private int indexMax(double[] arr) {
+        double maxNum = -1;
+        int result = -1;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > maxNum) {
                 result = i;
                 maxNum = arr[i];
             }
@@ -30,35 +28,19 @@ public class LeaderboardUseCaseInteractor {
     }
 
     /**
-     * @param arr an array of doubles
-     * @return the maximum value of the doubles in arr
-     */
-    public double max(double[] arr) {
-        if (arr.length == 0) {
-            return 0;
-        }
-        double maxNum = arr[0];
-        for(double num : arr) {
-            if(num > maxNum) {
-                maxNum = num;
-            }
-        }
-        return maxNum;
-    }
-
-    /**
      * @return an array of doubles, with the doubles representing the values of each of the users' competitive
      * portfolio values. The order of the array corresponds to the order of the listOfUsers from the getAllUsers call
      */
-    public double[] topValues() {
-        List<User> listOfUsers = UserManager.instance.getAllUsers();
-        double[] listOfVals =  new double[listOfUsers.size()];
+    private double[] topValues() {
+        users = UserManager.instance.getAllUsers();
+        double[] listOfVals = new double[users.size()];
         int i = 0;
-        for(User u : listOfUsers) {
-            if(u.getCompPortfolio() == null) {
-                listOfVals[i] = 0;
-            } else {
+
+        for (User u : users) {
+            if (u.getCompPortfolio() != null) {
                 listOfVals[i] = u.getCompPortfolio().getNetValue();
+            } else {
+                listOfVals[i] = 0;
             }
             i++;
         }
@@ -70,20 +52,13 @@ public class LeaderboardUseCaseInteractor {
      */
     public Leaderboard updateLeaderboard() {
         double[] listOfVals = topValues();
-        List<User> listOfUsers = UserManager.instance.getAllUsers();
-        List<User> resultList = new ArrayList<User>();
-        for(int j = 0; j < Leaderboard.SIZE; j++) {
-            int indexOfMax = indexMax(listOfVals);
-            resultList.add(listOfUsers.get(indexOfMax));
-            listOfVals[indexOfMax] = -5;
-        }
-        return new Leaderboard(resultList);
-    }
+        Map<User, Double> result = new LinkedHashMap<>();
 
-    public static void main(String[] args) {
-        List<User> listOfUsers = UserManager.instance.getAllUsers();
-        for(User u : listOfUsers) {
-            System.out.println(u.getPortfolioNames());
+        for (int j = 0; j < Math.min(Leaderboard.SIZE, listOfVals.length); j++) {
+            int indexOfMax = indexMax(listOfVals);
+            result.put(users.get(indexOfMax), listOfVals[indexOfMax]);
+            listOfVals[indexOfMax] = -1;
         }
+        return new Leaderboard(result);
     }
 }
