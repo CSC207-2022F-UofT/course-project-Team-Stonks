@@ -25,6 +25,7 @@ public class BuyStockTest {
     private static final String symbol = "TSLA";
     private static final String symbol2 = "AMZN";
     private static BuyUseCaseInteractor interactor;
+    private static final String username = "BuyTestUser";
 
 
     @BeforeAll
@@ -33,12 +34,12 @@ public class BuyStockTest {
         RegisterInteractor interactor1 = new RegisterInteractor();
 
         iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
-        dbGateway.deleteUser("TestUser");
+        dbGateway.deleteUser(username);
 
-        interactor1.signUpUser("TestUser", "password", "password", date);
+        interactor1.signUpUser(username, "password", "password", date);
 
         UserLoginInteractor interactor2 = new UserLoginInteractor();
-        User user = interactor2.loginUser("TestUser", "password", date);
+        User user = interactor2.loginUser(username, "password", date);
 
         PortfolioCreationInteractor interactor3 = new PortfolioCreationInteractor(user);
         interactor3.makeNewPortfolio("newPortfolio");
@@ -67,7 +68,7 @@ public class BuyStockTest {
 
     @Test
     public void buyStockInsufficientFundsTest() {
-        BuyInputRequest req = new BuyInputRequest(symbol2, 1000,port);
+        BuyInputRequest req = new BuyInputRequest(symbol2, 1000, port);
         BuyOutputResponse res = new BuyOutputResponse(true);
         try {
             res = interactor.buyStock(req);

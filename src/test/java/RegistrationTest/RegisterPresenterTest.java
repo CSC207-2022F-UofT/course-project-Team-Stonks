@@ -17,7 +17,7 @@ class RegisterPresenterTest {
 
     private static RegisterController controller;
     private static iEntityDBGateway dbGateway;
-    private static final String correctUsername = "database";
+    private static final String correctUsername = "RegisterUserTest";
     private static final String correctPassword = "password";
     private static final String correctPasswordConfirm = "password";
 
@@ -40,11 +40,10 @@ class RegisterPresenterTest {
     @Test
     public void testNoIssue() {
         // make a random name
-        String username = "registrationUser";
-        dbGateway.deleteUser(username);
+        dbGateway.deleteUser(correctUsername);
 
         RegisterRequest request = new RegisterRequest(
-                username,
+                correctUsername,
                 "password",
                 "password",
                 Date.valueOf(LocalDate.now()));
