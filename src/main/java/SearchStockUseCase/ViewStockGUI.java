@@ -7,25 +7,24 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.List;
 
 
 public class ViewStockGUI extends JFrame implements iViewStockGUI {
     private StockAPIResponse stock;
-    private Calendar from = Calendar.getInstance();
-    private Interval stockPriceInterval = Interval.DAILY;
+    private final Calendar from = Calendar.getInstance();
+    private final Interval stockPriceInterval = Interval.DAILY;
     private final String stockSymbol;
     private List<HistoricalQuote> histData;
     private JPanel mainPanel;
@@ -52,7 +51,8 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
         this.from.add(Calendar.DATE, -7); //Date of the last 7 days
         try {
             this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             throw new RuntimeException(e);
         }
         this.stockSymbol = symbol;
@@ -68,7 +68,8 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
         double last_close = previousDayValues.getClose().doubleValue();
         try {
             up_down.setText("Up/Down: " + new DecimalFormat("0.00").format(updatePrice() - last_close));
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -76,51 +77,43 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
 
 
         //Setting up Button
-        refreshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    updateValues();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+        refreshButton.addActionListener(e -> {
+            try {
+                updateValues();
+            } catch (
+                    IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
 
         updateTable();
-        todayButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    todayButtonAction();
-                    updateTable();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+        todayButton.addActionListener(e -> {
+            try {
+                todayButtonAction();
+                updateTable();
+            } catch (
+                    IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
-        weekButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    weeklyButtonAction();
-                    updateTable();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+        weekButton.addActionListener(e -> {
+            try {
+                weeklyButtonAction();
+                updateTable();
+            } catch (
+                    IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
-        yearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    monthlyButtonAction();
-                    updateTable();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+        yearButton.addActionListener(e -> {
+            try {
+                monthlyButtonAction();
+                updateTable();
+            } catch (
+                    IOException ex) {
+                throw new RuntimeException(ex);
+            }
 
-            }
         });
         //Setting up JFrame
         this.setContentPane(this.mainPanel);
@@ -152,7 +145,8 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
         StockAPIResponse stockAPIResponse;
         try {
             stockAPIResponse = new StockAPIAccess().getPrice(new StockAPIRequest(this.stockSymbol));
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             throw new Exception(String.format("Invalid stock Symbol %s", this.stockSymbol));
         }
         return stockAPIResponse.getPrice();

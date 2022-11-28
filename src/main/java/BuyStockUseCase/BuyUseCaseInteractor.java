@@ -48,12 +48,12 @@ public class BuyUseCaseInteractor {
             return new BuyOutputResponse(false);
         }
 
-        dbGateway.updateStockQuantity(symbol, port.getStockQuantity(symbol), port.getUsername(), port.getName());
-        dbGateway.updatePortfolioBalance(port.getName(), port.getBalance(), port.getUsername());
-
         if (result == BuyType.NEW){
             dbGateway.addStock(new StockDSRequest(symbol, price, buy_quantity, port.getUsername(), port.getName()));
         }
+
+        dbGateway.updateStockQuantity(symbol, port.getStockQuantity(symbol), port.getUsername(), port.getName());
+        dbGateway.updatePortfolioBalance(port.getName(), port.getBalance(), port.getUsername());
 
         return new BuyOutputResponse(true);
     }

@@ -73,11 +73,11 @@ public class Portfolio {
 
         if (stock != null) {
             stock.addQuantity(quantity, username, name);
-            return BuyType.NEW;
+            return BuyType.EXISTING;
         }
 
         symbolToStock.put(symbol, stockFactory.createStock(symbol, value, quantity));
-        return BuyType.EXISTING;
+        return BuyType.NEW;
     }
 
     /**
