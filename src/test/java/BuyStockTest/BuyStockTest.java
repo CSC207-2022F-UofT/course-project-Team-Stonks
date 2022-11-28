@@ -67,7 +67,7 @@ public class BuyStockTest {
 
     @Test
     public void buyStockInsufficientFundsTest() {
-        BuyInputRequest req = new BuyInputRequest(symbol2, 1000,port);
+        BuyInputRequest req = new BuyInputRequest(symbol2, 1000, port);
         BuyOutputResponse res = new BuyOutputResponse(true);
         try {
             res = interactor.buyStock(req);

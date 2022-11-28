@@ -1,6 +1,5 @@
 package entities;
 
-import db.iEntityDBGateway;
 
 import java.sql.Date;
 import java.util.Map;
@@ -13,15 +12,13 @@ public class User {
     private String curPortfolio;
     private final Date lastLogin;
     private final PortfolioFactory portfolioFactory = new PortfolioFactory();
-    private final iEntityDBGateway dbGateway;
     private String compPortfolio;
 
-    public User(String username, String password, Date lastLogin, String compPortfolio, Map<String, Portfolio> nameToPortfolio, iEntityDBGateway dbGateway) {
+    public User(String username, String password, Date lastLogin, String compPortfolio, Map<String, Portfolio> nameToPortfolio) {
         this.username = username;
         this.password = password;
         this.lastLogin = lastLogin;
         this.nameToPortfolio = nameToPortfolio;
-        this.dbGateway = dbGateway;
 
         if (!compPortfolio.equals("null")) {
             this.compPortfolio = compPortfolio;
@@ -36,7 +33,7 @@ public class User {
         if (nameToPortfolio.isEmpty()) {
             compPortfolio = name;
         }
-        nameToPortfolio.put(name, portfolioFactory.createPortfolio(name, username, dbGateway));
+        nameToPortfolio.put(name, portfolioFactory.createPortfolio(name, username));
 
     }
 
@@ -53,14 +50,6 @@ public class User {
 
     public boolean isPassword(String password) {
         return this.password.equals(password);
-    }
-
-    public void updatePortfolioStockValues(String portfolioName) {
-        nameToPortfolio.get(portfolioName).updateStockValues(username);
-    }
-
-    public void updateLoginDate(Date loginDate) {
-        dbGateway.updateUserLoginDate(username, loginDate);
     }
 
     public Portfolio getCurPortfolio() {
@@ -81,6 +70,5 @@ public class User {
 
     public void setCompPortfolio(String compPortfolio) {
         this.compPortfolio = compPortfolio;
-        dbGateway.addCompPort(username, compPortfolio);
     }
 }
