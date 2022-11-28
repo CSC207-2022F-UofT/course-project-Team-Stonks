@@ -1,34 +1,34 @@
 package SellStockUseCase;
-import APIInterface.StockAPIGateway;
-import APIInterface.StockAPIRequest;
-import APIInterface.StockAPIResponse;
 import entities.Portfolio;
-import java.io.IOException;
 
 public class SellUseCaseInteractor {
 
     /**
-     * This method is used to sell stocks from a portfolio
+     * The interactor for selling stocks from a portfolio. This class is used to
+     * interact with the API and the portfolio to sell stocks.
      * @param sell The request object containing the portfolio, symbol, and quantity
      * @return The response object containing the portfolio, symbol, quantity, and price
-     * @throws IOException when there is a connection issue with the API
      */
 
-    public SellOutputResponse sellStock(SellInputRequest sell) throws IOException {
+    public SellOutputResponse sellStock(SellInputRequest sell) {
+
         Portfolio portfolio = sell.getPortfolio();
         String symbol = sell.getSymbol();
         String username = portfolio.getUsername();
         int quantity = sell.getQuantity();
-        boolean possible = portfolio.sellStock(symbol, quantity, username);
-        StockAPIGateway stockAPIAccess = new StockAPIGateway();
-        StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
-        StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
-        if(possible){
-            double totalValue = stockAPIResponse.getPrice() * quantity;
-            return new SellOutputResponse("Sale successful", totalValue, quantity, symbol, true);
+
+        try {
+            boolean possible = portfolio.sellStock(symbol, quantity, username);
+            if(possible){
+                return new SellOutputResponse("Sale successful!", quantity, symbol, true);
+            }
+            else{
+                return new SellOutputResponse("Please enter a valid amount.", 0, symbol, false);
+            }
         }
-        else{
-            return new SellOutputResponse("Sale unsuccessful", 0, 0, symbol, false);
+        catch (NullPointerException e) {
+            return new SellOutputResponse("You do not own any of this stock", 0, symbol, false);
         }
+
     }
 }

@@ -1,6 +1,8 @@
 package BuyStockUseCase;
 
+import SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
+import main.OuterLayerFactory;
 
 import java.io.IOException;
 
@@ -56,5 +58,6 @@ public class BuyStockPresenter {
 
     private void onBack() {
         view.close();
+        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol()), this.currentPort);
     }
 }

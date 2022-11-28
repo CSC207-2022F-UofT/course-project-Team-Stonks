@@ -1,6 +1,8 @@
 package BuyStockUseCase;
 
 import PortfolioCreationUseCase.UserPresenter;
+import PortfolioCreationUseCase.iUserGUI;
+import SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
@@ -20,6 +22,7 @@ public class PortfolioPresenter {
         this.user = user;
         view.addBackAction(this::onBack);
         view.addMakeCompPortfolioAction(this::onMakeCompPortfolio);
+        view.addSearchAction(this::onSearch);
     }
     public void onBack() {
         view.close();
@@ -28,8 +31,10 @@ public class PortfolioPresenter {
 
     }
     public void onSearch() {
-        // TODO: CONNECT THE SEARCH FEATURE
         String symbol = view.getSearchField();
+        view.close();
+        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(symbol), this.portfolio);
+
     }
     public void onMakeCompPortfolio() {
         user.setCompPortfolio(portfolio.getName());

@@ -14,6 +14,8 @@ import PortfolioCreationUseCase.iPortfolioCreationGUI;
 import PortfolioCreationUseCase.iUserGUI;
 import RegisterUseCase.RegistrationPage;
 import RegisterUseCase.iRegisterGUI;
+import SearchStockUseCase.ViewStockGUI;
+import SearchStockUseCase.iViewStockGUI;
 import SellStockUseCase.SellStockGUI;
 import SellStockUseCase.iSellStockGUI;
 import db.EntitySQLGateway;
@@ -57,4 +59,5 @@ public class OuterLayerFactory {
     public iLeaderboardGUI getLeaderboardGUI(List<String> topUsers) {
         return new LeaderboardGUI(topUsers);
     }
+    public iViewStockGUI getViewStockGUI(String symbol) { return new ViewStockGUI(symbol);}
 }
