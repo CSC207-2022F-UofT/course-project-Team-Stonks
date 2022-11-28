@@ -9,4 +9,6 @@ public interface iStockDatabaseGateway {
     StockAPIResponse getPrice(StockAPIRequest req) throws IOException;
 
     BulkStockAPIResponse getBulkPrices(BulkStockAPIRequest req) throws IOException;
+
+    StockAPIResponse getPriceHist(StockAPIRequest req) throws IOException;
 }
