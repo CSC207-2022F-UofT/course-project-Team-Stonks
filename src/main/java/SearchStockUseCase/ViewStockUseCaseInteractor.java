@@ -13,15 +13,11 @@ public class ViewStockUseCaseInteractor{
     private Calendar from = Calendar.getInstance();
     private Interval stockPriceInterval = Interval.DAILY;
 
-    public boolean searchStock(String symbol){
+    public void searchStock(String symbol) throws IOException {
         System.out.println(symbol);
         this.from.add(Calendar.DATE, -7); //Date of the last 7 days
-        try {
-            this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
+
 
     }
 
