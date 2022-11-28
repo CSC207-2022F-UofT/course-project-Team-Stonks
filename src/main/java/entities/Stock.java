@@ -5,7 +5,7 @@ public class Stock {
      * Construct a Stock with the given symbol, value and quantity
      */
     private final String symbol;
-    private final double value;
+    private double value;
     private int quantity;
 
     public Stock(String symbol, double value, int quantity) {
@@ -22,11 +22,15 @@ public class Stock {
         return value;
     }
 
-    public void addQuantity(int quantity, String username, String portfolioName) {
+    public void addQuantity(int quantity) {
         this.quantity += quantity;
     }
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 }

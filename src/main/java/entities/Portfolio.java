@@ -72,7 +72,8 @@ public class Portfolio {
         balance -= value * quantity;
 
         if (stock != null) {
-            stock.addQuantity(quantity, username, name);
+            stock.addQuantity(quantity);
+            stock.setValue(value);
             return BuyType.EXISTING;
         }
 
@@ -97,13 +98,14 @@ public class Portfolio {
         }
 
         balance += quantity * value;
+        stock.setValue(value);
 
         if (quantity == stock.getQuantity()) {
             symbolToStock.remove(symbol);
             return SellType.REMOVE;
         }
 
-        stock.addQuantity(-quantity, username, name);
+        stock.addQuantity(-quantity);
 
         return SellType.SUCCESFUL;
     }
