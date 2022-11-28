@@ -10,6 +10,9 @@ import java.awt.*;
 import java.util.Locale;
 
 public class SellStockGUI extends JFrame implements iSellStockGUI {
+    /**
+     * This is the GUI for the sell stock use case
+     */
     private JPanel SellStockPanel;
     private JTextField quantityBox;
     private JButton sellButton;
@@ -62,7 +65,8 @@ public class SellStockGUI extends JFrame implements iSellStockGUI {
     public void displaySuccess() {
         JOptionPane.showMessageDialog(
                 null,
-                "Sale successful!");
+                "Sale successful! You have sold " + quantityBox.getText() + " shares of "
+                        + symbol.getText() + ".");
     }
 
     public String getSymbol() {
