@@ -3,6 +3,9 @@ package entities;
 import db.iEntityDBGateway;
 
 public class Stock {
+    /**
+     * Construct a Stock with the given symbol, value and quantity
+     */
     private final String symbol;
     private double value;
     private int quantity;
