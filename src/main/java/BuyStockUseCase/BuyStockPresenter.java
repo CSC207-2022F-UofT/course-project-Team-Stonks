@@ -54,6 +54,7 @@ public class BuyStockPresenter {
 
         if (res.getOutput()) {
             view.displaySuccess();
+            view.updateQuantityLabel(quantity);
         } else {
             view.displayBalanceFailure();
         }

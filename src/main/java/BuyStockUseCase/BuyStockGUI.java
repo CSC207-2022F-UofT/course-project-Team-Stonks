@@ -19,21 +19,24 @@ public class BuyStockGUI extends JFrame implements iBuyStockGUI {
     private JLabel symbolLabel;
     private JButton goBackButton;
     private JPanel mainPanel;
+    private int quantity;
+    private String symbol;
 
-    public BuyStockGUI(String symbol) {
+    public BuyStockGUI(String symbol, int quantity) {
         super();
-
+        this.quantity = quantity;
+        this.symbol = symbol;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
-        this.symbolLabel.setText(symbol);
+        this.symbolLabel.setText(symbol + " (Currently have: " + quantity + ")");
         this.responseLabel.setText("");
         this.pack();
         this.setVisible(true);
     }
 
     @Override
-    public void addBuyAction(Runnable onLogin) {
-        buyButton.addActionListener(e -> onLogin.run());
+    public void addBuyAction(Runnable onBuy) {
+        buyButton.addActionListener(e -> onBuy.run());
     }
 
     @Override
@@ -68,12 +71,18 @@ public class BuyStockGUI extends JFrame implements iBuyStockGUI {
 
     @Override
     public String getSymbol() {
-        return this.symbolLabel.getText();
+        return this.symbol;
     }
 
     @Override
     public int getQuantity() throws NumberFormatException {
         return Integer.parseInt(this.quantityField.getText());
+    }
+
+    @Override
+    public void updateQuantityLabel(int quant) {
+        this.quantity += quant;
+        this.symbolLabel.setText(symbol + " (Currently have: " + this.quantity + ")");
     }
 
     {
