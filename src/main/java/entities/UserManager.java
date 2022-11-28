@@ -45,7 +45,7 @@ public class UserManager {
 
         if (user != null) {
             this.user = user;
-            user.updateLoginDate(loginDate);
+            dbGateway.updateUserLoginDate(username, loginDate);
         }
 
         return user;
@@ -91,8 +91,7 @@ public class UserManager {
                 userDSResponse.getPassword(),
                 userDSResponse.getLastLogin(),
                 userDSResponse.getCompPort(),
-                userDSResponse.getPortfolios(),
-                dbGateway);
+                userDSResponse.getPortfolios());
     }
     
     /**

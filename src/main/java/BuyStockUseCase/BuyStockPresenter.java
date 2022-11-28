@@ -2,16 +2,22 @@ package BuyStockUseCase;
 
 import SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
+import entities.User;
 import main.OuterLayerFactory;
 
 import java.io.IOException;
 
 public class BuyStockPresenter {
+    /**
+     * Presenter for the buy stock GUI
+     */
     private final iBuyStockGUI view;
     private final Portfolio currentPort;
+    private final User user;
 
-    public BuyStockPresenter(iBuyStockGUI view, Portfolio currentPort){
+    public BuyStockPresenter(iBuyStockGUI view, Portfolio currentPort, User user){
         this.view = view;
+        this.user = user;
         view.addBuyAction(this::onBuy);
         view.addGoBackAction(this::onBack);
         this.currentPort = currentPort;
@@ -55,6 +61,6 @@ public class BuyStockPresenter {
 
     private void onBack() {
         view.close();
-        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol()), this.currentPort);
+        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol()), this.currentPort, this.user);
     }
 }
