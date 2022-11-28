@@ -27,15 +27,17 @@ public class SellStockTest {
     private static final int quantity = 10;
     private static final int sellQuant = 4;
     private static final int invalidQuant = 100;
+    private static final String username = "SellTestUser";
+
 
     @BeforeAll
     public static void SetUp() throws IOException {
         Date date = new Date(100);
         RegisterInteractor interactor1 = new RegisterInteractor();
-        interactor1.signUpUser("TestUser2", "password", "password", date);
+        interactor1.signUpUser(username, "password", "password", date);
 
         UserLoginInteractor interactor2 = new UserLoginInteractor();
-        User user = interactor2.loginUser("TestUser", "password", date);
+        User user = interactor2.loginUser(username, "password", date);
 
         PortfolioCreationInteractor interactor3 = new PortfolioCreationInteractor(user);
         int tag = 0;

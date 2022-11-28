@@ -26,37 +26,42 @@ public class SellUseCaseInteractor {
         iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         StockAPIAccess stockAPIAccess = new StockAPIAccess();
         StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
-        StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
-        SellType possible = portfolio.sellStock(symbol, stockAPIResponse.getPrice(), quantity);
 
-        if (possible == SellType.ERROR){
-            return new SellOutputResponse(false);
-        }
-        else{
-            dbGateway.updatePortfolioBalance(
-                    portfolio.getName(),
-                    portfolio.getBalance(),
-                    portfolio.getUsername());
+        try{
+            StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
+            SellType possible = portfolio.sellStock(symbol, stockAPIResponse.getPrice(), quantity);
 
-            if (possible == SellType.REMOVE) {
-                dbGateway.deleteStock(
-                        symbol,
-                        portfolio.getUsername(),
-                        portfolio.getName());
+            if (possible == SellType.ERROR){
+                return new SellOutputResponse(false, "Please enter a valid amount.");
             }
             else{
-                dbGateway.updateStockQuantity(
-                        symbol,
-                        portfolio.getStockQuantity(symbol),
-                        portfolio.getUsername(),
-                        portfolio.getName()
-                );
-            }
+                dbGateway.updatePortfolioBalance(
+                        portfolio.getName(),
+                        portfolio.getBalance(),
+                        portfolio.getUsername());
 
-            return new SellOutputResponse(true);
+                if (possible == SellType.REMOVE) {
+                    dbGateway.deleteStock(
+                            symbol,
+                            portfolio.getUsername(),
+                            portfolio.getName());
+                }
+                else{
+                    dbGateway.updateStockQuantity(
+                            symbol,
+                            portfolio.getStockQuantity(symbol),
+                            portfolio.getUsername(),
+                            portfolio.getName()
+                    );
+                }
+
+                return new SellOutputResponse(true, "Sale successful!");
+            }
         }
-        catch (NullPointerException e) {
-            return new SellOutputResponse("You do not own any of this stock", 0, symbol, false);
+
+        catch (NullPointerException |
+               IOException e) {
+            return new SellOutputResponse(false, "You do not own any of this stock");
         }
 
     }
