@@ -1,5 +1,6 @@
 package BuyStockUseCase;
 
+
 import PortfolioCreationUseCase.CompPortRequest;
 import PortfolioCreationUseCase.PortfolioSelectedController;
 import PortfolioCreationUseCase.UserPresenter;
@@ -8,10 +9,12 @@ import SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
-
 import java.util.ArrayList;
 
 public class PortfolioPresenter {
+    /**
+     * Presenter for the portfolio GUI
+     */
     private final iPortfolioGUI view;
     private final Portfolio portfolio;
     private final User user;

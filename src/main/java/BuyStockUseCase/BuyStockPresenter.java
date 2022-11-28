@@ -8,6 +8,9 @@ import main.OuterLayerFactory;
 import java.io.IOException;
 
 public class BuyStockPresenter {
+    /**
+     * Presenter for the buy stock GUI
+     */
     private final iBuyStockGUI view;
     private final Portfolio currentPort;
     private final User user;

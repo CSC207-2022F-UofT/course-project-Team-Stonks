@@ -1,5 +1,5 @@
 package SellStockUseCase;
-import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
 import db.iEntityDBGateway;
@@ -24,7 +24,7 @@ public class SellUseCaseInteractor {
         int quantity = sell.getQuantity();
 
         iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
-        StockAPIAccess stockAPIAccess = new StockAPIAccess();
+        StockAPIGateway stockAPIAccess = new StockAPIGateway();
         StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
 
         try{
