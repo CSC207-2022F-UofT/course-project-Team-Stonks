@@ -1,10 +1,8 @@
 package SearchStockTest;
 
 import SearchStockUseCase.ViewStockUseCaseInteractor;
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 
 public class SearchStockInteractorTest {
     private static ViewStockUseCaseInteractor interactor;

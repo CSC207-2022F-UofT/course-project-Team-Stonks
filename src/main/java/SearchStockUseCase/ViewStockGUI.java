@@ -48,80 +48,80 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
 
     public ViewStockGUI(String symbol) {
         super();
-        priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
-        this.from.add(Calendar.DATE, -7); //Date of the last 7 days
-        try {
-            this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
+//        this.from.add(Calendar.DATE, -7); //Date of the last 7 days
+//        try {
+//            this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
         this.stockSymbol = symbol;
-        this.histData = stock.getHistData();
-
-        //Setting up labels
-        HistoricalQuote latestValues = histData.get(histData.size() - 1);
-        curr_high.setText("High: " + new DecimalFormat("0.00").format(latestValues.getHigh()));
-        curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
-        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stock.getPrice()));
-
-        HistoricalQuote previousDayValues = histData.get(histData.size() - 1);
-        double last_close = previousDayValues.getClose().doubleValue();
-        try {
-            up_down.setText("Up/Down: " + new DecimalFormat("0.00").format(updatePrice() - last_close));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        stockLabel.setText(this.stockSymbol + stockMarketStatus());
-
-
-        //Setting up Button
-        refreshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    updateValues();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
-
-        updateTable();
-        todayButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    todayButtonAction();
-                    updateTable();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
-        weekButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    weeklyButtonAction();
-                    updateTable();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
-        yearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    monthlyButtonAction();
-                    updateTable();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-            }
-        });
+//        this.histData = stock.getHistData();
+//
+//        //Setting up labels
+//        HistoricalQuote latestValues = histData.get(histData.size() - 1);
+//        curr_high.setText("High: " + new DecimalFormat("0.00").format(latestValues.getHigh()));
+//        curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
+//        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stock.getPrice()));
+//
+//        HistoricalQuote previousDayValues = histData.get(histData.size() - 1);
+//        double last_close = previousDayValues.getClose().doubleValue();
+//        try {
+//            up_down.setText("Up/Down: " + new DecimalFormat("0.00").format(updatePrice() - last_close));
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        stockLabel.setText(this.stockSymbol + stockMarketStatus());
+//
+//
+//        //Setting up Button
+//        refreshButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                try {
+//                    updateValues();
+//                } catch (IOException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//            }
+//        });
+//
+//        updateTable();
+//        todayButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                try {
+//                    todayButtonAction();
+//                    updateTable();
+//                } catch (IOException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//            }
+//        });
+//        weekButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                try {
+//                    weeklyButtonAction();
+//                    updateTable();
+//                } catch (IOException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//            }
+//        });
+//        yearButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                try {
+//                    monthlyButtonAction();
+//                    updateTable();
+//                } catch (IOException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//
+//            }
+//        });
         //Setting up JFrame
         this.setContentPane(this.mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

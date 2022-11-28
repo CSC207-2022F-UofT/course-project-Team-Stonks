@@ -15,6 +15,8 @@ public class ViewStockPresenter {
     private final User user;
     public ViewStockPresenter(iViewStockGUI view, Portfolio portfolio, User user){
         this.view = view;
+        boolean valid = new ViewStockUseCaseInteractor().searchStock(view.getStockSymbol());
+        System.out.println(valid);
         this.portfolio = portfolio;
         this.user = user;
         view.addBuyStockAction(this::onBuyStock);

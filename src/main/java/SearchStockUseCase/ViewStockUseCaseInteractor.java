@@ -8,17 +8,21 @@ import java.io.IOException;
 import java.util.Calendar;
 
 
-public class ViewStockUseCaseInteractor {
-    public boolean searchStock(String symbol) throws Exception {
+public class ViewStockUseCaseInteractor{
+    private StockAPIResponse stock;
+    private Calendar from = Calendar.getInstance();
+    private Interval stockPriceInterval = Interval.DAILY;
+
+    public boolean searchStock(String symbol){
+        System.out.println(symbol);
+        this.from.add(Calendar.DATE, -7); //Date of the last 7 days
         try {
-            StockAPIAccess access = new StockAPIAccess();
-            StockAPIResponse res = access.getPrice(new StockAPIRequest(symbol));
+            this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
             return true;
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
 
-//        ViewStockPresenter viewStockPresenter = new ViewStockPresenter(symbol);
     }
 
 }
