@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public class PortfolioFactory {
+    /**
+     * This class is responsible for creating a Portfolio object
+     */
     private final StockFactory stockFactory = new StockFactory();
     public static double BALANCE = 10000;
 

@@ -11,13 +11,14 @@ import java.io.IOException;
 public class SellUseCaseInteractor {
 
     /**
-     * This method is used to sell stocks from a portfolio
+     * The interactor for selling stocks from a portfolio. This class is used to
+     * interact with the API and the portfolio to sell stocks.
      * @param sell The request object containing the portfolio, symbol, and quantity
      * @return The response object containing the portfolio, symbol, quantity, and price
-     * @throws IOException
      */
 
-    public SellOutputResponse sellStock(SellInputRequest sell) throws IOException {
+    public SellOutputResponse sellStock(SellInputRequest sell) {
+
         Portfolio portfolio = sell.getPortfolio();
         String symbol = sell.getSymbol();
         int quantity = sell.getQuantity();
@@ -54,5 +55,9 @@ public class SellUseCaseInteractor {
 
             return new SellOutputResponse(true);
         }
+        catch (NullPointerException e) {
+            return new SellOutputResponse("You do not own any of this stock", 0, symbol, false);
+        }
+
     }
 }

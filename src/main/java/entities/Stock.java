@@ -1,6 +1,9 @@
 package entities;
 
 public class Stock {
+    /**
+     * Construct a Stock with the given symbol, value and quantity
+     */
     private final String symbol;
     private final double value;
     private int quantity;

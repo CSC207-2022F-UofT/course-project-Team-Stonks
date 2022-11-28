@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserManager {
+    /**
+     * This class is responsible for managing the creation and deletion of User objects
+     */
     public static UserManager instance =
             new UserManager(
                     OuterLayerFactory.instance.getEntityDSGateway());
