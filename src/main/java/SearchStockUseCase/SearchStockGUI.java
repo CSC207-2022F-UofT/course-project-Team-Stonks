@@ -1,28 +1,27 @@
 package SearchStockUseCase;
 
-import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.List;
 
 
 public class SearchStockGUI extends JFrame{
     private StockAPIResponse stock;
-    private Calendar from = Calendar.getInstance();
-    private Interval stockPriceInterval = Interval.DAILY;
+    private final Calendar from = Calendar.getInstance();
+    private final Interval stockPriceInterval = Interval.DAILY;
     private final String stockSymbol;
     private List<HistoricalQuote> histData;
     private JPanel mainPanel;
@@ -46,7 +45,7 @@ public class SearchStockGUI extends JFrame{
         priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
 
         this.from.add(Calendar.DATE, -7); //Date of the last 7 days
-        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
         this.stockSymbol = symbol;
         this.histData = stock.getHistData();
 
@@ -64,26 +63,13 @@ public class SearchStockGUI extends JFrame{
 
 
         //Setting up Buttons
-        buyStockButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(buyStockButton, "BuY Stock");
-            }
-        });
-        sellStockButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(sellStockButton, "Sell Stock");
-            }
-        });
-        refreshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    updateValues();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+        buyStockButton.addActionListener(e -> JOptionPane.showMessageDialog(buyStockButton, "BuY Stock"));
+        sellStockButton.addActionListener(e -> JOptionPane.showMessageDialog(sellStockButton, "Sell Stock"));
+        refreshButton.addActionListener(e -> {
+            try {
+                updateValues();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
 
@@ -94,39 +80,30 @@ public class SearchStockGUI extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
-        todayButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    todayButtonAction();
-                    updateTable();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+        todayButton.addActionListener(e -> {
+            try {
+                todayButtonAction();
+                updateTable();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
-        weekButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    weeklyButtonAction();
-                    updateTable();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+        weekButton.addActionListener(e -> {
+            try {
+                weeklyButtonAction();
+                updateTable();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
-        yearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    monthlyButtonAction();
-                    updateTable();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+        yearButton.addActionListener(e -> {
+            try {
+                monthlyButtonAction();
+                updateTable();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
 
-            }
         });
     }
 
@@ -150,7 +127,7 @@ public class SearchStockGUI extends JFrame{
         /* This function should only be called periodically every minute*/
         StockAPIResponse stockAPIResponse;
         try {
-            stockAPIResponse = new StockAPIAccess().getPrice(new StockAPIRequest(this.stockSymbol));
+            stockAPIResponse = new StockAPIGateway().getPrice(new StockAPIRequest(this.stockSymbol));
         } catch (IOException e) {
             throw new Exception(String.format("Invalid stock Symbol %s", this.stockSymbol));
         }
@@ -159,7 +136,7 @@ public class SearchStockGUI extends JFrame{
 
     private void updateValues() throws IOException {
         //Getting updated values from API
-        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
         this.histData = this.stock.getHistData();
 
         //Setting up labels
@@ -173,7 +150,7 @@ public class SearchStockGUI extends JFrame{
         Calendar dailyFrom = Calendar.getInstance();
         dailyFrom.add(Calendar.DATE, -7);
         Interval dailyInterval = Interval.DAILY;
-        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(this.stockSymbol, dailyFrom, dailyInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, dailyFrom, dailyInterval));
         this.histData = this.stock.getHistData();
     }
 
@@ -182,7 +159,7 @@ public class SearchStockGUI extends JFrame{
         weeklyFrom.setFirstDayOfWeek(Calendar.MONDAY);
         weeklyFrom.add(Calendar.MONTH, -2);
         Interval weeklyInterval = Interval.WEEKLY;
-        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(this.stockSymbol, weeklyFrom, weeklyInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, weeklyFrom, weeklyInterval));
         this.histData = this.stock.getHistData();
     }
 
@@ -190,7 +167,7 @@ public class SearchStockGUI extends JFrame{
         Calendar monthlyFrom = Calendar.getInstance();
         monthlyFrom.add(Calendar.YEAR, -7);
         Interval monthlyInterval = Interval.MONTHLY;
-        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(this.stockSymbol, monthlyFrom, monthlyInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, monthlyFrom, monthlyInterval));
         this.histData = this.stock.getHistData();
     }
 
