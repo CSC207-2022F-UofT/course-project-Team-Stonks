@@ -4,10 +4,13 @@ import entities.Leaderboard;
 import entities.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LeaderboardResponse {
     private final Leaderboard board;
+
     public LeaderboardResponse(Leaderboard board) {
         this.board = board;
     }
@@ -19,8 +22,7 @@ public class LeaderboardResponse {
     public List<String> toStringList() {
         List<String> result = new ArrayList<>();
         int position = 1;
-
-        for(User u : board.getTopUsers().keySet()) {
+        for (User u : board.getTopUsers().keySet()) {
             result.add(position + ". " + u.getUsername() + ":             $" + board.getTopUsers().get(u));
             position++;
         }

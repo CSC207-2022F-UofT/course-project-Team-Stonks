@@ -89,7 +89,7 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
     }
 
     private void addCompText() {
-        this.portfolioName.setText(portfolioName.getText() + " (competative portfolio)");
+        this.portfolioName.setText(portfolioName.getText() + " (Competitive Portfolio)");
     }
 
     {
