@@ -16,7 +16,6 @@ public class Portfolio {
     private final String username;
     private final Map<String, Stock> symbolToStock;
     private final StockFactory stockFactory = new StockFactory();
-    private double balance;
 
     public Portfolio(double balance, String name, String username) {
         this.balance = balance;
