@@ -1,6 +1,6 @@
 package SellStockTest;
 
-import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
 import SellStockUseCase.SellUseCaseInteractor;
@@ -43,7 +43,7 @@ public class SellStockTest {
             tag += 1;
         }
 
-        StockAPIAccess access = new StockAPIAccess();
+        StockAPIGateway access = new StockAPIGateway();
         StockAPIResponse res = access.getPrice(new StockAPIRequest(symbol));
         double price = res.getPrice();
         portfolio = user.getPortfolio("newPortfolio" + tag);
