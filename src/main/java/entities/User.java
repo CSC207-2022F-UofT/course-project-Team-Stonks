@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class User {
+    /**
+     * Construct a User with the given username, password, portfolio and last login date
+     */
     private final String username;
     private final String password;
     private final Map<String, Portfolio> nameToPortfolio;

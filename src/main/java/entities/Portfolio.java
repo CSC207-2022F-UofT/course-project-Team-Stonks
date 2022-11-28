@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Portfolio {
+    /**
+     * Construct a Portfolio with the given name, balance and stocks
+     */
     private double balance;
     private final String name;
     private final String username;
