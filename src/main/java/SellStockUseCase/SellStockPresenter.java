@@ -1,6 +1,8 @@
 package SellStockUseCase;
 
+import SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
+import main.OuterLayerFactory;
 
 
 public class SellStockPresenter {
@@ -17,6 +19,7 @@ public class SellStockPresenter {
     }
     private void onBack() {
         view.close();
+        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol()), this.portfolio);
     }
     private void onSell() {
         String symbol = view.getSymbol();
