@@ -43,6 +43,11 @@ public class BuyUseCaseInteractor {
 
         // Passes parameters to Portfolio, outputs results
         BuyType result = port.addStock(symbol, price, buy_quantity);
+
+        if (result == BuyType.FAILED) {
+            return new BuyOutputResponse(false);
+        }
+
         dbGateway.updateStockQuantity(symbol, port.getStockQuantity(symbol), port.getUsername(), port.getName());
         dbGateway.updatePortfolioBalance(port.getName(), port.getBalance(), port.getUsername());
 
