@@ -1,7 +1,7 @@
 package entities;
 
-import db.StockDSResponse;
-import db.iEntityDBGateway;
+import BuyStockUseCase.BuyType;
+import SellStockUseCase.SellType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,21 +16,18 @@ public class Portfolio {
     private final String username;
     private final Map<String, Stock> symbolToStock;
     private final StockFactory stockFactory = new StockFactory();
-    private final iEntityDBGateway dbGateWay;
 
-    public Portfolio(double balance, String name, iEntityDBGateway dbGateway, String username) {
+    public Portfolio(double balance, String name, String username) {
         this.balance = balance;
         this.name = name;
         symbolToStock = new HashMap<>();
-        this.dbGateWay = dbGateway;
         this.username = username;
     }
 
-    public Portfolio(double balance, String name, Map<String, Stock> symbolToStock, iEntityDBGateway dbGateway, String username) {
+    public Portfolio(double balance, String name, Map<String, Stock> symbolToStock, String username) {
         this.balance = balance;
         this.name = name;
         this.symbolToStock = symbolToStock;
-        this.dbGateWay = dbGateway;
         this.username = username;
     }
 
@@ -57,75 +54,64 @@ public class Portfolio {
 
     /**
      * <p>
-     *     adds *quantity* amount of the stock to user's portfolio if user has sufficent funds and returns true,
-     *     otherwise does nothing and return false
+     * adds *quantity* amount of the stock to user's portfolio if user has sufficent funds and returns true,
+     * otherwise does nothing and return false
      * </p>
-     * @param symbol represents a stock's name
-     * @param value non-negative number
+     *
+     * @param symbol   represents a stock's name
+     * @param value    non-negative number
      * @param quantity positive integer
      */
-    public boolean addStock(String symbol, double value, int quantity) {
+    public BuyType addStock(String symbol, double value, int quantity) {
         Stock stock = symbolToStock.get(symbol);
 
         if (balance < value * quantity) {
-            return false;
-        }
-
-        if (stock != null) {
-            stock.addQuantity(quantity, username, name);
-        } else {
-            symbolToStock.put(symbol, stockFactory.createStock(symbol, value, quantity, username, name, dbGateWay));
+            return BuyType.FAILED;
         }
 
         balance -= value * quantity;
 
-        return true;
+        if (stock != null) {
+            stock.addQuantity(quantity, username, name);
+            return BuyType.EXISTING;
+        }
+
+        symbolToStock.put(symbol, stockFactory.createStock(symbol, value, quantity));
+        return BuyType.NEW;
     }
 
     /**
      * <p>
-     *     returns true and sells the quantity of stock with given symbol if user
-     *     has sufficient stock quantity, otherwise does nothing and return false
+     * returns true and sells the quantity of stock with given symbol if user
+     * has sufficient stock quantity, otherwise does nothing and return false
      * </p>
-     * @param symbol non-empty string
+     *
+     * @param symbol   non-empty string
      * @param quantity positive int
      */
-    public boolean sellStock(String symbol, int quantity, String username) {
+    public SellType sellStock(String symbol, double value, int quantity) {
         Stock stock = symbolToStock.get(symbol);
 
         if (stock.getQuantity() < quantity) {
-            return false;
+            return SellType.ERROR;
         }
 
-        balance += quantity * stock.getValue();
-        dbGateWay.updatePortfolioBalance(name, balance, username);
+        balance += quantity * value;
 
         if (quantity == stock.getQuantity()) {
             symbolToStock.remove(symbol);
-            dbGateWay.deleteStock(symbol, username, name);
-        } else {
-            stock.addQuantity(-quantity, username, name);
+            return SellType.REMOVE;
         }
 
-        return true;
-    }
+        stock.addQuantity(-quantity, username, name);
 
-    public void updateStockValues(String username) {
-        for (Stock stock : symbolToStock.values()) {
-            Stock dsStock = convertStockDSResponse(
-                    dbGateWay.findStock(stock.getSymbol(), username, name));
-            stock.setValue(dsStock.getValue());
-        }
+        return SellType.SUCCESFUL;
     }
 
     public void pullStocks(List<Stock> newStocks) {
         for (Stock stock : newStocks) {
             symbolToStock.put(stock.getSymbol(), stock);
         }
-    }
-
-    public Stock convertStockDSResponse(StockDSResponse dsResponse) {
-        return stockFactory.createStock(dsResponse.getSymbol(), dsResponse.getValue(), dsResponse.getQuantity(), dbGateWay);
     }
 
     public double getNetValue() {

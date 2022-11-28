@@ -3,11 +3,19 @@ package BuyStockUseCase;
 import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
+import db.StockDSRequest;
+import db.iEntityDBGateway;
 import entities.Portfolio;
+import main.OuterLayerFactory;
 
 import java.io.IOException;
 
 public class BuyUseCaseInteractor {
+    iEntityDBGateway dbGateway;
+
+    public BuyUseCaseInteractor() {
+        dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+    }
 
     /**
      * Receives symbol and quantity input from user, obtains stock price through
@@ -34,7 +42,19 @@ public class BuyUseCaseInteractor {
         double price = res.getPrice();
 
         // Passes parameters to Portfolio, outputs results
-        boolean result = port.addStock(symbol, price, buy_quantity);
-        return new BuyOutputResponse(result);
+        BuyType result = port.addStock(symbol, price, buy_quantity);
+
+        if (result == BuyType.FAILED) {
+            return new BuyOutputResponse(false);
+        }
+
+        if (result == BuyType.NEW){
+            dbGateway.addStock(new StockDSRequest(symbol, price, buy_quantity, port.getUsername(), port.getName()));
+        }
+
+        dbGateway.updateStockQuantity(symbol, port.getStockQuantity(symbol), port.getUsername(), port.getName());
+        dbGateway.updatePortfolioBalance(port.getName(), port.getBalance(), port.getUsername());
+
+        return new BuyOutputResponse(true);
     }
 }

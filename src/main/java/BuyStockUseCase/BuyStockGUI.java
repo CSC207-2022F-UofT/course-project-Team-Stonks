@@ -48,22 +48,22 @@ public class BuyStockGUI extends JFrame implements iBuyStockGUI {
 
     @Override
     public void displayBalanceFailure() {
-        this.responseLabel.setText("Insufficient balance.");
+        JOptionPane.showMessageDialog(null, "Insufficient balance.");
     }
 
     @Override
     public void displayConnectionFailure() {
-        this.responseLabel.setText("There was a problem connecting to the stock price service.");
+        JOptionPane.showMessageDialog(null, "There was a problem connecting to the stock price service.");
     }
 
     @Override
     public void displayInvalidInputFailure() {
-        this.responseLabel.setText("Please enter a positive integer.");
+        JOptionPane.showMessageDialog(null, "Please enter a positive integer.");
     }
 
     @Override
     public void displaySuccess() {
-        this.responseLabel.setText("Purchase successful!");
+        JOptionPane.showMessageDialog(null, "Purchase successful!");
     }
 
     @Override

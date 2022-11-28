@@ -1,5 +1,8 @@
 package BuyStockUseCase;
 
+
+import PortfolioCreationUseCase.CompPortRequest;
+import PortfolioCreationUseCase.PortfolioSelectedController;
 import PortfolioCreationUseCase.UserPresenter;
 import PortfolioCreationUseCase.iUserGUI;
 import SearchStockUseCase.ViewStockPresenter;
@@ -15,11 +18,15 @@ public class PortfolioPresenter {
     private final iPortfolioGUI view;
     private final Portfolio portfolio;
     private final User user;
+    private final PortfolioSelectedController psController;
 
     public PortfolioPresenter(iPortfolioGUI view, Portfolio portfolio, User user) {
         this.view = view;
         this.portfolio = portfolio;
         this.user = user;
+
+        psController = new PortfolioSelectedController();
+
         view.addBackAction(this::onBack);
         view.addMakeCompPortfolioAction(this::onMakeCompPortfolio);
         view.addSearchAction(this::onSearch);
@@ -37,7 +44,7 @@ public class PortfolioPresenter {
 
     }
     public void onMakeCompPortfolio() {
-        user.setCompPortfolio(portfolio.getName());
+        psController.NewCompPort(new CompPortRequest(user, portfolio.getName()));
         view.removeCompPortfolioButton();
     }
 }
