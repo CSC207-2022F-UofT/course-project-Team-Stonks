@@ -1,5 +1,5 @@
 package SearchStockUseCase;
-import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
 import yahoofinance.histquotes.HistoricalQuote;
@@ -22,12 +22,12 @@ public class ViewStockUseCaseInteractor{
     public void searchStock(String symbol) throws IOException {
         stockSymbol = symbol;
         this.from.add(Calendar.DATE, -7); //Date of the last 7 days
-        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
     }
 
     public String[][] sortHistoricalData(){
         try {
-            this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(stockSymbol, this.from, this.stockPriceInterval));
+            this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(stockSymbol, this.from, this.stockPriceInterval));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

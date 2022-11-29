@@ -1,6 +1,6 @@
 package SearchStockUseCase;
 
-import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -140,7 +140,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
         /* This function should only be called periodically every minute*/
         StockAPIResponse stockAPIResponse;
         try {
-            stockAPIResponse = new StockAPIAccess().getPrice(new StockAPIRequest(this.stockSymbol));
+            stockAPIResponse = new StockAPIGateway().getPrice(new StockAPIRequest(this.stockSymbol));
         } catch (IOException e) {
             throw new Exception(String.format("Invalid stock Symbol %s", this.stockSymbol));
         }
@@ -150,7 +150,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     @Override
     public void updateValues() throws IOException {
         //Getting updated values from API
-        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
         this.histData = this.stock.getHistData();
 
         //Setting up labels
@@ -165,7 +165,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
         Calendar dailyFrom = Calendar.getInstance();
         dailyFrom.add(Calendar.DATE, -7);
         Interval dailyInterval = Interval.DAILY;
-        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(this.stockSymbol, dailyFrom, dailyInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, dailyFrom, dailyInterval));
         this.histData = this.stock.getHistData();
     }
 
@@ -175,7 +175,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
         weeklyFrom.setFirstDayOfWeek(Calendar.MONDAY);
         weeklyFrom.add(Calendar.MONTH, -2);
         Interval weeklyInterval = Interval.WEEKLY;
-        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(this.stockSymbol, weeklyFrom, weeklyInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, weeklyFrom, weeklyInterval));
         this.histData = this.stock.getHistData();
     }
 
@@ -184,7 +184,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
         Calendar monthlyFrom = Calendar.getInstance();
         monthlyFrom.add(Calendar.YEAR, -7);
         Interval monthlyInterval = Interval.MONTHLY;
-        this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(this.stockSymbol, monthlyFrom, monthlyInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, monthlyFrom, monthlyInterval));
         this.histData = this.stock.getHistData();
     }
 
