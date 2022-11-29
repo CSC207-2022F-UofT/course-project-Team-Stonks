@@ -17,13 +17,17 @@ public class SellStockGUI extends JFrame implements iSellStockGUI {
     private JTextField quantityBox;
     private JButton sellButton;
     private JButton backButton;
-    private JLabel symbol;
+    private JLabel symbolLabel;
+    private String symbol;
+    private int quantity;
 
-    public SellStockGUI(String symbol) {
+    public SellStockGUI(String symbol, int quantity) {
         super();
+        this.symbol = symbol;
+        this.quantity = quantity;
         this.setContentPane(SellStockPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.symbol.setText(symbol);
+        this.symbolLabel.setText(symbol + " (Currently have: " + quantity + ")");
         this.pack();
         this.setVisible(true);
     }
@@ -66,11 +70,17 @@ public class SellStockGUI extends JFrame implements iSellStockGUI {
         JOptionPane.showMessageDialog(
                 null,
                 "Sale successful! You have sold " + quantityBox.getText() + " shares of "
-                        + symbol.getText() + ".");
+                        + symbol + ".");
     }
 
     public String getSymbol() {
-        return symbol.getText();
+        return symbol;
+    }
+
+    @Override
+    public void updateQuantityLabel(int quant) {
+        this.quantity -= quant;
+        this.symbolLabel.setText(symbol + " (Currently have: " + this.quantity + ")");
     }
 
     {
@@ -112,9 +122,9 @@ public class SellStockGUI extends JFrame implements iSellStockGUI {
         if (label2Font != null) label2.setFont(label2Font);
         label2.setText("Sell Stock");
         SellStockPanel.add(label2, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        symbol = new JLabel();
-        symbol.setText("_");
-        SellStockPanel.add(symbol, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        symbolLabel = new JLabel();
+        symbolLabel.setText("_");
+        SellStockPanel.add(symbolLabel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
