@@ -17,6 +17,7 @@ public class ViewStockPresenter {
     private final User user;
     public ViewStockPresenter(iViewStockGUI view, Portfolio portfolio, User user){
         this.view = view;
+
         this.portfolio = portfolio;
         this.user = user;
         view.addBuyStockAction(this::onBuyStock);
