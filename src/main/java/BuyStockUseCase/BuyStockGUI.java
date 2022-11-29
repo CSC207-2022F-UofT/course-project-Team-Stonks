@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BuyStockGUI extends JFrame implements iBuyStockGUI {
+    /**
+     * GUI where the user can purchase stocks
+     */
     private JButton buyButton;
     private JTextField quantityField;
     private JLabel buyStockLabel;
@@ -16,21 +19,24 @@ public class BuyStockGUI extends JFrame implements iBuyStockGUI {
     private JLabel symbolLabel;
     private JButton goBackButton;
     private JPanel mainPanel;
+    private int quantity;
+    private String symbol;
 
-    public BuyStockGUI(String symbol) {
+    public BuyStockGUI(String symbol, int quantity) {
         super();
-
+        this.quantity = quantity;
+        this.symbol = symbol;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
-        this.symbolLabel.setText(symbol);
+        this.symbolLabel.setText(symbol + " (Currently have: " + quantity + ")");
         this.responseLabel.setText("");
         this.pack();
         this.setVisible(true);
     }
 
     @Override
-    public void addBuyAction(Runnable onLogin) {
-        buyButton.addActionListener(e -> onLogin.run());
+    public void addBuyAction(Runnable onBuy) {
+        buyButton.addActionListener(e -> onBuy.run());
     }
 
     @Override
@@ -45,32 +51,38 @@ public class BuyStockGUI extends JFrame implements iBuyStockGUI {
 
     @Override
     public void displayBalanceFailure() {
-        this.responseLabel.setText("Insufficient balance.");
+        JOptionPane.showMessageDialog(null, "Insufficient balance.");
     }
 
     @Override
     public void displayConnectionFailure() {
-        this.responseLabel.setText("There was a problem connecting to the stock price service.");
+        JOptionPane.showMessageDialog(null, "There was a problem connecting to the stock price service.");
     }
 
     @Override
     public void displayInvalidInputFailure() {
-        this.responseLabel.setText("Please enter a positive integer.");
+        JOptionPane.showMessageDialog(null, "Please enter a positive integer.");
     }
 
     @Override
     public void displaySuccess() {
-        this.responseLabel.setText("Purchase successful!");
+        JOptionPane.showMessageDialog(null, "Purchase successful!");
     }
 
     @Override
     public String getSymbol() {
-        return this.symbolLabel.getText();
+        return this.symbol;
     }
 
     @Override
     public int getQuantity() throws NumberFormatException {
         return Integer.parseInt(this.quantityField.getText());
+    }
+
+    @Override
+    public void updateQuantityLabel(int quant) {
+        this.quantity += quant;
+        this.symbolLabel.setText(symbol + " (Currently have: " + this.quantity + ")");
     }
 
     {

@@ -61,7 +61,7 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
      */
     @Override
     public void presentUsernameError() {
-        JOptionPane.showMessageDialog(null, "username already exists or it is empty!");
+        JOptionPane.showMessageDialog(null, "username already exists or it is empty or contains \"");
     }
 
     /**

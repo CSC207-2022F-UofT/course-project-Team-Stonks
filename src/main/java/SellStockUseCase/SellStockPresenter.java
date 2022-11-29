@@ -34,6 +34,7 @@ public class SellStockPresenter {
             SellOutputResponse response = controller.sellStock(new SellInputRequest(portfolio, symbol, quantity));
             if (response.possible()) {
                 view.displaySuccess();
+                view.updateQuantityLabel(quantity);
             } else {
                 view.displayQuantityFailure();
             }

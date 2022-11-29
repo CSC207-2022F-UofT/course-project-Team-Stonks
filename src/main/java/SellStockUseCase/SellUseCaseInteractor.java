@@ -1,5 +1,12 @@
 package SellStockUseCase;
+import APIInterface.StockAPIGateway;
+import APIInterface.StockAPIRequest;
+import APIInterface.StockAPIResponse;
+import db.iEntityDBGateway;
 import entities.Portfolio;
+import main.OuterLayerFactory;
+
+import java.io.IOException;
 
 public class SellUseCaseInteractor {
 
@@ -14,21 +21,51 @@ public class SellUseCaseInteractor {
 
         Portfolio portfolio = sell.getPortfolio();
         String symbol = sell.getSymbol();
-        String username = portfolio.getUsername();
         int quantity = sell.getQuantity();
 
-        try {
-            boolean possible = portfolio.sellStock(symbol, quantity, username);
-            if(possible){
-                return new SellOutputResponse("Sale successful!", quantity, symbol, true);
+        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        StockAPIGateway stockAPIAccess = new StockAPIGateway();
+        StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
+
+        try{
+            StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
+            SellType possible = portfolio.sellStock(symbol, stockAPIResponse.getPrice(), quantity);
+
+            if (possible == SellType.ERROR){
+                return new SellOutputResponse(false, "Please enter a valid amount.");
             }
             else{
-                return new SellOutputResponse("Please enter a valid amount.", 0, symbol, false);
+                dbGateway.updatePortfolioBalance(
+                        portfolio.getName(),
+                        portfolio.getBalance(),
+                        portfolio.getUsername());
+
+                if (possible == SellType.REMOVE) {
+                    dbGateway.deleteStock(
+                            symbol,
+                            portfolio.getUsername(),
+                            portfolio.getName());
+                }
+                else{
+                    dbGateway.updateStockQuantity(
+                            symbol,
+                            portfolio.getStockQuantity(symbol),
+                            portfolio.getUsername(),
+                            portfolio.getName()
+                    );
+                }
+
+                return new SellOutputResponse(true, "Sale successful!");
+
             }
         }
-        catch (NullPointerException e) {
-            return new SellOutputResponse("You do not own any of this stock", 0, symbol, false);
+
+        catch (NullPointerException |
+               IOException e) {
+            return new SellOutputResponse(false, "You do not own any of this stock");
         }
+
+
 
     }
 }

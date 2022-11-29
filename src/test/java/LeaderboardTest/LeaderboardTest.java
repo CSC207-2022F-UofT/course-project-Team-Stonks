@@ -18,8 +18,12 @@ public class LeaderboardTest {
     }
 
     @Test
-    public void testGetAllUsers() {
+    public void testGetAllUsersNonEmpty() {
         List<User> users = UserManager.instance.getAllUsers();
         Assertions.assertFalse(users.isEmpty());
+    }
+    @Test
+    public void testLeaderboardTwoUsers() {
+
     }
 }

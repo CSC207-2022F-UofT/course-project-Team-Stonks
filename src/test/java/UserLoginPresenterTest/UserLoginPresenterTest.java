@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 public class UserLoginPresenterTest {
     private static UserLoginController controller;
-    private static final String correctUsername = "database";
+    private static final String correctUsername = "LoginTestUser";
     private static final String correctPassword = "password";
 
     @BeforeAll

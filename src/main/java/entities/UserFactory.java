@@ -1,7 +1,6 @@
 package entities;
 
 import db.PortfolioDSResponse;
-import db.iEntityDBGateway;
 
 import java.sql.Date;
 import java.util.HashMap;
@@ -14,13 +13,13 @@ public class UserFactory {
      */
     private final PortfolioFactory portfolioFactory = new PortfolioFactory();
 
-    public User createUser(String username, String password, Date creationTime, String compPort, List<PortfolioDSResponse> portfolioResponses, iEntityDBGateway dbGateway) {
+    public User createUser(String username, String password, Date creationTime, String compPort, List<PortfolioDSResponse> portfolioResponses) {
         Map<String, Portfolio> portfolios = new HashMap<>();
 
         for (PortfolioDSResponse portfolio : portfolioResponses) {
-            portfolios.put(portfolio.getName(), portfolioFactory.createPortfolio(portfolio.getBalance(), portfolio.getName(), username, portfolio.getStocks(), dbGateway));
+            portfolios.put(portfolio.getName(), portfolioFactory.createPortfolio(portfolio.getBalance(), portfolio.getName(), username, portfolio.getStocks()));
         }
 
-        return new User(username, password, creationTime, compPort, portfolios, dbGateway);
+        return new User(username, password, creationTime, compPort, portfolios);
     }
 }

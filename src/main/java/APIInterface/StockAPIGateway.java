@@ -4,11 +4,12 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StockAPIAccess implements StockDatabaseAccess{
+public class StockAPIGateway implements iStockDatabaseGateway{
 
     /**
      * @param req StockAPIRequest containing a String representing the symbol of the stock to be searched
@@ -17,8 +18,8 @@ public class StockAPIAccess implements StockDatabaseAccess{
      */
     @Override
     public StockAPIResponse getPrice(StockAPIRequest req) throws IOException {
-        Stock stock = YahooFinance.get(req.getSymbol(), true);
-        List<HistoricalQuote> histQuotes = stock.getHistory();
+        Stock stock = YahooFinance.get(req.getSymbol());
+        List<HistoricalQuote> histQuotes = new ArrayList<>();
         return new StockAPIResponse(stock.getQuote().getPrice().doubleValue(), histQuotes);
     }
 
