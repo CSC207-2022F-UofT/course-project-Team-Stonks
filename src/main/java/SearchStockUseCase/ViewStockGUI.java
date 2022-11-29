@@ -130,20 +130,9 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     }
 
     @Override
-    public void updateTable() {
-        //Setting up the JTable
-        String[][] data = new String[this.histData.size()][2];
-        // Column Names
-        String[] columnNames = {"Date", "Stock Price"};
-
-        int row = 0;
-        for (HistoricalQuote q : this.histData) {
-            data[row][0] = new SimpleDateFormat("dd/MM/yyyy").format(q.getDate().getTime());
-            data[row][1] = new DecimalFormat("0.00").format(q.getClose());
-            row++;
-        }
+    public void updateTable(DefaultTableModel tableModel) {
         // Initializing the JTable
-        priceTable.setModel(new DefaultTableModel(data, columnNames));
+        priceTable.setModel(tableModel);
     }
 
     @Override

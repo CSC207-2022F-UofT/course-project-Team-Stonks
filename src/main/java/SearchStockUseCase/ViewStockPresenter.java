@@ -9,6 +9,9 @@ import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
 
+import javax.swing.*;
+import java.io.IOException;
+
 public class ViewStockPresenter {
     private final iViewStockGUI view;
     private final Portfolio portfolio;
@@ -17,13 +20,18 @@ public class ViewStockPresenter {
     public ViewStockPresenter(iViewStockGUI view, Portfolio portfolio, User user){
         this.view = view;
         this.controller = new ViewStockController();
-        controller.searchStock(this.view.getStockSymbol());
-        System.out.println(valid);
+        try{
+            controller.searchStock(this.view.getStockSymbol());
+        } catch (Exception e) {
+            invalidSymbol();
+            onBack();
+        }
         this.portfolio = portfolio;
         this.user = user;
         view.addBuyStockAction(this::onBuyStock);
         view.addSellStockAction(this::onSellStock);
         view.addBackAction(this::onBack);
+        view.updateTable(this.controller.updateTable());
 
     }
 
@@ -43,5 +51,9 @@ public class ViewStockPresenter {
         //Call Buy Presenter
         view.close();
         new BuyStockPresenter(OuterLayerFactory.instance.getBuyGUI(view.getStockSymbol()), this.portfolio, this.user);
+    }
+    public void invalidSymbol(){
+        view.close();
+        JOptionPane.showMessageDialog(null, "Bad Symbol");
     }
 }

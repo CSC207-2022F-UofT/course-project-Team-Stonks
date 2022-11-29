@@ -1,6 +1,7 @@
 package SearchStockUseCase;
 
 
+import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
 
 
@@ -16,7 +17,7 @@ public interface iViewStockGUI {
     void addBackAction(Runnable onBack);
 
     String stockMarketStatus();
-    void updateTable();
+    void updateTable(DefaultTableModel tableModel);
     void close();
 
     String getStockSymbol();
