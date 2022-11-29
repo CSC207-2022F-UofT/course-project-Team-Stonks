@@ -51,7 +51,8 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
         this.from.add(Calendar.DATE, -7); //Date of the last 7 days
         try {
             this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             throw new RuntimeException(e);
         }
         this.stockSymbol = symbol;
@@ -144,7 +145,8 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
         StockAPIResponse stockAPIResponse;
         try {
             stockAPIResponse = new StockAPIGateway().getPrice(new StockAPIRequest(this.stockSymbol));
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             throw new Exception(String.format("Invalid stock Symbol %s", this.stockSymbol));
         }
         return stockAPIResponse.getPrice();

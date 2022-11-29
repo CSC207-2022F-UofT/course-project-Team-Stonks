@@ -1,5 +1,7 @@
 package main;
 
+import APIInterface.StockAPIGateway;
+import APIInterface.iStockDatabaseGateway;
 import BuyStockUseCase.BuyStockGUI;
 import BuyStockUseCase.PortfolioGUI;
 import BuyStockUseCase.iBuyStockGUI;
@@ -60,4 +62,8 @@ public class OuterLayerFactory {
         return new LeaderboardGUI(topUsers);
     }
     public iViewStockGUI getViewStockGUI(String symbol) { return new ViewStockGUI(symbol);}
+
+    public iStockDatabaseGateway getStockDBGateway() {
+        return new StockAPIGateway();
+    }
 }

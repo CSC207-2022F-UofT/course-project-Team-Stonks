@@ -29,11 +29,12 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
     private JButton makeCompetitivePortfolioButton;
     private JLabel netValue;
 
+    /**
+     * GUI where the user can view their portfolio information
+     */
     public PortfolioGUI(Portfolio port, String username, boolean isComp) {
         super();
-        /**
-         * GUI where the user can view their portfolio information
-         */
+
         this.port = port;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(portfolioPanel);
@@ -146,11 +147,14 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         label1.setText("Stocks:");
         panel2.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         stockComboBox = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("Stock: Quantity");
+        stockComboBox.setModel(defaultComboBoxModel1);
         panel2.add(stockComboBox, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel2.add(spacer1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         searchButton = new JButton();
-        searchButton.setText("Search Stock");
+        searchButton.setText("Search");
         portfolioPanel.add(searchButton, new GridConstraints(2, 2, 1, 2, GridConstraints.ANCHOR_SOUTHEAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         searchField = new JTextField();
         portfolioPanel.add(searchField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
