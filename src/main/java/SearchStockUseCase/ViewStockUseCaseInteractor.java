@@ -37,12 +37,11 @@ public class ViewStockUseCaseInteractor{
         this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
     }
 
+    public List<HistoricalQuote> getHistData(){
+        return this.stock.getHistData();
+    }
+
     public String[][] sortHistoricalData(){
-        try {
-            this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         List<HistoricalQuote> histData = stock.getHistData();
         //Setting up the JTable
         String[][] data = new String[histData.size()][2];
@@ -55,4 +54,8 @@ public class ViewStockUseCaseInteractor{
         return data;
     }
 
+    public double getStockValue() throws IOException {
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));;
+        return this.stock.getPrice();
+    }
 }

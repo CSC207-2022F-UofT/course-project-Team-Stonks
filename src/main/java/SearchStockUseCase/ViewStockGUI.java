@@ -10,11 +10,8 @@ import yahoofinance.histquotes.Interval;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.time.DayOfWeek;
@@ -23,7 +20,7 @@ import java.time.LocalTime;
 
 
 public class ViewStockGUI extends JFrame implements iViewStockGUI {
-    private StockAPIResponse stock;
+    private double stockPrice;
     private Calendar from = Calendar.getInstance();
     private Interval stockPriceInterval = Interval.DAILY;
     private final String stockSymbol;
@@ -45,35 +42,12 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     private JTable priceTable;
     private JScrollPane tableScrollPane;
     private JButton backButton;
-
     public ViewStockGUI(String symbol) {
         super();
-//        priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
-//        this.from.add(Calendar.DATE, -7); //Date of the last 7 days
-//        try {
-//            this.stock = new StockAPIAccess().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
         this.stockSymbol = symbol;
-//        this.histData = stock.getHistData();
-//
-//        //Setting up labels
-//        HistoricalQuote latestValues = histData.get(histData.size() - 1);
-//        curr_high.setText("High: " + new DecimalFormat("0.00").format(latestValues.getHigh()));
-//        curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
-//        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stock.getPrice()));
-//
-//        HistoricalQuote previousDayValues = histData.get(histData.size() - 1);
-//        double last_close = previousDayValues.getClose().doubleValue();
-//        try {
-//            up_down.setText("Up/Down: " + new DecimalFormat("0.00").format(updatePrice() - last_close));
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        stockLabel.setText(this.stockSymbol + stockMarketStatus());
-//
+        priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
+        stockLabel.setText(this.stockSymbol + stockMarketStatus());
+//        this.from.add(Calendar.DATE, -7); //Date of the last 7 days
 //
 //        //Setting up Button
 //        refreshButton.addActionListener(new ActionListener() {
@@ -129,6 +103,11 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
         this.setVisible(true);
     }
 
+    private String getStockHigh() {
+//        new DecimalFormat("0.00").format(latestValues.getHigh())
+        return "";
+    }
+
     @Override
     public void updateTable(DefaultTableModel tableModel) {
         // Initializing the JTable
@@ -149,43 +128,30 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
 
     @Override
     public void updateValues() throws IOException {
-        //Getting updated values from API
-        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
-        this.histData = this.stock.getHistData();
-
-        //Setting up labels
-        HistoricalQuote latestValues = histData.get(histData.size() - 1);
-        curr_high.setText("High: " + new DecimalFormat("0.00").format(latestValues.getHigh()));
-        curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
-        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stock.getPrice()));
+//        //Getting updated values from API
+//        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
+//        this.histData = this.stock.getHistData();
+//
+//        //Setting up labels
+//        HistoricalQuote latestValues = histData.get(histData.size() - 1);
+//        curr_high.setText("High: " + new DecimalFormat("0.00").format(latestValues.getHigh()));
+//        curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
+//        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stock.getPrice()));
     }
 
     @Override
-    public void todayButtonAction() throws IOException {
-        Calendar dailyFrom = Calendar.getInstance();
-        dailyFrom.add(Calendar.DATE, -7);
-        Interval dailyInterval = Interval.DAILY;
-        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, dailyFrom, dailyInterval));
-        this.histData = this.stock.getHistData();
+    public void todayButtonAction(Runnable onTodayButton){
+        todayButton.addActionListener(e -> onTodayButton.run());
     }
 
     @Override
-    public void weeklyButtonAction() throws IOException {
-        Calendar weeklyFrom = Calendar.getInstance();
-        weeklyFrom.setFirstDayOfWeek(Calendar.MONDAY);
-        weeklyFrom.add(Calendar.MONTH, -2);
-        Interval weeklyInterval = Interval.WEEKLY;
-        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, weeklyFrom, weeklyInterval));
-        this.histData = this.stock.getHistData();
+    public void weeklyButtonAction(Runnable onWeeklyButton){
+        weekButton.addActionListener(e -> onWeeklyButton.run());
     }
 
     @Override
-    public void monthlyButtonAction() throws IOException {
-        Calendar monthlyFrom = Calendar.getInstance();
-        monthlyFrom.add(Calendar.YEAR, -7);
-        Interval monthlyInterval = Interval.MONTHLY;
-        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, monthlyFrom, monthlyInterval));
-        this.histData = this.stock.getHistData();
+    public void yearlyButtonAction(Runnable onYearlyButton){
+        yearButton.addActionListener(e -> onYearlyButton.run());
     }
 
     @Override
@@ -221,6 +187,29 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     @Override
     public String getStockSymbol() {
         return this.stockSymbol;
+    }
+
+    @Override
+    public void setHistData(List<HistoricalQuote> historicalQuotes) {
+        this.histData = historicalQuotes;
+    }
+
+    @Override
+    public void setStockPrice(double stockPrice){
+        this.stockPrice = stockPrice;
+    }
+
+    @Override
+    public void loadLabels(){
+        //Setting up labels
+        HistoricalQuote latestValues = histData.get(histData.size() - 1);
+        curr_high.setText("High: " + latestValues.getHigh());
+        curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
+        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stockPrice));
+
+        HistoricalQuote previousDayValues = histData.get(histData.size() - 1);
+        double last_close = previousDayValues.getClose().doubleValue();
+        up_down.setText(String.format("Up/Down: %.2f", (this.stockPrice - last_close)));
     }
 
     {

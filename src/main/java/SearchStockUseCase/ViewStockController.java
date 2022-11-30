@@ -9,8 +9,12 @@ import java.util.List;
 public class ViewStockController {
     private final ViewStockUseCaseInteractor interactor;
 
+    private final String stockSymbol;
+    private List<HistoricalQuote> histData;
+
     public ViewStockController(String symbol){
-         this.interactor = new ViewStockUseCaseInteractor(symbol);
+        this.stockSymbol = symbol;
+        this.interactor = new ViewStockUseCaseInteractor(symbol);
     }
 
     public void stockIsValid() throws Exception {
@@ -28,4 +32,11 @@ public class ViewStockController {
         return new DefaultTableModel(data, columnNames);
     }
 
+    public List<HistoricalQuote> getCurrentHistData() {
+        return interactor.getHistData();
+    }
+
+    public double getCurrentPrice() throws IOException {
+        return interactor.getStockValue();
+    }
 }
