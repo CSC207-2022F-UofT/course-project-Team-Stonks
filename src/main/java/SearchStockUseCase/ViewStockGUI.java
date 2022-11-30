@@ -17,6 +17,7 @@ import java.util.List;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Locale;
 
 
 public class ViewStockGUI extends JFrame implements iViewStockGUI {
@@ -43,88 +44,25 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     private JScrollPane tableScrollPane;
     private JButton backButton;
 
+    private boolean isVisible = false;
+
     public ViewStockGUI(String symbol) {
         super();
         this.stockSymbol = symbol;
         priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
-        stockLabel.setText(this.stockSymbol + stockMarketStatus());
-//        this.from.add(Calendar.DATE, -7); //Date of the last 7 days
-//
-//        //Setting up Button
-//        refreshButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    updateValues();
-//                } catch (IOException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-//        });
-//
-//        updateTable();
-//        todayButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    todayButtonAction();
-//                    updateTable();
-//                } catch (IOException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-//        });
-//        weekButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    weeklyButtonAction();
-//                    updateTable();
-//                } catch (IOException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-//        });
-//        yearButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    monthlyButtonAction();
-//                    updateTable();
-//                } catch (IOException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//
-//            }
-//        });
+        stockLabel.setText(this.stockSymbol.toUpperCase() + stockMarketStatus());
         //Setting up JFrame
         this.setContentPane(this.mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.pack();
         this.setVisible(true);
-    }
+        this.pack();
 
-    private String getStockHigh() {
-//        new DecimalFormat("0.00").format(latestValues.getHigh())
-        return "";
     }
 
     @Override
     public void updateTable(DefaultTableModel tableModel) {
         // Initializing the JTable
         priceTable.setModel(tableModel);
-    }
-
-    @Override
-    public double updatePrice() throws Exception {
-        /* This function should only be called periodically every minute*/
-        StockAPIResponse stockAPIResponse;
-        try {
-            stockAPIResponse = new StockAPIGateway().getPrice(new StockAPIRequest(this.stockSymbol));
-        } catch (IOException e) {
-            throw new Exception(String.format("Invalid stock Symbol %s", this.stockSymbol));
-        }
-        return stockAPIResponse.getPrice();
     }
 
     @Override
@@ -196,13 +134,13 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     public void loadLabels() {
         //Setting up labels
         HistoricalQuote latestValues = histData.get(histData.size() - 1);
-        curr_high.setText("High: " + latestValues.getHigh());
+        curr_high.setText("High: " + new DecimalFormat("0.00").format(latestValues.getHigh()));
         curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
         currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stockPrice));
 
         HistoricalQuote previousDayValues = histData.get(histData.size() - 1);
         double last_close = previousDayValues.getClose().doubleValue();
-        System.out.println(this.stockPrice - last_close);
+        System.out.println("Labels Loaded");
         up_down.setText(String.format("Up/Down: %,.2f", this.stockPrice - last_close));
     }
 

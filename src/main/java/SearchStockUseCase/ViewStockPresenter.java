@@ -13,6 +13,7 @@ import main.OuterLayerFactory;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
 import java.util.Calendar;
@@ -26,8 +27,35 @@ public class ViewStockPresenter {
     public ViewStockPresenter(iViewStockGUI view, Portfolio portfolio, User user){
         this.view = view;
         this.controller = new ViewStockController(this.view.getStockSymbol());
+        JOptionPane jop = new JOptionPane();
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        jop.setMessage("Loading info for stock: " + this.view.getStockSymbol().toUpperCase());
+        JDialog dialog = jop.createDialog(null, "Loading Screen");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                onLoadGUI();
+                dialog.dispose();
+            }
 
+        }).start();
+        dialog.setVisible(true);
 
+        this.portfolio = portfolio;
+        this.user = user;
+
+        //Setting functionality for buttons
+        view.addBuyStockAction(this::onBuyStock);
+        view.addSellStockAction(this::onSellStock);
+        view.addBackAction(this::onBack);
+        view.yearlyButtonAction(this::onYearlyButton);
+        view.weeklyButtonAction(this::onWeeklyButton);
+        view.todayButtonAction(this::onTodayButton);
+        view.refreshButtonAction(this::onLoadGUI);
+
+    }
+
+    private boolean onLoadGUI(){
         try{
             this.controller.searchStock();
         } catch (IOException e) {
@@ -41,18 +69,7 @@ public class ViewStockPresenter {
         }
         this.view.loadLabels();
         this.view.updateTable(controller.updateTable(Interval.DAILY));
-
-        this.portfolio = portfolio;
-        this.user = user;
-
-        //Setting functionality for buttons
-        view.addBuyStockAction(this::onBuyStock);
-        view.addSellStockAction(this::onSellStock);
-        view.addBackAction(this::onBack);
-        view.yearlyButtonAction(this::onYearlyButton);
-        view.weeklyButtonAction(this::onWeeklyButton);
-        view.todayButtonAction(this::onTodayButton);
-
+        return true;
     }
 
     private void onTodayButton(){

@@ -9,12 +9,9 @@ import java.util.List;
 
 public class ViewStockController {
     private final ViewStockUseCaseInteractor interactor;
-
-    private final String stockSymbol;
     private List<HistoricalQuote> histData;
 
     public ViewStockController(String symbol){
-        this.stockSymbol = symbol;
         this.interactor = new ViewStockUseCaseInteractor(symbol);
     }
 

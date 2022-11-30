@@ -10,13 +10,9 @@ import java.util.List;
 
 public interface iViewStockGUI {
     void yearlyButtonAction(Runnable onYearlyButton);
-
     void addBuyStockAction(Runnable onBuyStock);
     void addSellStockAction(Runnable onSellStock);
-    double updatePrice() throws Exception;
-
     void refreshButtonAction(Runnable onRefreshButton);
-
     void todayButtonAction(Runnable onTodayButton);
     void weeklyButtonAction(Runnable onWeeklyButton);
     void addBackAction(Runnable onBack);
