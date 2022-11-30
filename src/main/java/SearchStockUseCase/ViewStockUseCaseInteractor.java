@@ -16,7 +16,7 @@ import java.util.List;
 public class ViewStockUseCaseInteractor{
     private StockAPIResponse stock;
     private final String stockSymbol;
-    private final Calendar from = Calendar.getInstance();
+    private Calendar from = Calendar.getInstance();
     private final Interval stockPriceInterval = Interval.DAILY;
 
     public ViewStockUseCaseInteractor(String symbol){
@@ -41,7 +41,23 @@ public class ViewStockUseCaseInteractor{
         return this.stock.getHistData();
     }
 
-    public String[][] sortHistoricalData(){
+    public String[][] sortHistoricalData(Interval histDataRange){
+        this.from = Calendar.getInstance();
+        if (histDataRange == Interval.DAILY){
+            this.from.add(Calendar.DATE, -7);
+        }else if (histDataRange == Interval.WEEKLY){
+            this.from.setFirstDayOfWeek(Calendar.MONDAY);
+            this.from.add(Calendar.MONTH, -2);
+        }else{
+            this.from.add(Calendar.YEAR, -7);
+        }
+
+        try{
+            this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, histDataRange));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         List<HistoricalQuote> histData = stock.getHistData();
         //Setting up the JTable
         String[][] data = new String[histData.size()][2];

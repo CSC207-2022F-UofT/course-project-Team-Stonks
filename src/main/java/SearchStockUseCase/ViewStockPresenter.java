@@ -10,6 +10,7 @@ import SellStockUseCase.SellStockPresenter;
 import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
+import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 
 import javax.swing.table.DefaultTableModel;
@@ -39,7 +40,7 @@ public class ViewStockPresenter {
             throw new RuntimeException(e);
         }
         this.view.loadLabels();
-        this.view.updateTable(controller.updateTable());
+        this.view.updateTable(controller.updateTable(Interval.DAILY));
 
         this.portfolio = portfolio;
         this.user = user;
@@ -55,27 +56,14 @@ public class ViewStockPresenter {
     }
 
     private void onTodayButton(){
-//        Calendar dailyFrom = Calendar.getInstance();
-//        dailyFrom.add(Calendar.DATE, -7);
-//        Interval dailyInterval = Interval.DAILY;
-//        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, dailyFrom, dailyInterval));
-//        this.histData = this.stock.getHistData();
+        this.view.updateTable(controller.updateTable(Interval.DAILY));
     }
     private void onWeeklyButton() {
-        //        Calendar weeklyFrom = Calendar.getInstance();
-//        weeklyFrom.setFirstDayOfWeek(Calendar.MONDAY);
-//        weeklyFrom.add(Calendar.MONTH, -2);
-//        Interval weeklyInterval = Interval.WEEKLY;
-//        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, weeklyFrom, weeklyInterval));
-//        this.histData = this.stock.getHistData();
+        this.view.updateTable(controller.updateTable(Interval.WEEKLY));
     }
 
     private void onYearlyButton() {
-        //        Calendar monthlyFrom = Calendar.getInstance();
-//        monthlyFrom.add(Calendar.YEAR, -7);
-//        Interval monthlyInterval = Interval.MONTHLY;
-//        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, monthlyFrom, monthlyInterval));
-//        this.histData = this.stock.getHistData();
+        this.view.updateTable(controller.updateTable(Interval.MONTHLY));
     }
 
 
@@ -97,8 +85,5 @@ public class ViewStockPresenter {
         view.close();
         int quantity = portfolio.getStockQuantity(view.getStockSymbol());
         new BuyStockPresenter(OuterLayerFactory.instance.getBuyGUI(view.getStockSymbol(), quantity), this.portfolio, this.user);
-    }
-    public DefaultTableModel updateTable(){
-        return controller.updateTable();
     }
 }

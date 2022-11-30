@@ -42,6 +42,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     private JTable priceTable;
     private JScrollPane tableScrollPane;
     private JButton backButton;
+
     public ViewStockGUI(String symbol) {
         super();
         this.stockSymbol = symbol;
@@ -127,30 +128,22 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     }
 
     @Override
-    public void updateValues() throws IOException {
-//        //Getting updated values from API
-//        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
-//        this.histData = this.stock.getHistData();
-//
-//        //Setting up labels
-//        HistoricalQuote latestValues = histData.get(histData.size() - 1);
-//        curr_high.setText("High: " + new DecimalFormat("0.00").format(latestValues.getHigh()));
-//        curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
-//        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stock.getPrice()));
+    public void refreshButtonAction(Runnable onRefreshButton){
+        refreshButton.addActionListener(e -> onRefreshButton.run());
     }
 
     @Override
-    public void todayButtonAction(Runnable onTodayButton){
+    public void todayButtonAction(Runnable onTodayButton) {
         todayButton.addActionListener(e -> onTodayButton.run());
     }
 
     @Override
-    public void weeklyButtonAction(Runnable onWeeklyButton){
+    public void weeklyButtonAction(Runnable onWeeklyButton) {
         weekButton.addActionListener(e -> onWeeklyButton.run());
     }
 
     @Override
-    public void yearlyButtonAction(Runnable onYearlyButton){
+    public void yearlyButtonAction(Runnable onYearlyButton) {
         yearButton.addActionListener(e -> onYearlyButton.run());
     }
 
@@ -195,12 +188,12 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     }
 
     @Override
-    public void setStockPrice(double stockPrice){
+    public void setStockPrice(double stockPrice) {
         this.stockPrice = stockPrice;
     }
 
     @Override
-    public void loadLabels(){
+    public void loadLabels() {
         //Setting up labels
         HistoricalQuote latestValues = histData.get(histData.size() - 1);
         curr_high.setText("High: " + latestValues.getHigh());
@@ -209,7 +202,8 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
 
         HistoricalQuote previousDayValues = histData.get(histData.size() - 1);
         double last_close = previousDayValues.getClose().doubleValue();
-        up_down.setText(String.format("Up/Down: %.2f", (this.stockPrice - last_close)));
+        System.out.println(this.stockPrice - last_close);
+        up_down.setText(String.format("Up/Down: %,.2f", this.stockPrice - last_close));
     }
 
     {

@@ -1,6 +1,7 @@
 package SearchStockUseCase;
 
 import yahoofinance.histquotes.HistoricalQuote;
+import yahoofinance.histquotes.Interval;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
@@ -25,10 +26,10 @@ public class ViewStockController {
         interactor.searchStock();
     }
 
-    public DefaultTableModel updateTable(){
+    public DefaultTableModel updateTable(Interval tableRange){
         // Column Names
         String[] columnNames = {"Date", "Stock Price"};
-        String[][] data = interactor.sortHistoricalData();
+        String[][] data = interactor.sortHistoricalData(tableRange);
         return new DefaultTableModel(data, columnNames);
     }
 
