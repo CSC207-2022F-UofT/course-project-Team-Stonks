@@ -15,19 +15,31 @@ import java.util.List;
 
 public class ViewStockUseCaseInteractor{
     private StockAPIResponse stock;
-    private String stockSymbol;
-    private Calendar from = Calendar.getInstance();
-    private Interval stockPriceInterval = Interval.DAILY;
+    private final String stockSymbol;
+    private final Calendar from = Calendar.getInstance();
+    private final Interval stockPriceInterval = Interval.DAILY;
 
-    public void searchStock(String symbol) throws IOException {
-        stockSymbol = symbol;
+    public ViewStockUseCaseInteractor(String symbol){
+        this.stockSymbol = symbol;
+    }
+
+    public void isValidStock() throws Exception {
+        //Checking is API throws error or not
+        try{
+            new StockAPIGateway().getPrice(new StockAPIRequest(this.stockSymbol));
+        }catch (IOException e){
+            throw new Exception("Invalid stock symbol");
+        }
+    }
+
+    public void searchStock() throws IOException {
         this.from.add(Calendar.DATE, -7); //Date of the last 7 days
-        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
     }
 
     public String[][] sortHistoricalData(){
         try {
-            this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(stockSymbol, this.from, this.stockPriceInterval));
+            this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

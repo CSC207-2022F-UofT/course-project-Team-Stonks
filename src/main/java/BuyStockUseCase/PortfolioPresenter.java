@@ -43,7 +43,7 @@ public class PortfolioPresenter {
     public void onSearch() {
         String symbol = view.getSearchField();
         try{
-            new ViewStockController().searchStock(symbol);
+            new ViewStockController(symbol).stockIsValid();
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, "Invalid stock symbol: "+symbol);
             return;
