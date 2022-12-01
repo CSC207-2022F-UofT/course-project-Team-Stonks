@@ -24,6 +24,9 @@ public class UserLoginPresenterTest {
         controller = new UserLoginController();
     }
 
+    /**
+     * Test that the presenter correctly handles a failed login with an incorrect username
+     */
     @Test
     public void testLoginFalseUsername() {
         UserLoginRequest request = new UserLoginRequest(
@@ -35,6 +38,10 @@ public class UserLoginPresenterTest {
         Assertions.assertNull(response.user());
     }
 
+
+    /**
+     * Test an invalid password to ensure that the user cannot login
+     */
     @Test
     public void testLoginFalsePassword() {
         UserLoginRequest request = new UserLoginRequest(
@@ -46,6 +53,9 @@ public class UserLoginPresenterTest {
         Assertions.assertNull(response.user());
     }
 
+    /**
+     * Test that the user is logged in when the correct username and password are entered
+     */
     @Test
     public void testLoginUserExists() {
         Date loginTime = Date.valueOf(LocalDate.now());

@@ -8,6 +8,14 @@ public final class RegisterRequest {
     private final String passwordConfirm;
     private final Date loginDate;
 
+
+    /**
+     * A request model class, carries input from the user to be processed by the interactor.
+     * @param username
+     * @param password
+     * @param passwordConfirm
+     * @param loginDate
+     */
     public RegisterRequest(String username, String password, String passwordConfirm, Date loginDate) {
         this.username = username;
         this.password = password;

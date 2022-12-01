@@ -51,6 +51,9 @@ public class BuyStockTest {
         interactor = new BuyUseCaseInteractor();
     }
 
+    /**
+     * Test that the user can buy a stock and that the stock is added to the portfolio
+     */
     @Test
     public void buyTSLAStockTest() {
         BuyInputRequest req = new BuyInputRequest(symbol, 5,port);
@@ -63,6 +66,9 @@ public class BuyStockTest {
         assert stock.getQuantity() == 5;
     }
 
+    /**
+     * Tests an invalid case where user does not have enough money to buy stock
+     */
     @Test
     public void buyStockInsufficientFundsTest() {
         BuyInputRequest req = new BuyInputRequest(symbol2, 1000, port);
