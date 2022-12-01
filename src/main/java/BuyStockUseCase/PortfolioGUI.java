@@ -89,7 +89,7 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
     }
 
     private void addCompText() {
-        this.portfolioName.setText(portfolioName.getText() + " (competative portfolio)");
+        this.portfolioName.setText(portfolioName.getText() + " (Competitive Portfolio)");
     }
 
     {
@@ -113,8 +113,7 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         portfolioPanel.setPreferredSize(new Dimension(700, 500));
         username = new JLabel();
         Font usernameFont = this.$$$getFont$$$(null, Font.BOLD, 14, username.getFont());
-        if (usernameFont != null)
-            username.setFont(usernameFont);
+        if (usernameFont != null) username.setFont(usernameFont);
         username.setText("Logged in as: ");
         portfolioPanel.add(username, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_SOUTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         backButton = new JButton();
@@ -125,14 +124,12 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         portfolioPanel.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         portfolioName = new JLabel();
         Font portfolioNameFont = this.$$$getFont$$$(null, Font.BOLD, 18, portfolioName.getFont());
-        if (portfolioNameFont != null)
-            portfolioName.setFont(portfolioNameFont);
+        if (portfolioNameFont != null) portfolioName.setFont(portfolioNameFont);
         portfolioName.setText("Portfolio name:");
         panel1.add(portfolioName, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         balance = new JLabel();
         Font balanceFont = this.$$$getFont$$$(null, Font.BOLD, 18, balance.getFont());
-        if (balanceFont != null)
-            balance.setFont(balanceFont);
+        if (balanceFont != null) balance.setFont(balanceFont);
         balance.setText("Balance: $");
         panel1.add(balance, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         final JPanel panel2 = new JPanel();
@@ -140,17 +137,19 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         portfolioPanel.add(panel2, new GridConstraints(0, 1, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, Font.BOLD, 18, label1.getFont());
-        if (label1Font != null)
-            label1.setFont(label1Font);
+        if (label1Font != null) label1.setFont(label1Font);
         label1.setHorizontalAlignment(0);
         label1.setText("Stocks:");
         panel2.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         stockComboBox = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("Stock: Quantity");
+        stockComboBox.setModel(defaultComboBoxModel1);
         panel2.add(stockComboBox, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel2.add(spacer1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         searchButton = new JButton();
-        searchButton.setText("Search Stock");
+        searchButton.setText("Search");
         portfolioPanel.add(searchButton, new GridConstraints(2, 2, 1, 2, GridConstraints.ANCHOR_SOUTHEAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
         searchField = new JTextField();
         portfolioPanel.add(searchField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -159,8 +158,7 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         portfolioPanel.add(makeCompetitivePortfolioButton, new GridConstraints(2, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         netValue = new JLabel();
         Font netValueFont = this.$$$getFont$$$(null, Font.BOLD, 18, netValue.getFont());
-        if (netValueFont != null)
-            netValue.setFont(netValueFont);
+        if (netValueFont != null) netValue.setFont(netValueFont);
         netValue.setText("Net Value: $");
         portfolioPanel.add(netValue, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
@@ -169,8 +167,7 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
      * @noinspection ALL
      */
     private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null)
-            return null;
+        if (currentFont == null) return null;
         String resultName;
         if (fontName == null) {
             resultName = currentFont.getName();

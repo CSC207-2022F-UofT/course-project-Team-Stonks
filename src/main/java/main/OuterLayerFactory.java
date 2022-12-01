@@ -59,5 +59,5 @@ public class OuterLayerFactory {
     public iLeaderboardGUI getLeaderboardGUI(List<String> topUsers) {
         return new LeaderboardGUI(topUsers);
     }
-    public iViewStockGUI getViewStockGUI(String symbol) { return new ViewStockGUI(symbol);}
+    public iViewStockGUI getViewStockGUI(String symbol, Portfolio port) { return new ViewStockGUI(symbol, port);}
 }
