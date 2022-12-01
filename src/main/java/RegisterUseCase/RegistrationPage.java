@@ -19,7 +19,7 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
     private JPasswordField pdPwdConfirm;
     private JLabel textConfirmPwd;
     private JLabel textPassword;
-    private JButton btnContinue;
+    private JButton btnRegister;
     private JButton btnBack;
 
     public RegistrationPage() {
@@ -48,7 +48,7 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
 
     @Override
     public void addRegisterAction(Runnable onRegister) {
-        btnContinue.addActionListener(e -> onRegister.run());
+        btnRegister.addActionListener(e -> onRegister.run());
     }
 
     @Override
@@ -101,71 +101,67 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
      */
     private void $$$setupUI$$$() {
         RegistrationPanel = new JPanel();
-        RegistrationPanel.setLayout(new GridLayoutManager(6, 3, new Insets(0, 0, 0, 0), -1, -1));
+        RegistrationPanel.setLayout(new GridLayoutManager(8, 3, new Insets(0, 0, 0, 0), -1, -1));
         stonksLabel = new JLabel();
         Font stonksLabelFont = this.$$$getFont$$$(null, Font.BOLD, 26, stonksLabel.getFont());
-        if (stonksLabelFont != null)
-            stonksLabel.setFont(stonksLabelFont);
+        if (stonksLabelFont != null) stonksLabel.setFont(stonksLabelFont);
         stonksLabel.setHorizontalAlignment(0);
         stonksLabel.setHorizontalTextPosition(0);
         stonksLabel.setText("Stonks Simulator ");
         RegistrationPanel.add(stonksLabel, new GridConstraints(0, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         textUsername = new JLabel();
         Font textUsernameFont = this.$$$getFont$$$(null, -1, 16, textUsername.getFont());
-        if (textUsernameFont != null)
-            textUsername.setFont(textUsernameFont);
+        if (textUsernameFont != null) textUsername.setFont(textUsernameFont);
         textUsername.setText("Username");
-        RegistrationPanel.add(textUsername, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        RegistrationPanel.add(textUsername, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         pfPwd = new JPasswordField();
         Font pfPwdFont = this.$$$getFont$$$(null, -1, 16, pfPwd.getFont());
-        if (pfPwdFont != null)
-            pfPwd.setFont(pfPwdFont);
+        if (pfPwdFont != null) pfPwd.setFont(pfPwdFont);
         pfPwd.setText("");
-        RegistrationPanel.add(pfPwd, new GridConstraints(2, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        RegistrationPanel.add(pfPwd, new GridConstraints(4, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         textPassword = new JLabel();
         Font textPasswordFont = this.$$$getFont$$$(null, -1, 16, textPassword.getFont());
-        if (textPasswordFont != null)
-            textPassword.setFont(textPasswordFont);
+        if (textPasswordFont != null) textPassword.setFont(textPasswordFont);
         textPassword.setText("Password");
-        RegistrationPanel.add(textPassword, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        RegistrationPanel.add(textPassword, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         pdPwdConfirm = new JPasswordField();
         Font pdPwdConfirmFont = this.$$$getFont$$$(null, -1, 16, pdPwdConfirm.getFont());
-        if (pdPwdConfirmFont != null)
-            pdPwdConfirm.setFont(pdPwdConfirmFont);
-        RegistrationPanel.add(pdPwdConfirm, new GridConstraints(3, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        if (pdPwdConfirmFont != null) pdPwdConfirm.setFont(pdPwdConfirmFont);
+        RegistrationPanel.add(pdPwdConfirm, new GridConstraints(5, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         textConfirmPwd = new JLabel();
         Font textConfirmPwdFont = this.$$$getFont$$$(null, -1, 16, textConfirmPwd.getFont());
-        if (textConfirmPwdFont != null)
-            textConfirmPwd.setFont(textConfirmPwdFont);
+        if (textConfirmPwdFont != null) textConfirmPwd.setFont(textConfirmPwdFont);
         textConfirmPwd.setText("Confirm Password");
-        RegistrationPanel.add(textConfirmPwd, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        RegistrationPanel.add(textConfirmPwd, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        RegistrationPanel.add(spacer1, new GridConstraints(4, 0, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        RegistrationPanel.add(spacer1, new GridConstraints(6, 0, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         btnBack = new JButton();
         Font btnBackFont = this.$$$getFont$$$(null, -1, 16, btnBack.getFont());
-        if (btnBackFont != null)
-            btnBack.setFont(btnBackFont);
+        if (btnBackFont != null) btnBack.setFont(btnBackFont);
         btnBack.setText("Go Back");
-        RegistrationPanel.add(btnBack, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnContinue = new JButton();
-        Font btnContinueFont = this.$$$getFont$$$(null, -1, 16, btnContinue.getFont());
-        if (btnContinueFont != null)
-            btnContinue.setFont(btnContinueFont);
-        btnContinue.setText("Register");
-        RegistrationPanel.add(btnContinue, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        RegistrationPanel.add(btnBack, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnRegister = new JButton();
+        Font btnContinueFont = this.$$$getFont$$$(null, -1, 16, btnRegister.getFont());
+        if (btnContinueFont != null) btnRegister.setFont(btnContinueFont);
+        btnRegister.setText("Register");
+        RegistrationPanel.add(btnRegister, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtUserName = new JTextField();
         Font txtUserNameFont = this.$$$getFont$$$(null, -1, 16, txtUserName.getFont());
-        if (txtUserNameFont != null)
-            txtUserName.setFont(txtUserNameFont);
-        RegistrationPanel.add(txtUserName, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        if (txtUserNameFont != null) txtUserName.setFont(txtUserNameFont);
+        RegistrationPanel.add(txtUserName, new GridConstraints(3, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label1 = new JLabel();
+        label1.setText("Password Requirements: 8 chars to 49 chars, no quotation marks ");
+        RegistrationPanel.add(label1, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setText("Username Requirements: 1 chars to 49 chars, no spaces, no quotation marks");
+        RegistrationPanel.add(label2, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
      * @noinspection ALL
      */
     private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null)
-            return null;
+        if (currentFont == null) return null;
         String resultName;
         if (fontName == null) {
             resultName = currentFont.getName();
