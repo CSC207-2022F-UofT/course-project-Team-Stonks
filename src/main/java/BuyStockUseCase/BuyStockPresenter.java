@@ -5,8 +5,6 @@ import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
 
-import java.io.IOException;
-
 public class BuyStockPresenter {
     /**
      * Presenter for the buy stock GUI
@@ -41,18 +39,17 @@ public class BuyStockPresenter {
         }
 
         BuyInputRequest req = new BuyInputRequest(symbol, quantity, currentPort);
+        BuyStockController cont = new BuyStockController();
 
-        // Tries to buy the stocks. If the portfolio has insufficient balance, displays price failure.
-        BuyUseCaseInteractor interactor = new BuyUseCaseInteractor();
-        BuyOutputResponse res;
-        try {
-            res = interactor.buyStock(req);
-        } catch(IOException e) {
+        // Tries to buy the stocks.
+        // If there's a problem connecting to the API, displays connection failure.
+        // If the portfolio has insufficient balance, displays balance failure.
+
+        BuyOutputResponse res = cont.buyStock(req);
+
+        if (res.getOutput() == null) {
             view.displayConnectionFailure();
-            return;
-        }
-
-        if (res.getOutput()) {
+        } else if (res.getOutput()) {
             view.displaySuccess();
             view.updateQuantityLabel(quantity);
         } else {
