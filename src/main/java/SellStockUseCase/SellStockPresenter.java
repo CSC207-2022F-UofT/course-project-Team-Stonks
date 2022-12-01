@@ -25,7 +25,7 @@ public class SellStockPresenter {
     }
     private void onBack() {
         view.close();
-        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol()), this.portfolio, this.user);
+        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol(), portfolio), this.portfolio, this.user);
     }
     private void onSell() {
         String symbol = view.getSymbol();

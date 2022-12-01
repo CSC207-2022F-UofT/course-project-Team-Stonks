@@ -62,6 +62,6 @@ public class BuyStockPresenter {
 
     private void onBack() {
         view.close();
-        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol()), this.currentPort, this.user);
+        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol(), currentPort), this.currentPort, this.user);
     }
 }

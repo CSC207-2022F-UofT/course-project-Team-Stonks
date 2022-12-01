@@ -33,6 +33,16 @@ class RegisterPresenterTest {
             dbGateway.addUser(new UserDSRequest(correctUsername, correctPassword, Date.valueOf(LocalDate.now())));
         }
     }
+    private static RegisterResponse getRegisterResponse(String correctUsername, String password, String passwordConfirm) {
+        RegisterRequest request = new RegisterRequest(
+                correctUsername,
+                password,
+                passwordConfirm,
+                Date.valueOf(LocalDate.now()));
+
+        RegisterResponse response = controller.signUpUser(request);
+        return response;
+    }
 
     /**
      * Inputs a correct combination with no issues to return RegisterError.NONE
@@ -42,13 +52,7 @@ class RegisterPresenterTest {
         // make a random name
         dbGateway.deleteUser(correctUsername);
 
-        RegisterRequest request = new RegisterRequest(
-                correctUsername,
-                "password",
-                "password",
-                Date.valueOf(LocalDate.now()));
-
-        RegisterResponse response = controller.signUpUser(request);
+        RegisterResponse response = getRegisterResponse(correctUsername, "password", "password");
         Assertions.assertEquals(response.userSignedUp(), RegisterError.NONE);
 
     }
@@ -58,13 +62,7 @@ class RegisterPresenterTest {
      */
     @Test
     public void testShortPassword() {
-        RegisterRequest request = new RegisterRequest(
-                "userDoesn'tExist",
-                "h1",
-                "h1",
-                Date.valueOf(LocalDate.now()));
-
-        RegisterResponse response = controller.signUpUser(request);
+        RegisterResponse response = getRegisterResponse("userDoesn'tExist", "h1", "h1");
         Assertions.assertEquals(response.userSignedUp(), RegisterError.PASSWORD_INVALID);
     }
 
@@ -74,13 +72,7 @@ class RegisterPresenterTest {
      */
     @Test
     public void testUserExistsError() {
-        RegisterRequest request = new RegisterRequest(
-                correctUsername,
-                correctPassword,
-                correctPasswordConfirm,
-                Date.valueOf(LocalDate.now()));
-
-        RegisterResponse response = controller.signUpUser(request);
+        RegisterResponse response = getRegisterResponse(correctUsername, correctPassword, correctPassword);
         Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
 
     }
@@ -90,13 +82,8 @@ class RegisterPresenterTest {
      */
     @Test
     public void testDifferentPasswordsError() {
-        RegisterRequest request = new RegisterRequest(
-                "RandomName",
-                "PasswordNotSame",
-                "PasswordIsSame",
-                Date.valueOf(LocalDate.now()));
-
-        RegisterResponse response = controller.signUpUser(request);
+        dbGateway.deleteUser(correctUsername);
+        RegisterResponse response = getRegisterResponse(correctUsername, "PasswordNotSame", "NotRight");
         Assertions.assertEquals(response.userSignedUp(), RegisterError.PASSWORD_NOT_MATCH);
 
     }
@@ -107,13 +94,7 @@ class RegisterPresenterTest {
      */
     @Test
     public void testSpacedUsername() {
-        RegisterRequest request = new RegisterRequest(
-                "Random Name",
-                "PasswordNotSame",
-                "PasswordIsSame",
-                Date.valueOf(LocalDate.now()));
-
-        RegisterResponse response = controller.signUpUser(request);
+        RegisterResponse response = getRegisterResponse("Random Name", "PasswordNotSame", "PasswordNotSame");
         Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
 
     }
@@ -123,13 +104,7 @@ class RegisterPresenterTest {
     @Test
     public void testLongUsername() {
         // Building a long username that is 51 characters long
-        RegisterRequest request = new RegisterRequest(
-                "a" + "a".repeat(50),
-                "PasswordNotSame",
-                "PasswordIsSame",
-                Date.valueOf(LocalDate.now()));
-
-        RegisterResponse response = controller.signUpUser(request);
+        RegisterResponse response = getRegisterResponse("a" + "a".repeat(50), "PasswordNotSame", "PasswordNotSame");
         Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
 
     }
@@ -142,13 +117,7 @@ class RegisterPresenterTest {
         // Building a long username that is 51 characters long
         StringBuilder longPassword = new StringBuilder("a");
         longPassword.append("a".repeat(50));
-        RegisterRequest request = new RegisterRequest(
-                "username",
-                longPassword.toString(),
-                longPassword.toString(),
-                Date.valueOf(LocalDate.now()));
-
-        RegisterResponse response = controller.signUpUser(request);
+        RegisterResponse response = getRegisterResponse("username", longPassword.toString(), longPassword.toString());
         Assertions.assertEquals(response.userSignedUp(), RegisterError.PASSWORD_INVALID);
 
     }

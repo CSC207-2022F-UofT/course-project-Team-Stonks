@@ -58,6 +58,10 @@ public class RegisterInteractor {
         int minLength = 8;
         int maxLength = 50;
 
+        if (password.contains("\"")) {
+            return false;
+        }
+
         return password.length() >= minLength && password.length() <= maxLength;
     }
 

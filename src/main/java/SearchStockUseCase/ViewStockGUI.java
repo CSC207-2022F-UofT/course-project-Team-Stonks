@@ -5,6 +5,7 @@ import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import entities.Portfolio;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 
@@ -23,6 +24,7 @@ import java.util.List;
 
 public class ViewStockGUI extends JFrame implements iViewStockGUI {
     private StockAPIResponse stock;
+    private final Portfolio portfolio;
     private final Calendar from = Calendar.getInstance();
     private final Interval stockPriceInterval = Interval.DAILY;
     private final String stockSymbol;
@@ -45,7 +47,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     private JScrollPane tableScrollPane;
     private JButton backButton;
 
-    public ViewStockGUI(String symbol) {
+    public ViewStockGUI(String symbol , Portfolio portfolio) {
         super();
         priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
         this.from.add(Calendar.DATE, -7); //Date of the last 7 days
@@ -56,6 +58,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
             throw new RuntimeException(e);
         }
         this.stockSymbol = symbol;
+        this.portfolio = portfolio;
         this.histData = stock.getHistData();
 
         //Setting up labels
@@ -200,7 +203,13 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
 
     @Override
     public void addSellStockAction(Runnable onSellStock) {
-        sellStockButton.addActionListener(e -> onSellStock.run());
+        if (portfolio.getSymbolToStock().containsKey(stockSymbol)) {
+            sellStockButton.addActionListener(e -> onSellStock.run());
+        }
+        else {
+            sellStockButton.setEnabled(false);
+        }
+
     }
 
     @Override
