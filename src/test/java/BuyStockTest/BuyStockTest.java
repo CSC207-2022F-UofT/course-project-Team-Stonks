@@ -15,7 +15,6 @@ import main.OuterLayerFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.Map;
 
@@ -55,9 +54,7 @@ public class BuyStockTest {
     @Test
     public void buyTSLAStockTest() {
         BuyInputRequest req = new BuyInputRequest(symbol, 5,port);
-        try {
-            interactor.buyStock(req);
-        } catch(IOException ignored) {}
+        interactor.buyStock(req);
 
         Map<String, Stock> map = port.getSymbolToStock();
 
@@ -69,10 +66,7 @@ public class BuyStockTest {
     @Test
     public void buyStockInsufficientFundsTest() {
         BuyInputRequest req = new BuyInputRequest(symbol2, 1000, port);
-        BuyOutputResponse res = new BuyOutputResponse(true);
-        try {
-            res = interactor.buyStock(req);
-        } catch(IOException ignored) {}
+        BuyOutputResponse res = interactor.buyStock(req);
 
         Map<String, Stock> map = port.getSymbolToStock();
 
