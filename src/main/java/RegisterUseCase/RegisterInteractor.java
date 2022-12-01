@@ -46,8 +46,8 @@ public class RegisterInteractor {
      */
     private boolean usernameInvalid(String username) {
         // case 1: username is already taken, case 2: username is empty, case 3: username contains spaces
-        // case 4: username is too long (SQL Error)
-        return userManager.userExists(username) || username.equals("") || username.contains(" ") || username.length() > 50 ;
+        // case 4: username is too long (SQL Error) and quotation mark
+        return userManager.userExists(username) || username.equals("") || username.contains(" ") || username.length() > 50 || username.contains("\"");
     }
 
     /**
@@ -57,6 +57,10 @@ public class RegisterInteractor {
     private boolean passwordValid(String password) {
         int minLength = 8;
         int maxLength = 50;
+
+        if (password.contains("\"")) {
+            return false;
+        }
 
         return password.length() >= minLength && password.length() <= maxLength;
     }

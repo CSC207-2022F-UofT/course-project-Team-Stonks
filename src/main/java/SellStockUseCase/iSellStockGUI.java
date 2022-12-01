@@ -13,4 +13,5 @@ public interface iSellStockGUI {
      void displaySuccess();
      String getSymbol();
 
+    void updateQuantityLabel(int quant);
 }

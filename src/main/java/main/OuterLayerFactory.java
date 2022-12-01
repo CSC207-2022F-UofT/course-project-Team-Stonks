@@ -50,14 +50,14 @@ public class OuterLayerFactory {
         return new RegistrationPage();
     }
 
-    public iBuyStockGUI getBuyGUI(String symbol) {
-        return new BuyStockGUI(symbol);
+    public iBuyStockGUI getBuyGUI(String symbol, int quantity) {
+        return new BuyStockGUI(symbol, quantity);
     }
-    public iSellStockGUI getSellGUI(String symbol) {
-        return new SellStockGUI(symbol);
+    public iSellStockGUI getSellGUI(String symbol, int quantity) {
+        return new SellStockGUI(symbol, quantity);
     }
     public iLeaderboardGUI getLeaderboardGUI(List<String> topUsers) {
         return new LeaderboardGUI(topUsers);
     }
-    public iViewStockGUI getViewStockGUI(String symbol) { return new ViewStockGUI(symbol);}
+    public iViewStockGUI getViewStockGUI(String symbol, Portfolio port) { return new ViewStockGUI(symbol, port);}
 }

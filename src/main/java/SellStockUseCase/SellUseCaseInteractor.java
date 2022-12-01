@@ -56,6 +56,7 @@ public class SellUseCaseInteractor {
                 }
 
                 return new SellOutputResponse(true, "Sale successful!");
+
             }
         }
 
@@ -63,6 +64,8 @@ public class SellUseCaseInteractor {
                IOException e) {
             return new SellOutputResponse(false, "You do not own any of this stock");
         }
+
+
 
     }
 }

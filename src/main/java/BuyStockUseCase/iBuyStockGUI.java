@@ -13,4 +13,6 @@ public interface iBuyStockGUI {
     void displaySuccess();
     String getSymbol();
     int getQuantity() throws NumberFormatException;
+
+    void updateQuantityLabel(int quant);
 }
