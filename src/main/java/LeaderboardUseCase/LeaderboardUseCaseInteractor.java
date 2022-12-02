@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LeaderboardUseCaseInteractor {
+public class LeaderboardUseCaseInteractor implements iLeaderboardInputBoundary {
     private List<User> users;
 
     /**

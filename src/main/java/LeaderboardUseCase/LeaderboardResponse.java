@@ -23,8 +23,12 @@ public class LeaderboardResponse {
         List<String> result = new ArrayList<>();
         int position = 1;
         for (User u : board.getTopUsers().keySet()) {
-            result.add(position + ". " + u.getUsername() + ":             $" + board.getTopUsers().get(u));
-            position++;
+            if(u.getUsername().length() < 25) {
+                result.add(position + ". " + u.getUsername() + ":" + new String(new char[20 - u.getUsername().length()]).replace("\0", " ") + "$" + board.getTopUsers().get(u));
+            } else {
+                result.add(position + ". " + u.getUsername() + ":           $" + board.getTopUsers().get(u));
+            }
+                position++;
         }
         return result;
     }
