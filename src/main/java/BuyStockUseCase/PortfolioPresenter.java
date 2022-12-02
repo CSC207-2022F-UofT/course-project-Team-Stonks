@@ -45,7 +45,7 @@ public class PortfolioPresenter {
         try{
             new ViewStockController(symbol).stockIsValid();
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Invalid stock symbol: "+symbol);
+            this.view.invalidStockMessage(symbol);
             return;
         }
         view.close();

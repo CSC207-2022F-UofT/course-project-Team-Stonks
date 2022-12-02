@@ -88,6 +88,10 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         portfolioPanel.remove(makeCompetitivePortfolioButton);
         addCompText();
     }
+    @Override
+    public void invalidStockMessage(String symbol){
+        JOptionPane.showMessageDialog(null, "Invalid stock symbol: "+symbol);
+    }
 
     private void addCompText() {
         this.portfolioName.setText(portfolioName.getText() + " (Competitive Portfolio)");

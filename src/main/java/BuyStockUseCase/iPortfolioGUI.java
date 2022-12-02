@@ -10,5 +10,5 @@ public interface iPortfolioGUI {
     String getSearchField();
     void close();
     void removeCompPortfolioButton();
-
+    void invalidStockMessage(String symbol);
 }
