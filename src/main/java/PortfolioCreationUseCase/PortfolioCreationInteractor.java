@@ -1,12 +1,18 @@
 package PortfolioCreationUseCase;
 
+import db.PortfolioDSRequest;
+import db.iEntityDBGateway;
+import entities.PortfolioFactory;
 import entities.User;
+import main.OuterLayerFactory;
 
 public class PortfolioCreationInteractor {
     private final User user;
+    private final iEntityDBGateway dbGateway;
 
     public PortfolioCreationInteractor(User user) {
         this.user = user;
+        dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
     }
 
     public PortfolioCreationError makeNewPortfolio(String newPortfolioName) {
@@ -18,6 +24,7 @@ public class PortfolioCreationInteractor {
         }
 
         user.addPortfolio(newPortfolioName);
+        dbGateway.addPortfolio(new PortfolioDSRequest(newPortfolioName, PortfolioFactory.BALANCE, user.getUsername()));
 
         return PortfolioCreationError.NONE;
 

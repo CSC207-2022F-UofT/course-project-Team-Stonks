@@ -25,11 +25,15 @@ public class PortfolioSelectedInteractor {
             stocks.add(stockFactory.createStock(
                     stock.getSymbol(),
                     stock.getValue(),
-                    stock.getQuantity(),
-                    dbGateway));
+                    stock.getQuantity()));
         }
 
         user.setCurPortfolio(portfolioName);
         user.getCurPortfolio().pullStocks(stocks);
+    }
+
+    public void MakeCompPort(User user, String compPort) {
+        user.setCompPortfolio(compPort);
+        dbGateway.addCompPort(user.getUsername(), compPort);
     }
 }

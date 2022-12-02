@@ -2,6 +2,7 @@ package SellStockUseCase;
 
 import SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
+import entities.User;
 import main.OuterLayerFactory;
 
 
@@ -12,9 +13,11 @@ public class SellStockPresenter {
     private final iSellStockGUI view;
     private final Portfolio portfolio;
     private final SellStockController controller;
+    private final User user;
 
-    public SellStockPresenter(iSellStockGUI view, Portfolio portfolio) {
+    public SellStockPresenter(iSellStockGUI view, Portfolio portfolio, User user) {
         this.view = view;
+        this.user = user;
         controller = new SellStockController();
         this.portfolio = portfolio;
         view.addSellAction(this::onSell);
@@ -22,7 +25,7 @@ public class SellStockPresenter {
     }
     private void onBack() {
         view.close();
-        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol()), this.portfolio);
+        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol()), this.portfolio, this.user);
     }
     private void onSell() {
         String symbol = view.getSymbol();

@@ -1,16 +1,19 @@
 package SellStockTest;
 
-import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
-import SellStockUseCase.SellUseCaseInteractor;
-import SellStockUseCase.SellInputRequest;
-import SellStockUseCase.SellOutputResponse;
 import LoginUseCase.UserLoginInteractor;
-import PortfolioCreationUseCase.PortfolioCreationError;
 import PortfolioCreationUseCase.PortfolioCreationInteractor;
 import RegisterUseCase.RegisterInteractor;
-import entities.*;
+import SellStockUseCase.SellInputRequest;
+import SellStockUseCase.SellOutputResponse;
+import SellStockUseCase.SellUseCaseInteractor;
+import db.iEntityDBGateway;
+import entities.Portfolio;
+import entities.Stock;
+import entities.User;
+import main.OuterLayerFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -27,26 +30,31 @@ public class SellStockTest {
     private static final int quantity = 10;
     private static final int sellQuant = 4;
     private static final int invalidQuant = 100;
+    private static final String username = "SellTestUser";
+
 
     @BeforeAll
     public static void SetUp() throws IOException {
         Date date = new Date(100);
+
+        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        dbGateway.deleteUser(username);
+
         RegisterInteractor interactor1 = new RegisterInteractor();
-        interactor1.signUpUser("TestUser2", "password", "password", date);
+        interactor1.signUpUser(username, "password", "password", date);
 
         UserLoginInteractor interactor2 = new UserLoginInteractor();
-        User user = interactor2.loginUser("TestUser", "password", date);
+        User user = interactor2.loginUser(username, "password", date);
 
         PortfolioCreationInteractor interactor3 = new PortfolioCreationInteractor(user);
-        int tag = 0;
-        while (interactor3.makeNewPortfolio("newPortfolio" + tag) == PortfolioCreationError.DUPLICATE_NAME){
-            tag += 1;
-        }
 
-        StockAPIAccess access = new StockAPIAccess();
+        interactor3.makeNewPortfolio("newPortfolio");
+
+
+        StockAPIGateway access = new StockAPIGateway();
         StockAPIResponse res = access.getPrice(new StockAPIRequest(symbol));
         double price = res.getPrice();
-        portfolio = user.getPortfolio("newPortfolio" + tag);
+        portfolio = user.getPortfolio("newPortfolio");
         portfolio.addStock(symbol, price, quantity);
         interactor = new SellUseCaseInteractor();
     }
