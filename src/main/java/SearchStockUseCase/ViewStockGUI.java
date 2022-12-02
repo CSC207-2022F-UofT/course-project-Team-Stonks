@@ -2,6 +2,7 @@ package SearchStockUseCase;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import entities.Portfolio;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 import javax.swing.*;
@@ -17,8 +18,7 @@ import java.time.LocalTime;
 
 public class ViewStockGUI extends JFrame implements iViewStockGUI {
     private double stockPrice;
-    private Calendar from = Calendar.getInstance();
-    private Interval stockPriceInterval = Interval.DAILY;
+    private final Portfolio portfolio;
     private final String stockSymbol;
     private List<HistoricalQuote> histData;
     private JPanel mainPanel;
@@ -39,11 +39,10 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     private JScrollPane tableScrollPane;
     private JButton backButton;
 
-    private boolean isVisible = false;
-
-    public ViewStockGUI(String symbol) {
+    public ViewStockGUI(String symbol, Portfolio portfolio) {
         super();
         this.stockSymbol = symbol;
+        this.portfolio = portfolio;
         priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
         stockLabel.setText(this.stockSymbol.toUpperCase() + stockMarketStatus());
         //Setting up JFrame
@@ -87,7 +86,12 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
 
     @Override
     public void addSellStockAction(Runnable onSellStock) {
-        sellStockButton.addActionListener(e -> onSellStock.run());
+        if (portfolio.getSymbolToStock().containsKey(stockSymbol)) {
+            sellStockButton.addActionListener(e -> onSellStock.run());
+        }
+        else {
+            sellStockButton.setEnabled(false);
+        }
     }
 
     @Override
