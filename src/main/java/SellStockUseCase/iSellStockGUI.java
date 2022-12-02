@@ -3,6 +3,7 @@ package SellStockUseCase;
 public interface iSellStockGUI {
      /**
       * This is the interface for the sell stock use case
+      * Refactored from SellStockUseCase.SellStockGUI
       */
      void close();
      void displayQuantityFailure();
@@ -13,4 +14,5 @@ public interface iSellStockGUI {
      void displaySuccess();
      String getSymbol();
 
+    void updateQuantityLabel(int quant);
 }

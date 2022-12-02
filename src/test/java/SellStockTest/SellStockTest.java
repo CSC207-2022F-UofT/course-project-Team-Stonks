@@ -59,6 +59,9 @@ public class SellStockTest {
         interactor = new SellUseCaseInteractor();
     }
 
+    /**
+     * Testing the sellStock method in SellUseCaseInteractor to see if the balance and quantity of the stock are updated correctly
+     */
     @Test
     public void testSellStock(){
         double balance = portfolio.getBalance();
@@ -70,6 +73,9 @@ public class SellStockTest {
         assert portfolio.getBalance() == balance + sellQuant * stock.getValue();
     }
 
+    /**
+     * Testing an invalid case where the user tries to sell more stocks than they have
+     */
     @Test
     public void testInvalidSellStock(){
         double balance = portfolio.getBalance();
@@ -81,6 +87,10 @@ public class SellStockTest {
         assert Objects.equals(response.getMessage(), "Please enter a valid amount.");
 
     }
+
+    /**
+     * Testing an invalid case where the user tries to sell a stock that they don't have
+     */
     @Test
     public void testNoStock(){
         double balance = portfolio.getBalance();

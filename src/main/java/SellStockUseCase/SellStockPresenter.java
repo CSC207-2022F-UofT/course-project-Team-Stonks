@@ -25,18 +25,25 @@ public class SellStockPresenter {
     }
     private void onBack() {
         view.close();
-        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol()), this.portfolio, this.user);
+        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol(), portfolio), this.portfolio, this.user);
     }
+
+    /**
+     * This method is used to process the data given by the user and output the response to the user
+     */
     private void onSell() {
         String symbol = view.getSymbol();
-        int quantity = view.getQuantity();
         try {
+            int quantity = view.getQuantity();
             SellOutputResponse response = controller.sellStock(new SellInputRequest(portfolio, symbol, quantity));
             if (response.possible()) {
                 view.displaySuccess();
+                view.updateQuantityLabel(quantity);
             } else {
                 view.displayQuantityFailure();
             }
+        } catch (NumberFormatException e) {
+            view.displayQuantityFailure();
         } catch (Exception e) {
             view.displayConnectionFailure();
         }

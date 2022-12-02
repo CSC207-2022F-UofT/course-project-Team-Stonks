@@ -48,7 +48,13 @@ public class Portfolio {
     }
 
     public int getStockQuantity(String symbol) {
-        return symbolToStock.get(symbol).getQuantity();
+        Stock stock = symbolToStock.get(symbol);
+
+        if (stock != null) {
+            return symbolToStock.get(symbol).getQuantity();
+        }
+
+        return 0;
     }
 
 

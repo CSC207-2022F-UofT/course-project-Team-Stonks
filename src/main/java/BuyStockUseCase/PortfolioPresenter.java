@@ -40,7 +40,7 @@ public class PortfolioPresenter {
     public void onSearch() {
         String symbol = view.getSearchField();
         view.close();
-        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(symbol), this.portfolio, this.user);
+        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(symbol, this.portfolio), this.portfolio, this.user);
 
     }
     public void onMakeCompPortfolio() {
