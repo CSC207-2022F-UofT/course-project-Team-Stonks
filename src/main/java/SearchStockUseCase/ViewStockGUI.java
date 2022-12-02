@@ -1,8 +1,5 @@
 package SearchStockUseCase;
 
-import APIInterface.StockAPIGateway;
-import APIInterface.StockAPIRequest;
-import APIInterface.StockAPIResponse;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import yahoofinance.histquotes.HistoricalQuote;
@@ -10,14 +7,12 @@ import yahoofinance.histquotes.Interval;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Locale;
 
 
 public class ViewStockGUI extends JFrame implements iViewStockGUI {
