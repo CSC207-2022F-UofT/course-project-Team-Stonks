@@ -7,6 +7,11 @@ public class UserLoginController {
         interactor = new UserLoginInteractor();
     }
 
+    /**
+     * This method is used to login a user by taking in a param of type UserLoginRequest and returning a UserLoginResponse
+     * @param request
+     * @return UserLoginResponse
+     */
     public UserLoginResponse loginUser(UserLoginRequest request) {
         return new UserLoginResponse(
                 interactor.loginUser(

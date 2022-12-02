@@ -1,6 +1,12 @@
 package LoginUseCase;
 
 public interface iUserLoginGUI {
+
+    /**
+     * This is the interface for the login use case
+     * Refactored from LoginUseCase.UserLoginGUI
+     */
+
     String getUsername();
 
     String getPassword();
