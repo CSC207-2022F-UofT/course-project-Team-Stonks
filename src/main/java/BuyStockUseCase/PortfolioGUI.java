@@ -29,11 +29,12 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
     private JButton makeCompetitivePortfolioButton;
     private JLabel netValue;
 
+    /**
+     * GUI where the user can view their portfolio information
+     */
     public PortfolioGUI(Portfolio port, String username, boolean isComp) {
         super();
-        /**
-         * GUI where the user can view their portfolio information
-         */
+
         this.port = port;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(portfolioPanel);

@@ -19,7 +19,7 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
     private JPasswordField pdPwdConfirm;
     private JLabel textConfirmPwd;
     private JLabel textPassword;
-    private JButton btnContinue;
+    private JButton btnRegister;
     private JButton btnBack;
 
     public RegistrationPage() {
@@ -48,7 +48,7 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
 
     @Override
     public void addRegisterAction(Runnable onRegister) {
-        btnContinue.addActionListener(e -> onRegister.run());
+        btnRegister.addActionListener(e -> onRegister.run());
     }
 
     @Override
@@ -140,11 +140,11 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
         if (btnBackFont != null) btnBack.setFont(btnBackFont);
         btnBack.setText("Go Back");
         RegistrationPanel.add(btnBack, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        btnContinue = new JButton();
-        Font btnContinueFont = this.$$$getFont$$$(null, -1, 16, btnContinue.getFont());
-        if (btnContinueFont != null) btnContinue.setFont(btnContinueFont);
-        btnContinue.setText("Register");
-        RegistrationPanel.add(btnContinue, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnRegister = new JButton();
+        Font btnContinueFont = this.$$$getFont$$$(null, -1, 16, btnRegister.getFont());
+        if (btnContinueFont != null) btnRegister.setFont(btnContinueFont);
+        btnRegister.setText("Register");
+        RegistrationPanel.add(btnRegister, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtUserName = new JTextField();
         Font txtUserNameFont = this.$$$getFont$$$(null, -1, 16, txtUserName.getFont());
         if (txtUserNameFont != null) txtUserName.setFont(txtUserNameFont);

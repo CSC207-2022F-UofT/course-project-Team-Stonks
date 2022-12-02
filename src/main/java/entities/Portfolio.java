@@ -3,6 +3,7 @@ package entities;
 import BuyStockUseCase.BuyType;
 import SellStockUseCase.SellType;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,8 @@ public class Portfolio {
     }
 
     public double getBalance() {
-        return balance;
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        return Double.parseDouble(numberFormat.format(balance));
     }
 
     public String getName() {
@@ -48,7 +50,13 @@ public class Portfolio {
     }
 
     public int getStockQuantity(String symbol) {
-        return symbolToStock.get(symbol).getQuantity();
+        Stock stock = symbolToStock.get(symbol);
+
+        if (stock != null) {
+            return symbolToStock.get(symbol).getQuantity();
+        }
+
+        return 0;
     }
 
 
@@ -122,6 +130,7 @@ public class Portfolio {
             total += stock.getValue() * stock.getQuantity();
         }
         total += balance;
-        return total;
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        return Double.parseDouble(numberFormat.format(total));
     }
 }
