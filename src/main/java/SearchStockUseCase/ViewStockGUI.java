@@ -66,7 +66,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     }
 
     @Override
-    public void refreshButtonAction(Runnable onRefreshButton){
+    public void refreshButtonAction(Runnable onRefreshButton) {
         refreshButton.addActionListener(e -> onRefreshButton.run());
     }
 
