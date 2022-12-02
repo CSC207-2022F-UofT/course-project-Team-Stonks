@@ -47,7 +47,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     private JScrollPane tableScrollPane;
     private JButton backButton;
 
-    public ViewStockGUI(String symbol , Portfolio portfolio) {
+    public ViewStockGUI(String symbol, Portfolio portfolio) {
         super();
         priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
         this.from.add(Calendar.DATE, -7); //Date of the last 7 days
@@ -203,8 +203,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     public void addSellStockAction(Runnable onSellStock) {
         if (portfolio.getSymbolToStock().containsKey(stockSymbol)) {
             sellStockButton.addActionListener(e -> onSellStock.run());
-        }
-        else {
+        } else {
             sellStockButton.setEnabled(false);
         }
 
