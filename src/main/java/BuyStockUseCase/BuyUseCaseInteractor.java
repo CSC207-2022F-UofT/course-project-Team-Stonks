@@ -23,10 +23,9 @@ public class BuyUseCaseInteractor {
      *
      * @param req Request with user input
      * @return BuyOutputResponse containing message to be displayed to user
-     * @throws IOException when there's a connection problem with the API
      */
 
-    public BuyOutputResponse buyStock(BuyInputRequest req) throws IOException {
+    public BuyOutputResponse buyStock(BuyInputRequest req){
         int buy_quantity = req.getQuantity();
         String symbol = req.getSymbol();
         Portfolio port = req.getPort();
@@ -36,9 +35,15 @@ public class BuyUseCaseInteractor {
             return new BuyOutputResponse(false);
         }
 
-        // Accesses stock price from API
+        // Tries to access stock price from API, returns output = null if failure occurs
         StockAPIGateway access = new StockAPIGateway();
-        StockAPIResponse res = access.getPrice(new StockAPIRequest(symbol));
+        StockAPIResponse res;
+        try {
+            res = access.getPrice(new StockAPIRequest(symbol));
+        } catch(IOException e) {
+            return new BuyOutputResponse(null);
+        }
+
         double price = res.getPrice();
 
         // Passes parameters to Portfolio, outputs results
