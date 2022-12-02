@@ -21,6 +21,8 @@ public class SellStockGUI extends JFrame implements iSellStockGUI {
     private String symbol;
     private int quantity;
 
+    private JLabel quantLeft;
+
     public SellStockGUI(String symbol, int quantity) {
         super();
         this.symbol = symbol;
