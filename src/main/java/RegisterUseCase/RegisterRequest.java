@@ -11,10 +11,10 @@ public final class RegisterRequest {
 
     /**
      * A request model class, carries input from the user to be processed by the interactor.
-     * @param username
-     * @param password
-     * @param passwordConfirm
-     * @param loginDate
+     * @param username the username of the user
+     * @param password the password of the user
+     * @param passwordConfirm the password confirmation of the user
+     * @param loginDate the date of the user's login
      */
     public RegisterRequest(String username, String password, String passwordConfirm, Date loginDate) {
         this.username = username;

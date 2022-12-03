@@ -8,17 +8,14 @@ public class RegisterInteractor {
     private final UserManager userManager;
 
     /**
-     *
+     * A constructor for the RegisterInteractor class
      */
     public RegisterInteractor() {
         userManager = UserManager.instance;
     }
 
     /**
-     * @param username
-     * @param password
-     * @param passwordConfirm
-     * @param loginDate
+     * A method that generates a response based on the request
      * @return RegisterError type such that it can be a Username or Password error or no error
      */
 
@@ -40,7 +37,6 @@ public class RegisterInteractor {
 
 
     /**
-     * @param username
      * @return True if the username is invalid
      * Refactored
      */
@@ -51,7 +47,6 @@ public class RegisterInteractor {
     }
 
     /**
-     * @param password
      * @return True if password length is in range [8, 50] otherwise false
      */
     private boolean passwordValid(String password) {
@@ -66,8 +61,8 @@ public class RegisterInteractor {
     }
 
     /**
-     * @param password
-     * @param passwordConfirm
+     * @param password the password of the user
+     * @param passwordConfirm the password confirmation of the user
      * @return True if password and passwordConfirm match, else false
      */
     private boolean passwordMatch(String password, String passwordConfirm) {
