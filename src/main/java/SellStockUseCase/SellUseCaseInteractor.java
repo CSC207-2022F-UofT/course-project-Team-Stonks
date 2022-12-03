@@ -26,6 +26,9 @@ public class SellUseCaseInteractor {
         iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         StockAPIGateway stockAPIAccess = new StockAPIGateway();
         StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
+        if(quantity < 1) {
+            return new SellOutputResponse(false, "Please enter a positive quantity.");
+        }
 
         try{
             StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
