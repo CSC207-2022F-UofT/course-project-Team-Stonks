@@ -86,7 +86,16 @@ This use case provides the interface to allow users to create new portfolios and
 
 ## Search Stock use case
 This use case provides the interface to allow users to search any stock and view it's stock price fluctuations over a varied period of time. This use case directly links to both sell and buy stock. This use case has the following functions:
-
+- isValidStock()
+  - Check with the API if the stock is valid. Throw an exception if it is not and tell the user to try again
+- SearchStock()
+  - Assigns the stock from the API to the stock object 
+- GetHisData()
+  - Get the historical data of the stock from the API
+- SortHistoricalData()
+  - Sort the historical data from the API into a list of dates and a list of prices
+- GetStockValue()
+  - Get the current stock price from the API
 
 ## Buy Stock use case
 This use case provides the interface to allow users to buy a stock after having selected a stock in the search stock case. This use case has the following functions:
@@ -103,7 +112,12 @@ This use case provides the interface to allow users to watchlist any stock and n
 
 ## Leaderboard use case
 This use case provides the interface to allow users to view the leaderboard of the top competitive portfolios. This use case has the following functions:
-
+- IndexMax()
+  - Takes in a list of values and returns the index of the maximum value
+- TopValue()
+  - Return list of values of each of the users' competitive portfolio net values
+- upadateLeaderboard()
+  - Return a Leaderboard with the top users according to the current value of their competitive portfolios
 
 
 # Controllers
