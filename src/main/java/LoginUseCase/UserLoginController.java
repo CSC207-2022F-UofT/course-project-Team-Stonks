@@ -9,7 +9,7 @@ public class UserLoginController {
 
     /**
      * This method is used to login a user by taking in a param of type UserLoginRequest and returning a UserLoginResponse
-     * @param request
+     * @param request the request to login a user
      * @return UserLoginResponse
      */
     public UserLoginResponse loginUser(UserLoginRequest request) {

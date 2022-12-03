@@ -21,7 +21,7 @@ public class BuyStockGUI extends JFrame implements iBuyStockGUI {
     private JPanel mainPanel;
     private JLabel balanceLabel;
     private int quantity;
-    private String symbol;
+    private final String symbol;
 
     public BuyStockGUI(String symbol, int quantity) {
         super();
