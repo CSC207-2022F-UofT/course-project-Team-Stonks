@@ -1,6 +1,8 @@
 package SearchStockUseCase;
 
 
+import APIInterface.StockAPIGateway;
+import APIInterface.StockAPIRequest;
 import BuyStockUseCase.BuyStockPresenter;
 import BuyStockUseCase.PortfolioPresenter;
 import BuyStockUseCase.iPortfolioGUI;
@@ -8,22 +10,79 @@ import SellStockUseCase.SellStockPresenter;
 import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
+import yahoofinance.histquotes.HistoricalQuote;
+import yahoofinance.histquotes.Interval;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.Map;
 
 public class ViewStockPresenter {
     private final iViewStockGUI view;
     private final Portfolio portfolio;
     private final User user;
+    private final ViewStockController controller;
     public ViewStockPresenter(iViewStockGUI view, Portfolio portfolio, User user){
         this.view = view;
+        this.controller = new ViewStockController(this.view.getStockSymbol());
+        JOptionPane jop = new JOptionPane();
+        jop.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        jop.setMessage("Loading info for stock: " + this.view.getStockSymbol().toUpperCase());
+        JDialog dialog = jop.createDialog(null, "Loading Screen");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                onLoadGUI();
+                dialog.dispose();
+            }
+
+        }).start();
+        dialog.setVisible(true);
+
         this.portfolio = portfolio;
         this.user = user;
+
+        //Setting functionality for buttons
         view.addBuyStockAction(this::onBuyStock);
         view.addSellStockAction(this::onSellStock);
         view.addBackAction(this::onBack);
+        view.yearlyButtonAction(this::onYearlyButton);
+        view.weeklyButtonAction(this::onWeeklyButton);
+        view.todayButtonAction(this::onTodayButton);
+        view.refreshButtonAction(this::onLoadGUI);
 
     }
+
+    private boolean onLoadGUI(){
+        try{
+            this.controller.searchStock();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        this.view.setHistData(this.controller.getCurrentHistData());
+        try{
+            this.view.setStockPrice(this.controller.getCurrentPrice());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        this.view.loadLabels();
+        this.view.updateTable(controller.updateTable(Interval.DAILY));
+        return true;
+    }
+
+    private void onTodayButton(){
+        this.view.updateTable(controller.updateTable(Interval.DAILY));
+    }
+    private void onWeeklyButton() {
+        this.view.updateTable(controller.updateTable(Interval.WEEKLY));
+    }
+
+    private void onYearlyButton() {
+        this.view.updateTable(controller.updateTable(Interval.MONTHLY));
+    }
+
 
     private void onBack() {
         boolean isComp = this.portfolio.getName().equals(user.getCompPortfolioName());
@@ -38,7 +97,7 @@ public class ViewStockPresenter {
         new SellStockPresenter(OuterLayerFactory.instance.getSellGUI(view.getStockSymbol(), quantity), this.portfolio, this.user);
     }
 
-    public void onBuyStock(){
+    private void onBuyStock(){
         //Call Buy Presenter
         view.close();
         int quantity = portfolio.getStockQuantity(view.getStockSymbol());
