@@ -101,7 +101,7 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
      */
     private void $$$setupUI$$$() {
         RegistrationPanel = new JPanel();
-        RegistrationPanel.setLayout(new GridLayoutManager(8, 3, new Insets(0, 0, 0, 0), -1, -1));
+        RegistrationPanel.setLayout(new GridLayoutManager(8, 3, new Insets(50, 50, 50, 50), -1, -1));
         stonksLabel = new JLabel();
         Font stonksLabelFont = this.$$$getFont$$$(null, Font.BOLD, 26, stonksLabel.getFont());
         if (stonksLabelFont != null) stonksLabel.setFont(stonksLabelFont);
@@ -115,10 +115,16 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
         textUsername.setText("Username");
         RegistrationPanel.add(textUsername, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         pfPwd = new JPasswordField();
+        pfPwd.setBackground(new Color(-1));
+        pfPwd.setDisabledTextColor(new Color(-14206903));
+        pfPwd.setDropMode(DropMode.USE_SELECTION);
+        pfPwd.setEnabled(true);
         Font pfPwdFont = this.$$$getFont$$$(null, -1, 16, pfPwd.getFont());
         if (pfPwdFont != null) pfPwd.setFont(pfPwdFont);
+        pfPwd.setSelectionColor(new Color(-3604488));
         pfPwd.setText("");
-        RegistrationPanel.add(pfPwd, new GridConstraints(4, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        pfPwd.setVisible(true);
+        RegistrationPanel.add(pfPwd, new GridConstraints(4, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         textPassword = new JLabel();
         Font textPasswordFont = this.$$$getFont$$$(null, -1, 16, textPassword.getFont());
         if (textPasswordFont != null) textPassword.setFont(textPasswordFont);
@@ -127,6 +133,7 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
         pdPwdConfirm = new JPasswordField();
         Font pdPwdConfirmFont = this.$$$getFont$$$(null, -1, 16, pdPwdConfirm.getFont());
         if (pdPwdConfirmFont != null) pdPwdConfirm.setFont(pdPwdConfirmFont);
+        pdPwdConfirm.setSelectionColor(new Color(-3604488));
         RegistrationPanel.add(pdPwdConfirm, new GridConstraints(5, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         textConfirmPwd = new JLabel();
         Font textConfirmPwdFont = this.$$$getFont$$$(null, -1, 16, textConfirmPwd.getFont());
@@ -141,13 +148,15 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
         btnBack.setText("Go Back");
         RegistrationPanel.add(btnBack, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnRegister = new JButton();
-        Font btnContinueFont = this.$$$getFont$$$(null, -1, 16, btnRegister.getFont());
-        if (btnContinueFont != null) btnRegister.setFont(btnContinueFont);
+        Font btnRegisterFont = this.$$$getFont$$$(null, -1, 16, btnRegister.getFont());
+        if (btnRegisterFont != null) btnRegister.setFont(btnRegisterFont);
         btnRegister.setText("Register");
         RegistrationPanel.add(btnRegister, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtUserName = new JTextField();
         Font txtUserNameFont = this.$$$getFont$$$(null, -1, 16, txtUserName.getFont());
         if (txtUserNameFont != null) txtUserName.setFont(txtUserNameFont);
+        txtUserName.setSelectionColor(new Color(-3604488));
+        txtUserName.setText("Input Username Here");
         RegistrationPanel.add(txtUserName, new GridConstraints(3, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Password Requirements: 8 chars to 49 chars, no quotation marks ");
