@@ -16,6 +16,7 @@ public class LeaderboardGUI extends JFrame implements iLeaderboardGUI {
     private JPanel panel1;
     private JList<String> leaderBoard;
     private JButton backButton;
+    private JLabel Leaderboard;
 
     public LeaderboardGUI(List<String> topUsers) {
         super();
