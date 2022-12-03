@@ -23,6 +23,9 @@ public class ViewStockUseCaseInteractor{
         this.stockSymbol = symbol;
     }
 
+    /*
+    * Uses symbol declared on instantiation and throws error if symbol is invalid
+    * */
     public void isValidStock() throws Exception {
         //Checking is API throws error or not
         try{
@@ -31,15 +34,24 @@ public class ViewStockUseCaseInteractor{
             throw new Exception("Invalid stock symbol");
         }
     }
-
+    /*
+     * Uses symbol declared on instantiation and trys to search for the stock
+     * */
     public void searchStock() throws IOException {
         this.from.add(Calendar.DATE, -7); //Date of the last 7 days
         this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
     }
-
+    /**
+     * @return List<HistoricalQuote> containing historical of last 7 days
+     */
     public List<HistoricalQuote> getHistData(){
         return this.stock.getHistData();
     }
+
+    /**
+     * @param histDataRange specifies what interval the historical data should range from
+     * @return String[][] contain date, and stock price on specific range
+     */
 
     public String[][] sortHistoricalData(Interval histDataRange){
         this.from = Calendar.getInstance();
@@ -69,7 +81,10 @@ public class ViewStockUseCaseInteractor{
         }
         return data;
     }
-
+    /**
+     * Returns current stock price
+     * @return double representing current price of stock
+     */
     public double getStockValue() throws IOException {
         this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));;
         return this.stock.getPrice();
