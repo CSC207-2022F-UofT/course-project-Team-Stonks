@@ -1,7 +1,7 @@
 package LeaderboardUseCase;
 
 public class LeaderboardController {
-    private LeaderboardUseCaseInteractor interactor;
+    private final LeaderboardUseCaseInteractor interactor;
 
     /**
      * Creates a new instance of LeaderboardController with an instance of the LeaderboardUseCaseInteractor

@@ -9,7 +9,7 @@ public class SellStockController {
     public SellStockController() {
     }
 
-    public SellOutputResponse sellStock(SellInputRequest sell) throws IOException {
+    public SellOutputResponse sellStock(SellInputRequest sell){
         SellUseCaseInteractor interactor = new SellUseCaseInteractor();
         return interactor.sellStock(sell);
     }

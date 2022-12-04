@@ -5,7 +5,7 @@ import APIInterface.StockAPIResponse;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 
-import javax.swing.table.DefaultTableModel;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -86,7 +86,7 @@ public class ViewStockUseCaseInteractor{
      * @return double representing current price of stock
      */
     public double getStockValue() throws IOException {
-        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));;
+        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
         return this.stock.getPrice();
     }
 }

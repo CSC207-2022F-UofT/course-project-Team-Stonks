@@ -4,12 +4,12 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import entities.Portfolio;
 import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.histquotes.Interval;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.util.Calendar;
+
 import java.util.List;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -88,8 +88,7 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     public void addSellStockAction(Runnable onSellStock) {
         if (portfolio.getSymbolToStock().containsKey(stockSymbol)) {
             sellStockButton.addActionListener(e -> onSellStock.run());
-        }
-        else {
+        } else {
             sellStockButton.setEnabled(false);
         }
     }
