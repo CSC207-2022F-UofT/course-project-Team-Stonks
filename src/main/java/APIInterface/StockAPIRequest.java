@@ -3,7 +3,7 @@ package APIInterface;
 import yahoofinance.histquotes.Interval;
 
 import java.util.Calendar;
-;
+
 
 public class StockAPIRequest {
     /**

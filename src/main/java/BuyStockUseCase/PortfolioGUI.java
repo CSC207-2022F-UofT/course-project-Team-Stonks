@@ -29,16 +29,18 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
     private JButton makeCompetitivePortfolioButton;
     private JLabel netValue;
 
+    /**
+     * GUI where the user can view their portfolio information
+     */
     public PortfolioGUI(Portfolio port, String username, boolean isComp) {
         super();
-        /**
-         * GUI where the user can view their portfolio information
-         */
+
         this.port = port;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(portfolioPanel);
         this.pack();
         this.setVisible(true);
+        this.getRootPane().setDefaultButton(searchButton);
         this.portfolioName.setText(this.port.getName());
         this.netValue.setText("Net Value: $" + port.getNetValue());
         this.balance.setText("Balance: $" + port.getBalance());
@@ -86,6 +88,11 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
     public void removeCompPortfolioButton() {
         portfolioPanel.remove(makeCompetitivePortfolioButton);
         addCompText();
+    }
+
+    @Override
+    public void invalidStockMessage(String symbol) {
+        JOptionPane.showMessageDialog(null, "Invalid stock symbol: " + symbol);
     }
 
     private void addCompText() {

@@ -1,17 +1,39 @@
 package SearchStockUseCase;
 
+import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Calendar;
+import javax.swing.table.DefaultTableModel;
+import java.io.IOException;
+import java.util.List;
 
 public class ViewStockController {
-    ViewStockController(String symbol) throws Exception {
-        ViewStockUseCaseInteractor vsuci = new ViewStockUseCaseInteractor();
-        boolean isValid = vsuci.searchStock(symbol);
+    private final ViewStockUseCaseInteractor interactor;
+
+    public ViewStockController(String symbol){
+        this.interactor = new ViewStockUseCaseInteractor(symbol);
     }
 
+    public void stockIsValid() throws Exception {
+        interactor.isValidStock();
+    }
+
+    public void searchStock() throws IOException {
+        interactor.searchStock();
+    }
+
+    public DefaultTableModel updateTable(Interval tableRange){
+        // Column Names
+        String[] columnNames = {"Date", "Stock Price"};
+        String[][] data = interactor.sortHistoricalData(tableRange);
+        return new DefaultTableModel(data, columnNames);
+    }
+
+    public List<HistoricalQuote> getCurrentHistData() {
+        return interactor.getHistData();
+    }
+
+    public double getCurrentPrice() throws IOException {
+        return interactor.getStockValue();
+    }
 }

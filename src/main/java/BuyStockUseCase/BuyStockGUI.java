@@ -2,7 +2,6 @@ package BuyStockUseCase;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +20,7 @@ public class BuyStockGUI extends JFrame implements iBuyStockGUI {
     private JPanel mainPanel;
     private JLabel balanceLabel;
     private int quantity;
-    private String symbol;
+    private final String symbol;
 
     public BuyStockGUI(String symbol, int quantity) {
         super();

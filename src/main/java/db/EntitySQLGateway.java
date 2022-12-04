@@ -80,7 +80,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
 
 
     /**
-     * @param newUser
+     * @param newUser the new user to be added to the database
      */
     @Override
     public void addUser(UserDSRequest newUser) {
@@ -97,8 +97,8 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param username
-     * @return
+     * @param username the username of the user to be found
+     * @return the boolean if the user is found
      */
     @Override
     public boolean findUser(String username) {
@@ -114,9 +114,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param username
-     * @param password
-     * @return
+     * @return UserDSResponse of the user to be found
      */
     @Override
     public UserDSResponse findUserPortfolios(String username, String password) {
@@ -159,7 +157,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param username
+     * @param username the username of the user to be updated
      */
     @Override
     public void updateUserLoginDate(String username, Date loginDate) {
@@ -175,7 +173,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param newPortfolio
+     * @param newPortfolio the new portfolio to be added to the database
      */
     @Override
     public void addPortfolio(PortfolioDSRequest newPortfolio) {
@@ -191,9 +189,9 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param portfolioName
-     * @param username
-     * @return
+     * @param portfolioName the name of the portfolio to be found
+     * @param username the username of the user to be found
+     * @return PortfolioDSResponse of the portfolio to be found
      */
     @Override
     public PortfolioDSResponse findPortfolio(String portfolioName, String username) {
@@ -238,8 +236,8 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param name
-     * @param username
+     * @param name the name of the portfolio to be updated
+     * @param username the username of the user to be updated
      */
     @Override
     public void deletePortfolio(String name, String username) {
@@ -284,7 +282,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param newStock
+     * @param newStock the new stock to be added to the database
      */
     @Override
     public void addStock(StockDSRequest newStock) {
@@ -397,10 +395,10 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param symbol
-     * @param newQuantity
-     * @param username
-     * @param portfolioName
+     * @param symbol the symbol of the stock to be updated
+     * @param newQuantity the new quantity of the stock to be updated
+     * @param username the username of the user to be updated
+     * @param portfolioName the name of the portfolio to be updated
      */
     @Override
     public void updateStockQuantity(String symbol, int newQuantity, String username, String portfolioName) {

@@ -1,30 +1,24 @@
 package SearchStockUseCase;
 
-import APIInterface.StockAPIGateway;
-import APIInterface.StockAPIRequest;
-import APIInterface.StockAPIResponse;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import entities.Portfolio;
 import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.histquotes.Interval;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
+
+import java.util.List;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.List;
 
 
 public class ViewStockGUI extends JFrame implements iViewStockGUI {
-    private StockAPIResponse stock;
-    private final Calendar from = Calendar.getInstance();
-    private final Interval stockPriceInterval = Interval.DAILY;
+    private double stockPrice;
+    private final Portfolio portfolio;
     private final String stockSymbol;
     private List<HistoricalQuote> histData;
     private JPanel mainPanel;
@@ -45,150 +39,44 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     private JScrollPane tableScrollPane;
     private JButton backButton;
 
-    public ViewStockGUI(String symbol) {
+    public ViewStockGUI(String symbol, Portfolio portfolio) {
         super();
-        priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
-        this.from.add(Calendar.DATE, -7); //Date of the last 7 days
-        try {
-            this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(symbol, this.from, this.stockPriceInterval));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         this.stockSymbol = symbol;
-        this.histData = stock.getHistData();
-
-        //Setting up labels
-        HistoricalQuote latestValues = histData.get(histData.size() - 1);
-        curr_high.setText("High: " + new DecimalFormat("0.00").format(latestValues.getHigh()));
-        curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
-        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stock.getPrice()));
-
-        HistoricalQuote previousDayValues = histData.get(histData.size() - 1);
-        double last_close = previousDayValues.getClose().doubleValue();
-        try {
-            up_down.setText("Up/Down: " + new DecimalFormat("0.00").format(updatePrice() - last_close));
-        } catch (
-                Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        stockLabel.setText(this.stockSymbol + stockMarketStatus());
-
-
-        //Setting up Button
-        refreshButton.addActionListener(e -> {
-            try {
-                updateValues();
-            } catch (
-                    IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-        updateTable();
-        todayButton.addActionListener(e -> {
-            try {
-                todayButtonAction();
-                updateTable();
-            } catch (
-                    IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        weekButton.addActionListener(e -> {
-            try {
-                weeklyButtonAction();
-                updateTable();
-            } catch (
-                    IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        yearButton.addActionListener(e -> {
-            try {
-                monthlyButtonAction();
-                updateTable();
-            } catch (
-                    IOException ex) {
-                throw new RuntimeException(ex);
-            }
-
-        });
+        this.portfolio = portfolio;
+        priceTable.setDefaultEditor(Object.class, null); //Disabling cell editing
+        stockLabel.setText(this.stockSymbol.toUpperCase() + stockMarketStatus());
         //Setting up JFrame
         this.setContentPane(this.mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.pack();
         this.setVisible(true);
+        this.pack();
+
     }
 
     @Override
-    public void updateTable() {
-        //Setting up the JTable
-        String[][] data = new String[this.histData.size()][2];
-        // Column Names
-        String[] columnNames = {"Date", "Stock Price"};
-
-        int row = 0;
-        for (HistoricalQuote q : this.histData) {
-            data[row][0] = new SimpleDateFormat("dd/MM/yyyy").format(q.getDate().getTime());
-            data[row][1] = new DecimalFormat("0.00").format(q.getClose());
-            row++;
-        }
+    public void updateTable(DefaultTableModel tableModel) {
         // Initializing the JTable
-        priceTable.setModel(new DefaultTableModel(data, columnNames));
+        priceTable.setModel(tableModel);
     }
 
     @Override
-    public double updatePrice() throws Exception {
-        /* This function should only be called periodically every minute*/
-        StockAPIResponse stockAPIResponse;
-        try {
-            stockAPIResponse = new StockAPIGateway().getPrice(new StockAPIRequest(this.stockSymbol));
-        } catch (IOException e) {
-            throw new Exception(String.format("Invalid stock Symbol %s", this.stockSymbol));
-        }
-        return stockAPIResponse.getPrice();
+    public void refreshButtonAction(Runnable onRefreshButton) {
+        refreshButton.addActionListener(e -> onRefreshButton.run());
     }
 
     @Override
-    public void updateValues() throws IOException {
-        //Getting updated values from API
-        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, this.from, this.stockPriceInterval));
-        this.histData = this.stock.getHistData();
-
-        //Setting up labels
-        HistoricalQuote latestValues = histData.get(histData.size() - 1);
-        curr_high.setText("High: " + new DecimalFormat("0.00").format(latestValues.getHigh()));
-        curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
-        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stock.getPrice()));
+    public void todayButtonAction(Runnable onTodayButton) {
+        todayButton.addActionListener(e -> onTodayButton.run());
     }
 
     @Override
-    public void todayButtonAction() throws IOException {
-        Calendar dailyFrom = Calendar.getInstance();
-        dailyFrom.add(Calendar.DATE, -7);
-        Interval dailyInterval = Interval.DAILY;
-        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, dailyFrom, dailyInterval));
-        this.histData = this.stock.getHistData();
+    public void weeklyButtonAction(Runnable onWeeklyButton) {
+        weekButton.addActionListener(e -> onWeeklyButton.run());
     }
 
     @Override
-    public void weeklyButtonAction() throws IOException {
-        Calendar weeklyFrom = Calendar.getInstance();
-        weeklyFrom.setFirstDayOfWeek(Calendar.MONDAY);
-        weeklyFrom.add(Calendar.MONTH, -2);
-        Interval weeklyInterval = Interval.WEEKLY;
-        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, weeklyFrom, weeklyInterval));
-        this.histData = this.stock.getHistData();
-    }
-
-    @Override
-    public void monthlyButtonAction() throws IOException {
-        Calendar monthlyFrom = Calendar.getInstance();
-        monthlyFrom.add(Calendar.YEAR, -7);
-        Interval monthlyInterval = Interval.MONTHLY;
-        this.stock = new StockAPIGateway().getPriceHist(new StockAPIRequest(this.stockSymbol, monthlyFrom, monthlyInterval));
-        this.histData = this.stock.getHistData();
+    public void yearlyButtonAction(Runnable onYearlyButton) {
+        yearButton.addActionListener(e -> onYearlyButton.run());
     }
 
     @Override
@@ -198,7 +86,11 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
 
     @Override
     public void addSellStockAction(Runnable onSellStock) {
-        sellStockButton.addActionListener(e -> onSellStock.run());
+        if (portfolio.getSymbolToStock().containsKey(stockSymbol)) {
+            sellStockButton.addActionListener(e -> onSellStock.run());
+        } else {
+            sellStockButton.setEnabled(false);
+        }
     }
 
     @Override
@@ -224,6 +116,30 @@ public class ViewStockGUI extends JFrame implements iViewStockGUI {
     @Override
     public String getStockSymbol() {
         return this.stockSymbol;
+    }
+
+    @Override
+    public void setHistData(List<HistoricalQuote> historicalQuotes) {
+        this.histData = historicalQuotes;
+    }
+
+    @Override
+    public void setStockPrice(double stockPrice) {
+        this.stockPrice = stockPrice;
+    }
+
+    @Override
+    public void loadLabels() {
+        //Setting up labels
+        HistoricalQuote latestValues = histData.get(histData.size() - 1);
+        curr_high.setText("High: " + new DecimalFormat("0.00").format(latestValues.getHigh()));
+        curr_low.setText("Low: " + new DecimalFormat("0.00").format(latestValues.getLow()));
+        currentPrice.setText("Current: " + new DecimalFormat("0.00").format(this.stockPrice));
+
+        HistoricalQuote previousDayValues = histData.get(histData.size() - 1);
+        double last_close = previousDayValues.getClose().doubleValue();
+        System.out.println("Labels Loaded");
+        up_down.setText(String.format("Up/Down: %,.2f", this.stockPrice - last_close));
     }
 
     {

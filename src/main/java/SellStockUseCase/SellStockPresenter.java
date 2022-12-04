@@ -25,7 +25,7 @@ public class SellStockPresenter {
     }
     private void onBack() {
         view.close();
-        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol()), this.portfolio, this.user);
+        new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol(), portfolio), this.portfolio, this.user);
     }
 
     /**
@@ -33,8 +33,8 @@ public class SellStockPresenter {
      */
     private void onSell() {
         String symbol = view.getSymbol();
-        int quantity = view.getQuantity();
         try {
+            int quantity = view.getQuantity();
             SellOutputResponse response = controller.sellStock(new SellInputRequest(portfolio, symbol, quantity));
             if (response.possible()) {
                 view.displaySuccess();
@@ -42,6 +42,8 @@ public class SellStockPresenter {
             } else {
                 view.displayQuantityFailure();
             }
+        } catch (NumberFormatException e) {
+            view.displayQuantityFailure();
         } catch (Exception e) {
             view.displayConnectionFailure();
         }

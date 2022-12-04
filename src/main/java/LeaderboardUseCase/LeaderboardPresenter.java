@@ -4,9 +4,6 @@ import entities.User;
 import main.OuterLayerFactory;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.*;
 
 
 public class LeaderboardPresenter {

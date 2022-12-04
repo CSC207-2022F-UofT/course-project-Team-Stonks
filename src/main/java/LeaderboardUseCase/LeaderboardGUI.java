@@ -3,17 +3,13 @@ package LeaderboardUseCase;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
-import entities.User;
-import entities.Leaderboard;
-
 import java.awt.*;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
-import java.util.ArrayList;
-import java.util.Locale;
 
 public class LeaderboardGUI extends JFrame implements iLeaderboardGUI {
     private JPanel panel1;
