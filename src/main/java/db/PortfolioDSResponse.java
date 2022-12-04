@@ -2,6 +2,10 @@ package db;
 
 import java.util.List;
 
+/**
+ * Response model class containing the information for creating a new portfolio
+ * object in the application from the entity database
+ */
 public class PortfolioDSResponse {
     private final String name;
     private final double balance;

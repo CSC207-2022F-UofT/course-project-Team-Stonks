@@ -2,6 +2,10 @@ package LoginUseCase;
 
 import java.sql.Date;
 
+/**
+ * Request model object for when user attempts to log in, contains
+ * given username, password, and current date
+ */
 public final class UserLoginRequest {
     private final String username;
     private final String password;
