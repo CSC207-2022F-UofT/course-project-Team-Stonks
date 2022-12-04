@@ -124,32 +124,32 @@ This use case provides the interface to allow users to view the leaderboard of t
 
 ## Registration GUI
 
-(input images)
+![Screenshot](images/registrationPage.png)
 
 ## Login GUI
 
-(input images)
+![Screenshot](images/LoginScreen.png)
 
 ## Portfolio GUI
 
-(input images)
+![Screenshot](images/CreatePortfolioScreen.png)
 
 ## Search Stock GUI
 
-(input images)
+![Screenshot](images/ViewStockScreen.png)
 
 ## Buy Stock GUI
 
-(input images)
+![Screenshot](images/BuyStockScreen.png)
 
 ## Sell Stock GUI
 
-(input images)
+![Screenshot](images/SellStockScreen.png)
 
 ## Watchlist GUI
 
-(input images)
+![Screenshot](images/LeaderboardScreen.png)
 
 ## Leaderboard GUI
 
-(input images)
+![Screenshot](images/LoginScreen.png)
