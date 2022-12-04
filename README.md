@@ -1,19 +1,20 @@
 # Group Members:
 - Inaam (Inaam2)
-- Noel 
-- Elad
-- Hoa (Peacful36)
-- Elliot
-- Rohan
-- Ben
-- Jack
+- Noel (noel-toms)
+- Elad (eladperlman)
+- Hoa (Peaceful36)
+- Elliot (Spaghetti-12)
+- Rohan (Rohh1)
+- Ben (benmarlow)
+- Jack (jackzxliu)
 
 ## Stock Market Simulation
 
 The Stockmarket Simulator is a program that allows a user to simulate the environment of stock investments. It allows a user to register an account and then have the options to buy/sell/watchlist a stock and naturally develop multiple portfolios and an interest in the investment world! This also involves a compeitive aspect such that each user can select a competitive portfolio which allows each user to put foreward a portfolio which can compete with other user's portfolios. 
 
 # Entities
-
+## Leaderboard
+Leaderboard is a list of competitive portfolios that are ranked by their total value.
 ## Portfolio
 The portfolio class stores the portfolios of each user
 Contains attributes:
