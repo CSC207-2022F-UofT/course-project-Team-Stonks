@@ -120,7 +120,6 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
-
     /**
      * <pre>
      * Searches for user in database based on given username
@@ -207,6 +206,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
 
     /**
      * Adds portfolio to given user in the database
+     * @param newPortfolio the new portfolio to be added to the database
      */
     @Override
     public void addPortfolio(PortfolioDSRequest newPortfolio) {

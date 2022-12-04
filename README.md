@@ -119,10 +119,36 @@ This use case provides the interface to allow users to view the leaderboard of t
 - upadateLeaderboard()
   - Return a Leaderboard with the top users according to the current value of their competitive portfolios
 
-
-# Controllers
-(TODO)
-
 # GUI
 
-Add pictures of each GUI
+## Registration GUI
+
+(input images)
+
+## Login GUI
+
+(input images)
+
+## Portfolio GUI
+
+(input images)
+
+## Search Stock GUI
+
+(input images)
+
+## Buy Stock GUI
+
+(input images)
+
+## Sell Stock GUI
+
+(input images)
+
+## Watchlist GUI
+
+(input images)
+
+## Leaderboard GUI
+
+(input images)

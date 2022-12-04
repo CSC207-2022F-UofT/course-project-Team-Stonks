@@ -4,14 +4,14 @@ package BuyStockUseCase;
 import PortfolioCreationUseCase.CompPortRequest;
 import PortfolioCreationUseCase.PortfolioSelectedController;
 import PortfolioCreationUseCase.UserPresenter;
-import PortfolioCreationUseCase.iUserGUI;
+
 import SearchStockUseCase.ViewStockController;
 import SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
 
-import javax.swing.*;
+
 import java.util.ArrayList;
 
 public class PortfolioPresenter {

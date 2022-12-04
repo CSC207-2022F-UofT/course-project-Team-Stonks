@@ -30,6 +30,7 @@ public class SellStockTest {
     private static final int quantity = 10;
     private static final int sellQuant = 4;
     private static final int invalidQuant = 100;
+    private static final int negativeQuant = -1;
     private static final String username = "SellTestUser";
 
 
@@ -86,6 +87,20 @@ public class SellStockTest {
 
         assert Objects.equals(response.getMessage(), "Please enter a valid amount.");
 
+    }
+
+    /**
+     * Testing an invalid case where the user tries to sell a negative amount of stocks
+     */
+    @Test
+    public void testNegativeQuantity(){
+        double balance = portfolio.getBalance();
+        SellInputRequest sell = new SellInputRequest(portfolio, symbol, negativeQuant);
+        SellOutputResponse response = interactor.sellStock(sell);
+        interactor.sellStock(sell);
+        assert portfolio.getBalance() == balance;
+
+        assert Objects.equals(response.getMessage(), "Please enter a positive quantity.");
     }
 
     /**

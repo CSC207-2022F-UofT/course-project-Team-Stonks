@@ -24,6 +24,7 @@ public class UserLoginGUI extends JFrame implements iUserLoginGUI {
         this.setContentPane(loginPanel);
         this.pack();
         this.setVisible(true);
+        this.getRootPane().setDefaultButton(loginBtn);
     }
 
     @Override

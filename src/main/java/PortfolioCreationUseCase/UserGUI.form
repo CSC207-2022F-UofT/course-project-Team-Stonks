@@ -9,29 +9,13 @@
       <alignmentX value="0.5"/>
       <foreground color="-67841"/>
       <minimumSize width="650" height="400"/>
-      <preferredSize width="474" height="369"/>
+      <preferredSize width="800" height="500"/>
       <requestFocusEnabled value="true"/>
     </properties>
     <border type="bevel-lowered" title="">
       <title-color color="-4473925"/>
     </border>
     <children>
-      <component id="97ba2" class="javax.swing.JList" binding="portfolios">
-        <constraints>
-          <grid row="1" column="3" row-span="3" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <minimum-size width="250" height="250"/>
-            <preferred-size width="250" height="250"/>
-          </grid>
-        </constraints>
-        <properties>
-          <background color="-67841"/>
-          <font size="18"/>
-          <foreground color="-16752965"/>
-          <model/>
-          <selectionForeground color="-16761413"/>
-          <selectionMode value="0"/>
-        </properties>
-      </component>
       <component id="f983c" class="javax.swing.JButton" binding="logOut">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="10" fill="0" indent="0" use-parent-layout="false">
@@ -65,14 +49,31 @@
               <text value="Portfolios:"/>
             </properties>
           </component>
-          <component id="2f2ee" class="javax.swing.JList" binding="list1" default-binding="true">
+          <scrollpane id="779ce">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
-          </component>
+            <border type="none"/>
+            <children>
+              <component id="7a3f7" class="javax.swing.JList" binding="portfolios">
+                <constraints/>
+                <properties>
+                  <background color="-67841"/>
+                  <dropMode value="USE_SELECTION"/>
+                  <focusable value="true"/>
+                  <font size="20"/>
+                  <foreground color="-14518587"/>
+                  <model>
+                    <item value="Test Obnj"/>
+                    <item value="Portfolio 2"/>
+                  </model>
+                  <opaque value="true"/>
+                  <selectionMode value="2"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
       <grid id="8d092" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

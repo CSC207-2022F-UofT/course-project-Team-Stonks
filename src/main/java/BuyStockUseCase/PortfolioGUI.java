@@ -40,6 +40,7 @@ public class PortfolioGUI extends JFrame implements iPortfolioGUI {
         this.setContentPane(portfolioPanel);
         this.pack();
         this.setVisible(true);
+        this.getRootPane().setDefaultButton(searchButton);
         this.portfolioName.setText(this.port.getName());
         this.netValue.setText("Net Value: $" + port.getNetValue());
         this.balance.setText("Balance: $" + port.getBalance());

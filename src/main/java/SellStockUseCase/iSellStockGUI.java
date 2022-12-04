@@ -13,6 +13,5 @@ public interface iSellStockGUI {
      void addGoBackAction(Runnable onBack);
      void displaySuccess();
      String getSymbol();
-
     void updateQuantityLabel(int quant);
 }
