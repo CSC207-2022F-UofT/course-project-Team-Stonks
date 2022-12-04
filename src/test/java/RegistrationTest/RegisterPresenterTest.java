@@ -24,7 +24,7 @@ class RegisterPresenterTest {
     @BeforeAll
     public static void setUp() {
         RegisterInteractor registerInteractor = new RegisterInteractor();
-        registerInteractor.signUpUser(correctUsername, correctPassword, correctPassword, Date.valueOf(LocalDate.now()));
+        registerInteractor.signUpUser(correctUsername, correctPassword, correctPasswordConfirm, Date.valueOf(LocalDate.now()));
         controller = new RegisterController();
         UserManager userManager = UserManager.instance;
         dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
@@ -40,8 +40,7 @@ class RegisterPresenterTest {
                 passwordConfirm,
                 Date.valueOf(LocalDate.now()));
 
-        RegisterResponse response = controller.signUpUser(request);
-        return response;
+        return controller.signUpUser(request);
     }
 
     /**
@@ -53,7 +52,7 @@ class RegisterPresenterTest {
         dbGateway.deleteUser(correctUsername);
 
         RegisterResponse response = getRegisterResponse(correctUsername, "password", "password");
-        Assertions.assertEquals(response.userSignedUp(), RegisterError.NONE);
+        Assertions.assertEquals(RegisterError.NONE, response.userSignedUp());
 
     }
 
@@ -63,7 +62,7 @@ class RegisterPresenterTest {
     @Test
     public void testShortPassword() {
         RegisterResponse response = getRegisterResponse("userDoesn'tExist", "h1", "h1");
-        Assertions.assertEquals(response.userSignedUp(), RegisterError.PASSWORD_INVALID);
+        Assertions.assertEquals(RegisterError.PASSWORD_INVALID, response.userSignedUp());
     }
 
 
@@ -73,7 +72,7 @@ class RegisterPresenterTest {
     @Test
     public void testUserExistsError() {
         RegisterResponse response = getRegisterResponse(correctUsername, correctPassword, correctPassword);
-        Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
+        Assertions.assertEquals(RegisterError.USERNAME, response.userSignedUp());
 
     }
 
@@ -84,7 +83,7 @@ class RegisterPresenterTest {
     public void testDifferentPasswordsError() {
         dbGateway.deleteUser(correctUsername);
         RegisterResponse response = getRegisterResponse(correctUsername, "PasswordNotSame", "NotRight");
-        Assertions.assertEquals(response.userSignedUp(), RegisterError.PASSWORD_NOT_MATCH);
+        Assertions.assertEquals(RegisterError.PASSWORD_NOT_MATCH, response.userSignedUp());
 
     }
 
@@ -95,7 +94,7 @@ class RegisterPresenterTest {
     @Test
     public void testSpacedUsername() {
         RegisterResponse response = getRegisterResponse("Random Name", "PasswordNotSame", "PasswordNotSame");
-        Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
+        Assertions.assertEquals(RegisterError.USERNAME, response.userSignedUp());
 
     }
     /**
@@ -105,7 +104,7 @@ class RegisterPresenterTest {
     public void testLongUsername() {
         // Building a long username that is 51 characters long
         RegisterResponse response = getRegisterResponse("a" + "a".repeat(50), "PasswordNotSame", "PasswordNotSame");
-        Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
+        Assertions.assertEquals(RegisterError.USERNAME, response.userSignedUp());
 
     }
 
@@ -118,7 +117,7 @@ class RegisterPresenterTest {
         StringBuilder longPassword = new StringBuilder("a");
         longPassword.append("a".repeat(50));
         RegisterResponse response = getRegisterResponse("username", longPassword.toString(), longPassword.toString());
-        Assertions.assertEquals(response.userSignedUp(), RegisterError.PASSWORD_INVALID);
+        Assertions.assertEquals(RegisterError.PASSWORD_INVALID, response.userSignedUp());
 
     }
 

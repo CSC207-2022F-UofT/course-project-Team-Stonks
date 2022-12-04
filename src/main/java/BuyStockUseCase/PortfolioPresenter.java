@@ -4,11 +4,14 @@ package BuyStockUseCase;
 import PortfolioCreationUseCase.CompPortRequest;
 import PortfolioCreationUseCase.PortfolioSelectedController;
 import PortfolioCreationUseCase.UserPresenter;
-import PortfolioCreationUseCase.iUserGUI;
+
+import SearchStockUseCase.ViewStockController;
 import SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
 import entities.User;
 import main.OuterLayerFactory;
+
+
 import java.util.ArrayList;
 
 public class PortfolioPresenter {
@@ -39,6 +42,12 @@ public class PortfolioPresenter {
     }
     public void onSearch() {
         String symbol = view.getSearchField();
+        try{
+            new ViewStockController(symbol).stockIsValid();
+        }catch (Exception e){
+            this.view.invalidStockMessage(symbol);
+            return;
+        }
         view.close();
         new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(symbol, this.portfolio), this.portfolio, this.user);
 

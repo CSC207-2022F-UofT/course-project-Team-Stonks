@@ -75,26 +75,49 @@ This use case provides the interface to login to the user's account and access t
   - 
 
 ## Portfolio use case
-
 This use case provides the interface to allow users to create new portfolios and allow users to enter into a portfolio and begin investing. This includes deciding on a competitive portfolio. This use case has the following functions:
+
+- makeNewPortfolio()
+  - Takes in the portfolio name, then check with the database if the name already existed. If not, create a new portfolio with that name and add it to the user's portfolio map and display a response to user
+- populatePortfolio()
+  - Takes in the user and portfolio name and then display the stocks in that portfolio
+- makeCompPortfolio()
+  - Takes in the user and then make that portfolio a competitive portfolio
 
 ## Search Stock use case
 This use case provides the interface to allow users to search any stock and view it's stock price fluctuations over a varied period of time. This use case directly links to both sell and buy stock. This use case has the following functions:
-
+- isValidStock()
+  - Check with the API if the stock is valid. Throw an exception if it is not and tell the user to try again
+- SearchStock()
+  - Assigns the stock from the API to the stock object 
+- GetHisData()
+  - Get the historical data of the stock from the API
+- SortHistoricalData()
+  - Sort the historical data from the API into a list of dates and a list of prices
+- GetStockValue()
+  - Get the current stock price from the API
 
 ## Buy Stock use case
 This use case provides the interface to allow users to buy a stock after having selected a stock in the search stock case. This use case has the following functions:
-
+- buyStock()
+  - Takes in the stock symbol, quantity and portfolio name, then check if the user's input is valid and user has enough balance. If the requirements are met, add the stock to portfolio and subtract the balance with stock's value and then display a response to user
 
 ## Sell Stock use case
 This use case provides the interface to allow users to sell a stock after having selected a stock in the search stock case. This use case has the following functions:
+- sellStock()
+  - Takes in the stock symbol, quantity and portfolio name, then check if the user's input is valid and user has enough stock to sell. If the requirements are met, remove the input amount of the stock from portfolio and add the selling money to balance,then display a response to user
 
 ## Watchlist use case
 This use case provides the interface to allow users to watchlist any stock and notify the user once the stock price has reached a desired price range. This use case has the following functions:
 
 ## Leaderboard use case
 This use case provides the interface to allow users to view the leaderboard of the top competitive portfolios. This use case has the following functions:
-
+- IndexMax()
+  - Takes in a list of values and returns the index of the maximum value
+- TopValue()
+  - Return list of values of each of the users' competitive portfolio net values
+- upadateLeaderboard()
+  - Return a Leaderboard with the top users according to the current value of their competitive portfolios
 
 
 # Controllers

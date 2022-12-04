@@ -1,6 +1,5 @@
 package SellStockUseCase;
 
-import java.io.IOException;
 public class SellStockController {
     /**
      * Create a controller object for the sell stock use case
@@ -9,7 +8,7 @@ public class SellStockController {
     public SellStockController() {
     }
 
-    public SellOutputResponse sellStock(SellInputRequest sell) throws IOException {
+    public SellOutputResponse sellStock(SellInputRequest sell){
         SellUseCaseInteractor interactor = new SellUseCaseInteractor();
         return interactor.sellStock(sell);
     }
