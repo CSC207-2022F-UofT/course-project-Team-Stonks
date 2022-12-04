@@ -1,5 +1,7 @@
 package LeaderboardUseCase;
 
+import entities.Leaderboard;
+
 public class LeaderboardController {
     private final LeaderboardUseCaseInteractor interactor;
 
@@ -7,10 +9,10 @@ public class LeaderboardController {
      * Creates a new instance of LeaderboardController with an instance of the LeaderboardUseCaseInteractor
      */
     public LeaderboardController() {
-        interactor = new LeaderboardUseCaseInteractor();
+        this.interactor = new LeaderboardUseCaseInteractor();
     }
 
-    /**
+    /*
      * @return a LeaderboardResponse object generated from interactor.updateLeaderboard()
      */
     public LeaderboardResponse currLeaderboard() {
