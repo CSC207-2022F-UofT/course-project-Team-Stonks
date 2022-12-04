@@ -152,4 +152,4 @@ This use case provides the interface to allow users to view the leaderboard of t
 
 ## Leaderboard GUI
 
-![Screenshot](images/LoginScreen.png)
+![Screenshot](images/LeaderboardScreen.png)
