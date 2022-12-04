@@ -10,7 +10,7 @@
 
 ## Stock Market Simulation
 
-The Stockmarket Simulator is a program that allows a user to simulate the environment of stock investments. It allows a user to register an account and then have the options to buy/sell/watchlist a stock and naturally develop multiple portfolios and an interest in the investment world! This also involves a compeitive aspect such that each user can select a competitive portfolio which allows each user to put foreward a portfolio which can compete with other user's portfolios. 
+The Stock-market Simulator is a program that allows a user to simulate the environment of stock investments. It allows a user to register an account and then have the options to buy/sell/watchlist a stock and naturally develop multiple portfolios and an interest in the investment world! This also involves a competitive aspect such that each user can select a competitive portfolio which allows each user to put forward a portfolio which can compete with other user's portfolios. 
 
 # Entities
 
@@ -62,17 +62,19 @@ This use case provides the interface to register a user with a username and pass
 - signUpUser() 
   - Takes in the username, password and password confirmation to check with the input data is suitable to be registered given that it passes certain conditions
 - passwordValid()
-  - Takes in the password and password confirmation and checks if it follows the neccessary conditions of being a valid password. If it does, it will return True, otherwise False
+  - Takes in the password and password confirmation and checks if it follows the necessary conditions of being a valid password. If it does, it will return True, otherwise False
 - usernameValid()
-  - Takes in the input username and checks if it follows the neccessary conditions of being a valid username. If it does, it will return True, otherwise False
+  - Takes in the input username and checks if it follows the necessary conditions of being a valid username. If it does, it will return True, otherwise False
   
 ## Login use case
 
-This use case provides the interface to login to the user's account and access their portfolio(s). This use case has the following functions:
+This use case provides the interface to log in to the user's account and access their portfolio(s). This use case has the following functions:
 - loginUser()
   - Takes in username and password, and then returns the UserLoginResponse
 - loginResult()
-  - 
+  - method in presenter class responsible for displaying weather login was successful based on the user
+  - object given from the user manager, if it is null presenter invokes view's failed login method,
+  - otherwise creates a new user presenter and closes current view
 
 ## Portfolio use case
 This use case provides the interface to allow users to create new portfolios and allow users to enter into a portfolio and begin investing. This includes deciding on a competitive portfolio. This use case has the following functions:
@@ -116,34 +118,34 @@ This use case provides the interface to allow users to view the leaderboard of t
   - Takes in a list of values and returns the index of the maximum value
 - TopValue()
   - Return list of values of each of the users' competitive portfolio net values
-- upadateLeaderboard()
+- updateLeaderboard()
   - Return a Leaderboard with the top users according to the current value of their competitive portfolios
 
 # GUI
 
 ## Registration GUI
 
-(input images)
+![Screenshot](images/register-gui.png)
 
 ## Login GUI
 
-(input images)
+![Screenshot](images/user-login-gui.png)
 
 ## Portfolio GUI
 
-(input images)
+![Screenshot](images/portfolio-gui.png)
 
 ## Search Stock GUI
 
-(input images)
+![Screenshot](images/view-stock-gui.png)
 
 ## Buy Stock GUI
 
-(input images)
+![Screenshot](images/buy-stock-gui.png)
 
 ## Sell Stock GUI
 
-(input images)
+![Screenshot](images/sell-stock-gui.png)
 
 ## Watchlist GUI
 
@@ -151,4 +153,4 @@ This use case provides the interface to allow users to view the leaderboard of t
 
 ## Leaderboard GUI
 
-(input images)
+![Screenshot](images/leaderboard-gui.png)
