@@ -29,6 +29,7 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
         this.setContentPane(RegistrationPanel);
         this.pack();
         this.setVisible(true);
+        this.getRootPane().setDefaultButton(btnRegister);
     }
 
     @Override
