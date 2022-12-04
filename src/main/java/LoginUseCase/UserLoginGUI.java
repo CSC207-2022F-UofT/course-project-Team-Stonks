@@ -16,6 +16,8 @@ public class UserLoginGUI extends JFrame implements iUserLoginGUI {
     private JTextField usernameText;
     private JPasswordField passwordField;
     private JLabel title;
+    private JLabel txtIntro;
+    private JLabel textIntroSecond;
 
     public UserLoginGUI() {
         super();

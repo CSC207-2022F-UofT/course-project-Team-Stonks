@@ -21,6 +21,8 @@ public class RegistrationPage extends JFrame implements iRegisterGUI {
     private JLabel textPassword;
     private JButton btnRegister;
     private JButton btnBack;
+    private JLabel txtPwdReq;
+    private JLabel txtUsernameReq;
 
     public RegistrationPage() {
         super();
