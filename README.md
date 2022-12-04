@@ -126,27 +126,31 @@ This use case provides the interface to allow users to view the leaderboard of t
 
 ## Registration GUI
 
-![Screenshot](images/register-gui.png)
+![Screenshot](images/registrationPage.png)
 
 ## Login GUI
 
-![Screenshot](images/user-login-gui.png)
+![Screenshot](images/LoginScreen.png)
+
+## User GUI
+
+![Screenshot](images/UserScreen.png)
 
 ## Portfolio GUI
 
-![Screenshot](images/portfolio-gui.png)
+![Screenshot](images/PortfolioScreen.png)
 
 ## Search Stock GUI
 
-![Screenshot](images/view-stock-gui.png)
+![Screenshot](images/ViewStockScreen.png)
 
 ## Buy Stock GUI
 
-![Screenshot](images/buy-stock-gui.png)
+![Screenshot](images/BuyStockScreen.png)
 
 ## Sell Stock GUI
 
-![Screenshot](images/sell-stock-gui.png)
+![Screenshot](images/SellStockScreen.png)
 
 ## Watchlist GUI
 
@@ -154,4 +158,4 @@ This use case provides the interface to allow users to view the leaderboard of t
 
 ## Leaderboard GUI
 
-![Screenshot](images/leaderboard-gui.png)
+![Screenshot](images/LeaderboardScreen.png)

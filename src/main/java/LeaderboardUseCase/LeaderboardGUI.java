@@ -15,7 +15,6 @@ public class LeaderboardGUI extends JFrame implements iLeaderboardGUI {
     private JPanel panel1;
     private JList<String> leaderBoard;
     private JButton backButton;
-    private JLabel Leaderboard;
 
     public LeaderboardGUI(List<String> topUsers) {
         super();
@@ -64,8 +63,9 @@ public class LeaderboardGUI extends JFrame implements iLeaderboardGUI {
         panel1.add(backButton, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, Font.BOLD, 22, label1.getFont());
-        if (label1Font != null) label1.setFont(label1Font);
-        label1.setText("Leaderboard");
+        if (label1Font != null)
+            label1.setFont(label1Font);
+        label1.setText("Top 5 Users Leaderboard");
         panel1.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
@@ -73,7 +73,8 @@ public class LeaderboardGUI extends JFrame implements iLeaderboardGUI {
      * @noinspection ALL
      */
     private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
+        if (currentFont == null)
+            return null;
         String resultName;
         if (fontName == null) {
             resultName = currentFont.getName();
@@ -97,4 +98,5 @@ public class LeaderboardGUI extends JFrame implements iLeaderboardGUI {
     public JComponent $$$getRootComponent$$$() {
         return panel1;
     }
+
 }
