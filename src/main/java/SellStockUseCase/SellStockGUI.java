@@ -19,10 +19,8 @@ public class SellStockGUI extends JFrame implements iSellStockGUI {
     private JButton sellButton;
     private JButton backButton;
     private JLabel symbolLabel;
-    private String symbol;
+    private final String symbol;
     private int quantity;
-
-    private JLabel quantLeft;
 
     public SellStockGUI(String symbol, int quantity) {
         super();
@@ -130,7 +128,7 @@ public class SellStockGUI extends JFrame implements iSellStockGUI {
         symbolLabel = new JLabel();
         symbolLabel.setText("_");
         SellStockPanel.add(symbolLabel, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        quantLeft = new JLabel();
+        JLabel quantLeft = new JLabel();
         quantLeft.setText("_");
         SellStockPanel.add(quantLeft, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }

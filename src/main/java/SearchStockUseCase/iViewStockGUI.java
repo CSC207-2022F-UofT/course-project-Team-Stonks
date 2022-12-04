@@ -4,7 +4,6 @@ package SearchStockUseCase;
 import yahoofinance.histquotes.HistoricalQuote;
 
 import javax.swing.table.DefaultTableModel;
-import java.io.IOException;
 import java.util.List;
 
 
