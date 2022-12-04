@@ -1,5 +1,9 @@
 package db;
 
+/**
+ * Response model class containing the information for creating a new stock
+ * object in the application from the entity database
+ */
 public class StockDSResponse {
     private final String symbol;
     private final double value;

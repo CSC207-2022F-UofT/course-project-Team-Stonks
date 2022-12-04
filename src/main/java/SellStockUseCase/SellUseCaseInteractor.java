@@ -1,4 +1,5 @@
 package SellStockUseCase;
+
 import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
@@ -13,6 +14,7 @@ public class SellUseCaseInteractor {
     /**
      * The interactor for selling stocks from a portfolio. This class is used to
      * interact with the API and the portfolio to sell stocks.
+     *
      * @param sell The request object containing the portfolio, symbol, and quantity
      * @return The response object containing the portfolio, symbol, quantity, and price
      */
@@ -27,14 +29,13 @@ public class SellUseCaseInteractor {
         StockAPIGateway stockAPIAccess = new StockAPIGateway();
         StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
 
-        try{
+        try {
             StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
             SellType possible = portfolio.sellStock(symbol, stockAPIResponse.getPrice(), quantity);
 
-            if (possible == SellType.ERROR){
+            if (possible == SellType.ERROR) {
                 return new SellOutputResponse(false, "Please enter a valid amount.");
-            }
-            else{
+            } else {
                 dbGateway.updatePortfolioBalance(
                         portfolio.getName(),
                         portfolio.getBalance(),
@@ -45,8 +46,7 @@ public class SellUseCaseInteractor {
                             symbol,
                             portfolio.getUsername(),
                             portfolio.getName());
-                }
-                else{
+                } else {
                     dbGateway.updateStockQuantity(
                             symbol,
                             portfolio.getStockQuantity(symbol),
@@ -58,14 +58,10 @@ public class SellUseCaseInteractor {
                 return new SellOutputResponse(true, "Sale successful!");
 
             }
-        }
-
-        catch (NullPointerException |
-               IOException e) {
+        } catch (
+                NullPointerException |
+                IOException e) {
             return new SellOutputResponse(false, "You do not own any of this stock");
         }
-
-
-
     }
 }

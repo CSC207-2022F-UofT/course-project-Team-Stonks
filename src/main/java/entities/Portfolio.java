@@ -32,23 +32,41 @@ public class Portfolio {
         this.username = username;
     }
 
+
+    /**
+     * @return gets the portfolio's balance
+     */
     public double getBalance() {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
         return Double.parseDouble(numberFormat.format(balance));
     }
 
+    /**
+     * @return gets the portfolio's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return gets the portfolio's symbol to stock map
+     */
     public Map<String, Stock> getSymbolToStock() {
         return symbolToStock;
     }
 
+    /**
+     * @return gets the portfolio's user parent
+     */
     public String getUsername() {
         return username;
     }
 
+
+    /**
+     * @param symbol non-empty string representing a stock's name
+     * @return the quantity of the given stock the portfolio has
+     */
     public int getStockQuantity(String symbol) {
         Stock stock = symbolToStock.get(symbol);
 
@@ -115,15 +133,22 @@ public class Portfolio {
 
         stock.addQuantity(-quantity);
 
-        return SellType.SUCCESFUL;
+        return SellType.SUCCESSFUL;
     }
 
+    /**
+     * @param newStocks list of stock objects to be added
+     * adds the new given stocks
+     */
     public void pullStocks(List<Stock> newStocks) {
         for (Stock stock : newStocks) {
             symbolToStock.put(stock.getSymbol(), stock);
         }
     }
 
+    /**
+     * @return gets the net value of the portfolio
+     */
     public double getNetValue() {
         double total = 0;
         for (Stock stock : symbolToStock.values()) {

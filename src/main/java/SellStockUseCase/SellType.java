@@ -2,6 +2,6 @@ package SellStockUseCase;
 
 public enum SellType {
     REMOVE,
-    SUCCESFUL,
+    SUCCESSFUL,
     ERROR
 }

@@ -28,10 +28,19 @@ public class User {
         }
     }
 
+
+    /**
+     * @return the username of this object
+     */
     public String getUsername() {
         return username;
     }
 
+
+    /**
+     * @param name non-empty string representing a new portfolio's name
+     * adds new portfolio
+     */
     public void addPortfolio(String name) {
         if (nameToPortfolio.isEmpty()) {
             compPortfolio = name;
@@ -40,37 +49,71 @@ public class User {
 
     }
 
+
+    /**
+     * @param portfolioName non-empty string representing a new portfolio's name
+     * @return portfolio with given name
+     */
     public Portfolio getPortfolio(String portfolioName) {
         return nameToPortfolio.get(portfolioName);
     }
 
+    /**
+     * @return all portfolio names user owns
+     */
     public Set<String> getPortfolioNames() {
         return nameToPortfolio.keySet();
     }
+
+    /**
+     * @return user's last login date
+     */
     public Date getLastLogin() {
         return lastLogin;
     }
 
+    /**
+     * @param password non-empty string
+     * @return if input is equal to user's password
+     */
     public boolean isPassword(String password) {
         return this.password.equals(password);
     }
 
+    /**
+     * @return user's current portfolio
+     */
     public Portfolio getCurPortfolio() {
         return nameToPortfolio.get(curPortfolio);
     }
 
+    /**
+     * @return user's competitive portfolio
+     */
     public Portfolio getCompPortfolio() {
         return nameToPortfolio.get(compPortfolio);
     }
 
+    /**
+     * @return user's competitive portfolio's name
+     */
     public String getCompPortfolioName() {
         return compPortfolio;
     }
 
+
+    /**
+     * @param curPortfolio non-empty string
+     * sets user's current portfolio to the input
+     */
     public void setCurPortfolio(String curPortfolio) {
         this.curPortfolio = curPortfolio;
     }
 
+    /**
+     * @param compPortfolio non-empty string
+     * sets user's competitive portfolio to the input
+     */
     public void setCompPortfolio(String compPortfolio) {
         this.compPortfolio = compPortfolio;
     }
