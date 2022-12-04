@@ -9,6 +9,9 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.Locale;
 
+/**
+ * A swing implementation of the user login view interface
+ */
 public class UserLoginGUI extends JFrame implements iUserLoginGUI {
     private JPanel loginPanel;
     private JButton loginBtn;
