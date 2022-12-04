@@ -121,4 +121,16 @@ class RegisterPresenterTest {
 
     }
 
+    /**
+     * Testing With " in Username
+     */
+    @Test
+    public void testQuotation() {
+        String username = "username\"";
+
+        RegisterResponse response = getRegisterResponse(username, correctPassword, correctPasswordConfirm);
+        Assertions.assertEquals(response.userSignedUp(), RegisterError.USERNAME);
+
+    }
+
 }
