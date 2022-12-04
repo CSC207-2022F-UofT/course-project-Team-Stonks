@@ -13,14 +13,26 @@ public class PortfolioDSResponse {
         this.stocks = stocks;
     }
 
+    /**
+     * @return String name of the portfolio
+     * Getter for the name of the portfolio
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * @return double balance of the portfolio
+     * Getter for the balance of the portfolio
+     */
     public double getBalance() {
         return this.balance;
     }
 
+    /**
+     * @return List<StockDSResponse> stocks of the portfolio
+     * Getter for the stocks of the portfolio
+     */
     public List<StockDSResponse> getStocks() {
         return this.stocks;
     }

@@ -34,6 +34,10 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
+    /**
+     * @param username the username of the user
+     *  Deletes the user from the database
+     */
     @Override
     public void deleteUser(String username) {
         try{
@@ -58,6 +62,10 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
+    /**
+     * @return a list of all the users in the database
+     * Gets all the users in the database
+     */
     @Override
     public List<UserDSResponse> getAllUsers() {
         try{
