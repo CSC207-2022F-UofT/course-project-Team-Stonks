@@ -146,10 +146,6 @@ This use case provides the interface to allow users to view the leaderboard of t
 
 ![Screenshot](images/SellStockScreen.png)
 
-## Watchlist GUI
-
-![Screenshot](images/LeaderboardScreen.png)
-
 ## Leaderboard GUI
 
 ![Screenshot](images/LeaderboardScreen.png)
