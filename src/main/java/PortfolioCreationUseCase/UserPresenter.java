@@ -36,6 +36,8 @@ public class UserPresenter {
     private void onPortfolioSelected() {
         String portfolioName = view.getPortfolioSelected();
 
+        if(!this.view.confirmPortfolioMessage(portfolioName)){return;}
+
         controller.PopulatePortfolio(new PortfolioSelectedRequest(user, portfolioName));
 
         boolean isComp = portfolioName.equals(user.getCompPortfolioName());
