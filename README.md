@@ -15,6 +15,9 @@ The Stock-market Simulator is a program that allows a user to simulate the envir
 # Entities
 ## Leaderboard
 Leaderboard is a list of competitive portfolios that are ranked by their total value.
+Contains attributes:
+- int SIZE 
+- Map<User, Double> topUsers
 ## Portfolio
 The portfolio class stores the portfolios of each user
 Contains attributes:
@@ -54,6 +57,9 @@ Contains attributes:
 The user factory class is used to create user objects
 ## User Manager
 The user manager class is used to manage the user objects
+Contains attributes:
+- iEntityDBGateway dbGateway
+- UserFactory userFactory
 
 # Use Cases
 
@@ -124,6 +130,8 @@ This use case provides the interface to allow users to view the leaderboard of t
 
 # GUI
 
+Swing GUIs that require user input have a JTextField which in turn allows for users to input information into the program
+
 ## Registration GUI
 
 ![Screenshot](images/registrationPage.png)
@@ -139,6 +147,10 @@ This use case provides the interface to allow users to view the leaderboard of t
 ## Portfolio GUI
 
 ![Screenshot](images/PortfolioScreen.png)
+
+## Create Portfolio GUI
+
+![Screenshot](images/CreatePortfolioScreen.png)
 
 ## Search Stock GUI
 
