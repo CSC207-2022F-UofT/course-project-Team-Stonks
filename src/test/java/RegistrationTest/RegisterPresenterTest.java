@@ -24,7 +24,7 @@ class RegisterPresenterTest {
     @BeforeAll
     public static void setUp() {
         RegisterInteractor registerInteractor = new RegisterInteractor();
-        registerInteractor.signUpUser(correctUsername, correctPassword, correctPassword, Date.valueOf(LocalDate.now()));
+        registerInteractor.signUpUser(correctUsername, correctPassword, correctPasswordConfirm, Date.valueOf(LocalDate.now()));
         controller = new RegisterController();
         UserManager userManager = UserManager.instance;
         dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
@@ -40,8 +40,7 @@ class RegisterPresenterTest {
                 passwordConfirm,
                 Date.valueOf(LocalDate.now()));
 
-        RegisterResponse response = controller.signUpUser(request);
-        return response;
+        return controller.signUpUser(request);
     }
 
     /**
