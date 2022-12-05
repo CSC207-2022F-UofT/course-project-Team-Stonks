@@ -4,9 +4,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SQL implementation of the entity database gateway interface,
+ * contains methods such as adding, deleting, and updating user, portfolio,
+ * and stock objects in the database
+ */
 public class EntitySQLGateway implements iEntityDBGateway {
     Connection con;
 
+    /**
+     * Initializes a connection to the SQL database
+     */
     public EntitySQLGateway() {
         String dbURL = "jdbc:mysql://db-mysql-nyc1-71885-do-user-10038162-0.b.db.ondigitalocean.com:25060/defaultdb";
         String user = "doadmin";
@@ -22,6 +30,57 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
+
+    /**
+     * @param username non-empty string representing a username
+     * @param compPort non-empty string representing the user's competitive
+     *                 portfolio's name
+     *                 sets given portfolio name as the user's new competitive portfolio
+     */
+    @Override
+    public void addCompPort(String username, String compPort) {
+        try{
+            Statement st = con.createStatement();
+            st.executeUpdate("UPDATE Users SET " +
+                    "competitivePort = '" + compPort + "' WHERE " +
+                    "username = '" + username + "'");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * @param username non-empty string representing a username
+     *                 deletes the given user from the database
+     */
+    @Override
+    public void deleteUser(String username) {
+        try{
+            PreparedStatement ps = con.prepareStatement("SELECT name FROM Portfolios WHERE " +
+                    "username = ?");
+            ps.setString(1, username);
+            ResultSet portRS = ps.executeQuery();
+
+            while (portRS.next()) {
+                deletePortfolio(
+                        portRS.getString(1),
+                        username);
+            }
+
+            Statement st = con.createStatement();
+            st.execute(
+                    "DELETE FROM Users WHERE " +
+                            "username = '" + username + "'");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * @return list of user database response objects representing all the users
+     * existing in the database
+     */
     @Override
     public List<UserDSResponse> getAllUsers() {
         try{
@@ -42,9 +101,10 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
-
     /**
-     * @param newUser
+     * @param newUser user ds request model containing information for adding a new
+     *                user to the database
+     *                adds a new user to the database
      */
     @Override
     public void addUser(UserDSRequest newUser) {
@@ -53,15 +113,19 @@ public class EntitySQLGateway implements iEntityDBGateway {
             st.executeUpdate("INSERT INTO Users VALUES ('" +
                     newUser.getUsername() + "','" +
                     newUser.getPassword() + "','" +
-                    newUser.getLastLogin() + "')");
+                    newUser.getLastLogin() + "','" +
+                    null + "')");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * @param username
-     * @return
+     * <pre>
+     * Searches for user in database based on given username
+     *
+     * Returns User object if it is found, null otherwise
+     * </pre>
      */
     @Override
     public boolean findUser(String username) {
@@ -77,9 +141,10 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param username
-     * @param password
-     * @return
+     * @param username a non-empty string following the valid username parameters
+     * @param password a non-empty string following the valid username parameters
+     * @return user database response model containing a user's info and only
+     * their portfolio names instead of their full information to make calls more efficient
      */
     @Override
     public UserDSResponse findUserPortfolios(String username, String password) {
@@ -111,6 +176,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
                 return new UserDSResponse(userRS.getString(1),
                         userRS.getString(2),
                         userRS.getDate(3),
+                        userRS.getString(4),
                         portfolioDSResponses);
             }
 
@@ -121,7 +187,9 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param username
+     * @param username  username a non-empty string following the valid username parameters
+     * @param loginDate date of when user logged in
+     *                  Updates the user's login date in the database
      */
     @Override
     public void updateUserLoginDate(String username, Date loginDate) {
@@ -137,7 +205,8 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param newPortfolio
+     * Adds portfolio to given user in the database
+     * @param newPortfolio the new portfolio to be added to the database
      */
     @Override
     public void addPortfolio(PortfolioDSRequest newPortfolio) {
@@ -153,9 +222,13 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param portfolioName
-     * @param username
-     * @return
+     *  @param portfolioName a non-empty string following the valid portfolio name parameters
+     *  @param username a non-empty string following the valid username parameters
+     * <pre>
+     * Searches for portfolio in database based on given username and portfolioName
+     *
+     * @return User object if it is found, null otherwise
+     * </pre>
      */
     @Override
     public PortfolioDSResponse findPortfolio(String portfolioName, String username) {
@@ -200,8 +273,9 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param name
-     * @param username
+     * @param name     a non-empty string following the valid portfolio name parameters
+     * @param username a non-empty string following the valid username parameters
+     *                 deletes the given portfolio from the database if it exists
      */
     @Override
     public void deletePortfolio(String name, String username) {
@@ -222,7 +296,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
 
             Statement st = con.createStatement();
             st.execute(
-                    "DELETE Portfolios WHERE " +
+                    "DELETE FROM Portfolios WHERE " +
                             "name = '" + name + "' AND " +
                             "username = '" + username + "'");
 
@@ -231,6 +305,11 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
+    /**
+     * @param name       a non-empty string following the valid portfolio name parameters
+     * @param newBalance a positive amount representing the portfolios updated balance
+     * @param username   a non-empty string following the valid username parameters
+     */
     @Override
     public void updatePortfolioBalance(String name, double newBalance, String username) {
         try{
@@ -246,7 +325,9 @@ public class EntitySQLGateway implements iEntityDBGateway {
     }
 
     /**
-     * @param newStock
+     * @param newStock stock ds request model containing information for adding a new
+     *                 stock to the database
+     *                 adds a new stock to the database
      */
     @Override
     public void addStock(StockDSRequest newStock) {
@@ -273,6 +354,13 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
+    /**
+     * @param symbol a non-empty string representing a stock name
+     * @param username a non-empty string following the valid username parameters
+     * @param portfolioName a non-empty string following the valid portfolio name parameters
+     * @return stock database response model containing a stock's info belonging to the
+     * specified portfolio
+     */
     @Override
     public StockDSResponse findStock(String symbol, String username, String portfolioName) {
         try{
@@ -307,6 +395,10 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
+    /**
+     * @param symbol a non-empty string representing a stock name
+     * @return weather a stock with the given symbol nae exists in the database
+     */
     @Override
     public boolean findStock(String symbol) {
         try{
@@ -321,12 +413,18 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
+    /**
+     * @param symbol        a non-empty string representing a stock name
+     * @param username      a non-empty string following the valid username parameters
+     *                      deletes the given portfolio from the database if it exists
+     * @param portfolioName a non-empty string following the valid portfolio name parameters
+     */
     @Override
     public void deleteStock(String symbol, String username, String portfolioName) {
         try{
             Statement st = con.createStatement();
             st.executeUpdate(
-                    "DELETE PortfolioStock WHERE " +
+                    "DELETE FROM PortfolioStock WHERE " +
                             "portfolioName = '" + portfolioName + "' AND " +
                             "stockName = '" + symbol + "' AND " +
                             "username = '" + username + "'");
@@ -337,7 +435,7 @@ public class EntitySQLGateway implements iEntityDBGateway {
 
             if (!ps.executeQuery().isBeforeFirst()) {
                 st = con.createStatement();
-                st.executeUpdate("DELETE Stocks WHERE " +
+                st.executeUpdate("DELETE FROM Stocks WHERE " +
                         "symbol = '" + symbol + "'");
             }
         } catch (SQLException e) {
@@ -345,24 +443,14 @@ public class EntitySQLGateway implements iEntityDBGateway {
         }
     }
 
-    @Override
-    public void updateStockValue(String symbol, double newValue) {
-        try{
-            Statement st = con.createStatement();
-            st.executeUpdate(
-                    "UPDATE Stocks SET " +
-                            "value = '" + newValue + "' WHERE" +
-                            "symbol = '" + symbol + "'");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
-     * @param symbol
-     * @param newQuantity
-     * @param username
-     * @param portfolioName
+     * @param symbol        a non-empty string representing a stock name
+     * @param newQuantity   positive value representing the stock's updated quantity
+     *                      the given portfolio owns of it
+     * @param username      a non-empty string following the valid username parameters
+     *                      deletes the given portfolio from the database if it exists
+     * @param portfolioName a non-empty string following the valid
+     *                      portfolio name parameters
      */
     @Override
     public void updateStockQuantity(String symbol, int newQuantity, String username, String portfolioName) {

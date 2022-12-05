@@ -9,4 +9,8 @@ public class PortfolioSelectedController {
     public void PopulatePortfolio(PortfolioSelectedRequest request) {
         interactor.populatePortfolio(request.getUser(), request.getPortfolioName());
     }
+
+    public void NewCompPort(CompPortRequest request) {
+        interactor.MakeCompPort(request.getUser(), request.getCompPort());
+    }
 }

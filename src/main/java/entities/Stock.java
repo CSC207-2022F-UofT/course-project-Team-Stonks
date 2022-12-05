@@ -1,39 +1,55 @@
 package entities;
 
-import db.iEntityDBGateway;
-
 public class Stock {
+    /**
+     * Construct a Stock with the given symbol, value and quantity
+     */
     private final String symbol;
     private double value;
     private int quantity;
-    private final iEntityDBGateway dbGateway;
 
-    public Stock(String symbol, double value, int quantity, iEntityDBGateway dbGateway) {
+    public Stock(String symbol, double value, int quantity) {
         this.symbol = symbol;
         this.value = value;
         this.quantity = quantity;
-        this.dbGateway = dbGateway;
     }
 
+
+    /**
+     * @return gets stock's name
+     */
     public String getSymbol(){
         return symbol;
     }
 
+    /**
+     * @return gets stock's value
+     */
     public double getValue() {
         return value;
     }
 
-    public void addQuantity(int quantity, String username, String portfolioName) {
+    /**
+     * @param quantity new quantity of stock to be added
+     * adds quanitity amount of the stock
+     */
+    public void addQuantity(int quantity) {
         this.quantity += quantity;
-        dbGateway.updateStockQuantity(symbol, this.quantity, username, portfolioName);
     }
 
+    /**
+     * @return gets stock's quantity
+     */
     public int getQuantity() {
         return quantity;
     }
 
+
+    /**
+     * @param value positive value of stock
+     * sets new value to be the stock's value
+     */
     public void setValue(double value) {
         this.value = value;
-        dbGateway.updateStockValue(symbol, value);
     }
 }

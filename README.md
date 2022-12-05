@@ -1,39 +1,173 @@
-# Project Template
+# Group Members:
+- Inaam (Inaam2)
+- Noel (noel-toms)
+- Elad (eladperlman)
+- Hoa (Peaceful36)
+- Elliot (Spaghetti-12)
+- Rohan (Rohh1)
+- Ben (benmarlow)
+- Jack (jackzxliu)
 
-This is a template repository for CSC 207 projects. 
-This repository contains starter code for a gradle project.
-It also contains workflow documents that give instructions on how to manage your Github repository and how to use Github Projects for efficient collaboration.
+## Stock Market Simulation
 
-## Checklist For Your Project
-- [ ] Verify the correct settings for your project repository
-- [ ] Set up Github Projects
-- [ ] Create the implementation plan using issues and Github Projects
-- [ ] Create deveopment branches for your features
-- [ ] Use pull requests to merge finished features into main branch
-- [ ] Conduct code reviews
+The Stock-market Simulator is a program that allows a user to simulate the environment of stock investments. It allows a user to register an account and then have the options to buy/sell/watchlist a stock and naturally develop multiple portfolios and an interest in the investment world! This also involves a competitive aspect such that each user can select a competitive portfolio which allows each user to put forward a portfolio which can compete with other user's portfolios. 
 
-**If your team has trouble with any of these steps, please ask on Piazza. For example, with how GitHub Classroom works, your team *may* not have permissions to do some of the first few steps, in which case we'll post alternative instructions as needed.**
+# Entities
+## Leaderboard
+Leaderboard is a list of competitive portfolios that are ranked by their total value.
+Contains attributes:
+- int SIZE 
+- Map<User, Double> topUsers
+## Portfolio
+The portfolio class stores the portfolios of each user
+Contains attributes:
+- String name
+- String username
+- Map symbolToStock (Maps from symbol name to stock object)
+- StockFactory stockFactory
+- iEntityDBGate dbGateway (To connect to database)
 
-## Workflow Documents
+This entity provides the means to sell stocks, pull stocks and update stock values in the user's portfolio. 
 
-* Github Workflow: Please refer to the workflow that was introduced in the first lab. You should follow this when working on your code. The following document provides additional details too.
+## Portfolio Factory
+The portfolio factory class is used to create portfolios for each user
+## Stock
+The stock class stores the stock information in the form of a Stock object.
+Contains attributes:
+- String symbol
+- double value
+- int quantity
+- iEntityDBGateway dbGateway
 
-* [Project Planning and Development Guide](project_plan_dev.md): This document helps you to understand how to create and maintain a project plan for your class project. **This document helps you to complete the Implementation Plan Milestone.**
+## Stock Factory
+The stock factory class is used to create stock objects 
+## User
+The user class stores the user information in the form of a User object.
+Contains attributes:
+- String username
+- String password
+- String email
+- iEntityDBGateway dbGateway
+- PortfolioFactory portfolioFactory
+- Portfolio portfolio
+- Map portfolioMap (Maps from portfolio name to portfolio object)
+- Map symbolToStock (Maps from symbol name to stock object)
+- StockFactory stockFactory
+## User Factory
+The user factory class is used to create user objects
+## User Manager
+The user manager class is used to manage the user objects
+Contains attributes:
+- iEntityDBGateway dbGateway
+- UserFactory userFactory
 
-## Gradle Project
-Import this project into your Intellij editor. It should automatically recognise this as a gradle repository.
-The starter code was built using SDK version 11.0.1. Ensure that you are using this version for this project. (You can, of course, change the SDK version as per your requirement if your team has all agreed to use a different version)
+# Use Cases
 
-You have been provided with two starter files for demonstration: HelloWorld and HelloWorldTest.
+## Registration use case
 
-You will find HelloWorld in `src/main/java/tutorial` directory. Right click on the HelloWorld file and click on `Run HelloWorld.main()`.
-This should run the program and print on your console.
+This use case provides the interface to register a user with a username and password. This use case has the following functions:
+- signUpUser() 
+  - Takes in the username, password and password confirmation to check with the input data is suitable to be registered given that it passes certain conditions
+- passwordValid()
+  - Takes in the password and password confirmation and checks if it follows the necessary conditions of being a valid password. If it does, it will return True, otherwise False
+- usernameValid()
+  - Takes in the input username and checks if it follows the necessary conditions of being a valid username. If it does, it will return True, otherwise False
+  
+## Login use case
 
-You will find HelloWorldTest in `src/test/java/tutorial` directory. Right click on the HelloWorldTest file and click on `Run HelloWorldTest`.
-All tests should pass. Your team can remove this sample of how testing works once you start adding your project code to the repo.
+This use case provides the interface to log in to the user's account and access their portfolio(s). This use case has the following functions:
+- loginUser()
+  - Takes in username and password, and then returns the UserLoginResponse
+- loginResult()
+  - method in presenter class responsible for displaying weather login was successful based on the user
+  - object given from the user manager, if it is null presenter invokes view's failed login method,
+  - otherwise creates a new user presenter and closes current view
 
-Moving forward, we expect you to maintain this project structure. You *should* use Gradle as the build environment, but it is fine if your team prefers to use something else -- just remove the gradle files and push your preferred project setup. Assuming you stick with Gradle, your source code should go into `src/main/java` (you can keep creating more subdirectories as per your project requirement). Every source class can auto-generate a test file for you. For example, open HelloWorld.java file and click on the `HelloWorld` variable as shown in the image below. You should see an option `Generate` and on clicking this your should see an option `Test`. Clicking on this will generate a JUnit test file for `HelloWorld` class. This was used to generate the `HelloWorldTest`.
+## Portfolio use case
+This use case provides the interface to allow users to create new portfolios and allow users to enter into a portfolio and begin investing. This includes deciding on a competitive portfolio. This use case has the following functions:
 
-![image](https://user-images.githubusercontent.com/5333020/196066655-d3c97bf4-fdbd-46b0-b6ae-aeb8dbcf351d.png)
+- makeNewPortfolio()
+  - Takes in the portfolio name, then check with the database if the name already existed. If not, create a new portfolio with that name and add it to the user's portfolio map and display a response to user
+- populatePortfolio()
+  - Takes in the user and portfolio name and then display the stocks in that portfolio
+- makeCompPortfolio()
+  - Takes in the user and then make that portfolio a competitive portfolio
 
-You can create another simple class and try generating a test for this class.
+## Search Stock use case
+This use case provides the interface to allow users to search any stock and view it's stock price fluctuations over a varied period of time. This use case directly links to both sell and buy stock. This use case has the following functions:
+- isValidStock()
+  - Check with the API if the stock is valid. Throw an exception if it is not and tell the user to try again
+- SearchStock()
+  - Assigns the stock from the API to the stock object 
+- GetHisData()
+  - Get the historical data of the stock from the API
+- SortHistoricalData()
+  - Sort the historical data from the API into a list of dates and a list of prices
+- GetStockValue()
+  - Get the current stock price from the API
+
+## Buy Stock use case
+This use case provides the interface to allow users to buy a stock after having selected a stock in the search stock case. This use case has the following functions:
+- buyStock()
+  - Takes in the stock symbol, quantity and portfolio name, then check if the user's input is valid and user has enough balance. If the requirements are met, add the stock to portfolio and subtract the balance with stock's value and then display a response to user
+
+## Sell Stock use case
+This use case provides the interface to allow users to sell a stock after having selected a stock in the search stock case. This use case has the following functions:
+- sellStock()
+  - Takes in the stock symbol, quantity and portfolio name, then check if the user's input is valid and user has enough stock to sell. If the requirements are met, remove the input amount of the stock from portfolio and add the selling money to balance,then display a response to user
+
+## Watchlist use case
+This use case provides the interface to allow users to watchlist any stock and notify the user once the stock price has reached a desired price range. This use case has the following functions:
+
+## Leaderboard use case
+This use case provides the interface to allow users to view the leaderboard of the top competitive portfolios. This use case has the following functions:
+- IndexMax()
+  - Takes in a list of values and returns the index of the maximum value
+- TopValue()
+  - Return list of values of each of the users' competitive portfolio net values
+- updateLeaderboard()
+  - Return a Leaderboard with the top users according to the current value of their competitive portfolios
+
+# GUI
+
+Swing GUIs that require user input have a JTextField which in turn allows for users to input information into the program
+
+## Registration GUI
+
+![Screenshot](images/registrationPage.png)
+
+## Login GUI
+
+![Screenshot](images/LoginScreen.png)
+
+## User GUI
+
+![Screenshot](images/UserScreen.png)
+
+## Portfolio GUI
+
+![Screenshot](images/PortfolioScreen.png)
+
+## Create Portfolio GUI
+
+![Screenshot](images/CreatePortfolioScreen.png)
+
+## Search Stock GUI
+
+![Screenshot](images/ViewStockScreen.png)
+
+## Buy Stock GUI
+
+![Screenshot](images/BuyStockScreen.png)
+
+## Sell Stock GUI
+
+![Screenshot](images/SellStockScreen.png)
+
+## Watchlist GUI
+
+(input images)
+
+## Leaderboard GUI
+
+![Screenshot](images/LeaderboardScreen.png)

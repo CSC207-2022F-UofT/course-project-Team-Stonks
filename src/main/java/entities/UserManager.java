@@ -10,7 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserManager {
-    public static UserManager instance = new UserManager(OuterLayerFactory.instance.getEntityDSGateway());
+    /**
+     * This class is responsible for managing the creation and deletion of User objects
+     */
+    public static UserManager instance =
+            new UserManager(
+                    OuterLayerFactory.instance.getEntityDSGateway());
     private User user;
     private final iEntityDBGateway dbGateway;
     private final UserFactory userFactory = new UserFactory();
@@ -40,7 +45,7 @@ public class UserManager {
 
         if (user != null) {
             this.user = user;
-            user.updateLoginDate(loginDate);
+            dbGateway.updateUserLoginDate(username, loginDate);
         }
 
         return user;
@@ -72,6 +77,10 @@ public class UserManager {
         dbGateway.addUser(new UserDSRequest(username, password, dateCreated));
     }
 
+    /**
+     * @param userDSResponse response from the database
+     * @return a user object from the response
+     */
     private User convertUserDSResponse(UserDSResponse userDSResponse) {
         if (userDSResponse == null) {
             return null;
@@ -81,10 +90,14 @@ public class UserManager {
                 userDSResponse.getUsername(),
                 userDSResponse.getPassword(),
                 userDSResponse.getLastLogin(),
-                userDSResponse.getPortfolios(),
-                dbGateway);
+                userDSResponse.getCompPort(),
+                userDSResponse.getPortfolios());
     }
-
+    
+    /**
+     * Getter for user
+     * @return the user that is currently logged in
+     */
     public User getUser() {
         return user;
     }

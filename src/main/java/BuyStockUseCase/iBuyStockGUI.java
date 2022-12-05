@@ -1,6 +1,9 @@
 package BuyStockUseCase;
 
 public interface iBuyStockGUI {
+    /**
+     * Interface for the buy stock GUI
+     */
     void addBuyAction(Runnable onLogin);
     void addGoBackAction(Runnable onBack);
     void close();
@@ -10,4 +13,7 @@ public interface iBuyStockGUI {
     void displaySuccess();
     String getSymbol();
     int getQuantity() throws NumberFormatException;
+    void updateBalanceLabel(double balance);
+    double getBalance();
+    void updateQuantityLabel(int quant);
 }

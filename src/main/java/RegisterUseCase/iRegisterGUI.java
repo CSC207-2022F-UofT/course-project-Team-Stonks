@@ -1,6 +1,10 @@
 package RegisterUseCase;
 
 public interface iRegisterGUI {
+    /**
+     * This is the interface for the register use case
+     * Refactored from RegisterUseCase.RegisterGUI
+     */
     String getUsername();
 
     String getPassword();

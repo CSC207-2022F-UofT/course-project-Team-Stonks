@@ -1,33 +1,37 @@
 package main;
 
+import APIInterface.StockAPIGateway;
+import APIInterface.iStockDatabaseGateway;
 import BuyStockUseCase.BuyStockGUI;
 import BuyStockUseCase.PortfolioGUI;
 import BuyStockUseCase.iBuyStockGUI;
 import BuyStockUseCase.iPortfolioGUI;
+import LeaderboardUseCase.LeaderboardGUI;
+import LeaderboardUseCase.iLeaderboardGUI;
 import LoginUseCase.UserLoginGUI;
 import LoginUseCase.iUserLoginGUI;
-import PortfolioCreationUseCase.UserGUI;
-import PortfolioCreationUseCase.iUserGUI;
 import PortfolioCreationUseCase.PortfolioCreationGUI;
+import PortfolioCreationUseCase.UserGUI;
 import PortfolioCreationUseCase.iPortfolioCreationGUI;
+import PortfolioCreationUseCase.iUserGUI;
 import RegisterUseCase.RegistrationPage;
 import RegisterUseCase.iRegisterGUI;
+import SearchStockUseCase.ViewStockGUI;
+import SearchStockUseCase.iViewStockGUI;
+import SellStockUseCase.SellStockGUI;
+import SellStockUseCase.iSellStockGUI;
 import db.EntitySQLGateway;
 import db.iEntityDBGateway;
+import entities.Portfolio;
 
 import java.sql.Date;
 import java.util.List;
 
 public class OuterLayerFactory {
     public static final OuterLayerFactory instance = new OuterLayerFactory();
-    private final iEntityDBGateway entityDBGateway;
-
-    public OuterLayerFactory() {
-        entityDBGateway = new EntitySQLGateway();
-    }
 
     public iEntityDBGateway getEntityDSGateway() {
-        return entityDBGateway;
+        return new EntitySQLGateway();
     }
 
     public iUserLoginGUI getUserLoginGUI() {
@@ -40,15 +44,29 @@ public class OuterLayerFactory {
 
     public iPortfolioCreationGUI getPortfolioCreationGUI() {return new PortfolioCreationGUI();}
 
-    public iPortfolioGUI getPortfolioGUI(String portfolioName, double balance, String username) {
-        return new PortfolioGUI(portfolioName, balance, username);
+    public iPortfolioGUI getPortfolioGUI(Portfolio port, String username, boolean isComp) {
+        return new PortfolioGUI(port, username, isComp);
     }
 
     public iRegisterGUI getRegisterGUI() {
         return new RegistrationPage();
     }
 
-    public iBuyStockGUI getBuyGUI(String symbol) {
-        return new BuyStockGUI(symbol);
+    public iBuyStockGUI getBuyGUI(String symbol, int quantity, double balance) {
+        return new BuyStockGUI(symbol, quantity, balance);
+    }
+    
+    public iSellStockGUI getSellGUI(String symbol, int quantity) {
+        return new SellStockGUI(symbol, quantity);
+    }
+    
+    public iLeaderboardGUI getLeaderboardGUI(List<String> topUsers) {
+        return new LeaderboardGUI(topUsers);
+    }
+
+    public iViewStockGUI getViewStockGUI(String symbol, Portfolio port) { return new ViewStockGUI(symbol, port);}
+
+    public iStockDatabaseGateway getStockDBGateway() {
+        return new StockAPIGateway();
     }
 }
