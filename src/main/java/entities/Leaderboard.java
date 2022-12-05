@@ -8,8 +8,8 @@ public class Leaderboard {
     private final Map<User, Double> topUsers;
 
     /**
-     * @param topUsers the List representation of the Leaderboard, with the order of users in the List representing
-     *                 the positions in the leaderboard
+     * @param topUsers the Map representation of the Leaderboard, with keys representing Users and values representing
+     *                 net values of competitive portfolio
      */
     public Leaderboard(Map<User, Double> topUsers) {
         this.topUsers = topUsers;
