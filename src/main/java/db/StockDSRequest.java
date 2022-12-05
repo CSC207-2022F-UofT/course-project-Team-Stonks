@@ -1,5 +1,9 @@
 package db;
 
+/**
+ * Request model class containing input for creating a new stock
+ * object in the entity database
+ */
 public class StockDSRequest {
     private final String symbol;
     private final double value;

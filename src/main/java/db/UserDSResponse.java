@@ -3,6 +3,10 @@ package db;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Response model class containing the information for creating a new user
+ * object in the application from the entity database
+ */
 public class UserDSResponse {
     private final String username;
     private final String password;
