@@ -93,7 +93,7 @@ public class EntitySQLGateway implements EntityDBGateway {
                     "SELECT * FROM Users");
             ResultSet userRS = st.executeQuery();
             while (userRS.next()) {
-                userDSResponses.add(findUserPortfolios(
+                userDSResponses.add(getUser(
                         userRS.getString(1),
                         userRS)
                 );
@@ -146,6 +146,33 @@ public class EntitySQLGateway implements EntityDBGateway {
         }
     }
 
+    public UserDSResponse getUser(String username, ResultSet userRS) {
+        try {
+            List<PortfolioDSResponse> portfolioDSResponses = new ArrayList<>();
+
+            PreparedStatement st = con.prepareStatement(
+                    "SELECT name FROM Portfolios WHERE username = ?");
+            st.setString(1, username);
+            ResultSet portfolioRS = st.executeQuery();
+
+            while (portfolioRS.next()) {
+                portfolioDSResponses.add(findPortfolio(
+                        portfolioRS.getString(1),
+                        username
+                ));
+            }
+
+            return new UserDSResponse(userRS.getString(1),
+                    userRS.getString(2),
+                    userRS.getDate(3),
+                    userRS.getString(4),
+                    portfolioDSResponses);
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * @param username a non-empty string following the valid username parameters
      * @param password a non-empty string following the valid username parameters
@@ -187,34 +214,6 @@ public class EntitySQLGateway implements EntityDBGateway {
             }
 
             return null;
-        } catch (
-                SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private UserDSResponse findUserPortfolios(String username, ResultSet userRS) {
-        try {
-            List<PortfolioDSResponse> portfolioDSResponses = new ArrayList<>();
-
-            PreparedStatement st = con.prepareStatement(
-                    "SELECT name, balance FROM Portfolios WHERE username = ?");
-            st.setString(1, username);
-            ResultSet portfolioRS = st.executeQuery();
-
-            while (portfolioRS.next()) {
-                portfolioDSResponses.add(new PortfolioDSResponse(
-                        portfolioRS.getString(1),
-                        portfolioRS.getDouble(2),
-                        new ArrayList<>()
-                ));
-            }
-
-            return new UserDSResponse(userRS.getString(1),
-                    userRS.getString(2),
-                    userRS.getDate(3),
-                    userRS.getString(4),
-                    portfolioDSResponses);
         } catch (
                 SQLException e) {
             throw new RuntimeException(e);
