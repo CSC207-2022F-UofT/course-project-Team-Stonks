@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class Leaderboard {
 
-    public static int SIZE = 5;
+    public static final int SIZE = 5;
     private final Map<User, Double> topUsers;
 
     /**
