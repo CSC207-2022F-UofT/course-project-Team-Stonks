@@ -3,13 +3,13 @@ package SellStockTest;
 import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
-import LoginUseCase.UserLoginInteractor;
-import PortfolioCreationUseCase.PortfolioCreationInteractor;
-import RegisterUseCase.RegisterInteractor;
-import SellStockUseCase.SellInputRequest;
-import SellStockUseCase.SellOutputResponse;
-import SellStockUseCase.SellUseCaseInteractor;
-import db.iEntityDBGateway;
+import UseCases.LoginUseCase.UserLoginInteractor;
+import UseCases.PortfolioCreationUseCase.PortfolioCreationInteractor;
+import UseCases.RegisterUseCase.RegisterInteractor;
+import UseCases.SellStockUseCase.SellInputRequest;
+import UseCases.SellStockUseCase.SellOutputResponse;
+import UseCases.SellStockUseCase.SellUseCaseInteractor;
+import db.EntityDBGateway;
 import entities.Portfolio;
 import entities.Stock;
 import entities.User;
@@ -38,7 +38,7 @@ public class SellStockTest {
     public static void SetUp() throws IOException {
         Date date = new Date(100);
 
-        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        EntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         dbGateway.deleteUser(username);
 
         RegisterInteractor interactor1 = new RegisterInteractor();

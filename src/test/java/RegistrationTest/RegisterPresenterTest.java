@@ -1,9 +1,10 @@
 package RegistrationTest;
 
-import RegisterUseCase.*;
+import Controllers.RegisterController;
+import UseCases.RegisterUseCase.*;
 import db.UserDSRequest;
-import db.iEntityDBGateway;
-import entities.UserManager;
+import db.EntityDBGateway;
+import main.UserManager;
 import main.OuterLayerFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 class RegisterPresenterTest {
 
     private static RegisterController controller;
-    private static iEntityDBGateway dbGateway;
+    private static EntityDBGateway dbGateway;
     private static final String correctUsername = "RegisterUserTest";
     private static final String correctPassword = "password";
     private static final String correctPasswordConfirm = "password";

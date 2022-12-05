@@ -11,7 +11,7 @@ public class PortfolioFactory {
      * This class is responsible for creating a Portfolio object
      */
     private final StockFactory stockFactory = new StockFactory();
-    public static double BALANCE = 10000;
+    public static final double BALANCE = 10000;
 
 
     /**
