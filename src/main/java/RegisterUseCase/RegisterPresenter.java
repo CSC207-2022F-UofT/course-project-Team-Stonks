@@ -6,10 +6,18 @@ import main.OuterLayerFactory;
 import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * This class is responsible for controlling the logic of
+ * the user registration view
+ */
 public class RegisterPresenter {
     private final iRegisterGUI view;
     private final RegisterController controller;
 
+    /**
+     * @param view not-null input
+     *  initializes the presenter and adds button action observers
+     */
     public RegisterPresenter(iRegisterGUI view) {
         this.view = view;
         controller = new RegisterController();
@@ -18,6 +26,9 @@ public class RegisterPresenter {
         view.addBackAction(this::onBack);
     }
 
+    /**
+     * Contains logic for when the user clicks on the register button
+     */
     private void onRegister() {
         RegisterRequest request = new RegisterRequest(
                 view.getUsername(),
@@ -39,6 +50,9 @@ public class RegisterPresenter {
         }
     }
 
+    /**
+     * contains logic for when the user clicks on the back button, ie moves to the login view
+     */
     private void onBack() {
         view.close();
         new UserLoginPresenter(OuterLayerFactory.instance.getUserLoginGUI());

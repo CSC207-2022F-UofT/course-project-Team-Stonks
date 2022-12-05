@@ -18,11 +18,19 @@ public class StockAPIResponse {
         this.price = price;
         this.histData = histData;
     }
-    
+
+    /**
+     * @return the price
+     * Getter for the price
+     */
     public double getPrice() {
         return this.price;
     }
 
+    /**
+     * @return the histData
+     * Getter for the histData
+     */
     public List<HistoricalQuote> getHistData() {
         return histData;
     }

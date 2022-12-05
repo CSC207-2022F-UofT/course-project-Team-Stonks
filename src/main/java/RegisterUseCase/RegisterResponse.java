@@ -1,5 +1,9 @@
 package RegisterUseCase;
 
+/**
+ * Response model object for when user attempts to register, contains
+ * returned user object (could be null)
+ */
 public final class RegisterResponse {
     private final RegisterError userSignedUp;
 
