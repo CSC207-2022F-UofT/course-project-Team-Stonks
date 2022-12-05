@@ -117,9 +117,8 @@ class RegisterPresenterTest {
         // Building a long username that is 51 characters long
         StringBuilder longPassword = new StringBuilder("a");
         longPassword.append("a".repeat(50));
-        RegisterResponse response = getRegisterResponse("username", longPassword.toString(), longPassword.toString());
+        RegisterResponse response = getRegisterResponse("usernamedoesnotexist", longPassword.toString(), longPassword.toString());
         Assertions.assertEquals(RegisterError.PASSWORD_INVALID, response.userSignedUp());
-
     }
 
     /**
