@@ -45,7 +45,7 @@ public class PortfolioCreationTest {
 
 
     /**
-     * Test that after processing a new createportfolio request, the portfolio is added to the user.
+     * Test that after processing a new create-portfolio request, the portfolio is added to the user.
      */
     @Test
     public void testNewPortfolio(){
