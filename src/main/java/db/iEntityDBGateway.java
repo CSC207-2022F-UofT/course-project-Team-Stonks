@@ -132,4 +132,13 @@ public interface iEntityDBGateway {
      * deletes the given portfolio from the database if it exists
      */
     void updateStockQuantity(String symbol, int newQuantity, String username, String portfolioName);
+
+
+    void addWatchlist(WatchlistDSRequest newWatchlist);
+
+    void removeWatchlist(WatchlistDSRequest newWatchlist);
+
+    void updateWatchlist(String symbol, String type, Float value, String username, String condition);
+
+    void getWatchlist(String symbol, String type, Float value, String username, String condition);
 }

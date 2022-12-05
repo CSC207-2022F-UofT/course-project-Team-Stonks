@@ -466,4 +466,61 @@ public class EntitySQLGateway implements iEntityDBGateway {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void addWatchlist(WatchlistDSRequest newWatchlist) {
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("INSERT INTO watchlist VALUES ('" +
+                    newWatchlist.getSymbol() + "','" +
+                    newWatchlist.getType() + "','" +
+                    newWatchlist.getValue() + "','" +
+                    null + "')");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void removeWatchlist(WatchlistDSRequest newWatchlist) {
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("DELETE FROM watchlist WHERE " +
+                    "symbol = '" + newWatchlist.getSymbol() + "' AND " +
+                    "type = '" + newWatchlist.getType() + "' AND " +
+                    "value = '" + newWatchlist.getValue() + "'");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateWatchlist(String symbol, String type, Float value, String username, String condition) {
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("UPDATE watchlist SET " +
+                    "value = '" + value + "' WHERE " +
+                    "symbol = '" + symbol + "' AND " +
+                    "type = '" + type + "'");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void getWatchlist(String symbol, String type, Float value, String username, String condition) {
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("SELECT * FROM watchlist WHERE " +
+                    "symbol = '" + symbol + "' AND " +
+                    "type = '" + type + "' AND " +
+                    "value = '" + value + "'");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

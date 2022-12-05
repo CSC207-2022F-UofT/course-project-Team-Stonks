@@ -3,11 +3,15 @@ package PortfolioCreationUseCase;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
+import WatchlistUseCase.WatchlistGUI;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.Locale;
 import java.util.List;
@@ -21,6 +25,7 @@ public class UserGUI extends JFrame implements iUserGUI {
     private JLabel lastLogin;
     private JButton createPortfolio;
     private JButton goToLeaderboard;
+    private JButton goToWatchList;
 
     public UserGUI(String username, List<String> portfolioNames, Date lastLogin) {
         super();
@@ -36,6 +41,15 @@ public class UserGUI extends JFrame implements iUserGUI {
         DefaultListModel<String> dPortfolios = new DefaultListModel<>();
         dPortfolios.addAll(portfolioNames);
         portfolios.setModel(dPortfolios);
+        goToWatchList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                // on click show watchlistgui.
+                WatchlistGUI watchlistGUI = new WatchlistGUI();
+                watchlistGUI.setVisible(true);
+            }
+        });
+ 
     }
 
     @Override
@@ -56,6 +70,10 @@ public class UserGUI extends JFrame implements iUserGUI {
     @Override
     public void goToLeaderboardAction(Runnable onGoToLeaderboard) {
         goToLeaderboard.addActionListener(e -> onGoToLeaderboard.run());
+    }
+
+    public void goToWatchList(Runnable onGoToWatchList) {
+        goToWatchList.addActionListener(e -> onGoToWatchList.run());
     }
 
     @Override
@@ -149,6 +167,9 @@ public class UserGUI extends JFrame implements iUserGUI {
         goToLeaderboard = new JButton();
         goToLeaderboard.setText("Leaderboard");
         userPanel.add(goToLeaderboard, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        goToWatchList = new JButton();
+        goToWatchList.setText("Watchlist");
+        userPanel.add(goToWatchList, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_SOUTHEAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
     }
 
     /**
@@ -179,5 +200,6 @@ public class UserGUI extends JFrame implements iUserGUI {
     public JComponent $$$getRootComponent$$$() {
         return userPanel;
     }
+
 
 }
