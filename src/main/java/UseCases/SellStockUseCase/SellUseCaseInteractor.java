@@ -3,7 +3,7 @@ package UseCases.SellStockUseCase;
 import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import entities.Portfolio;
 import main.OuterLayerFactory;
 
@@ -25,7 +25,7 @@ public class SellUseCaseInteractor {
         String symbol = sell.getSymbol();
         int quantity = sell.getQuantity();
 
-        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        EntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         StockAPIGateway stockAPIAccess = new StockAPIGateway();
         StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
         // checks if user input is valid, prompts the user if not

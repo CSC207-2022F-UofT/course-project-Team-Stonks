@@ -1,6 +1,6 @@
 package UseCases.BuyStockUseCase;
 
-public interface iBuyStockGUI {
+public interface BuyStockView {
     /**
      * Interface for the buy stock GUI
      */

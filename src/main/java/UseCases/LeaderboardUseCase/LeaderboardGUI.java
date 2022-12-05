@@ -11,7 +11,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 
-public class LeaderboardGUI extends JFrame implements iLeaderboardGUI {
+public class LeaderboardGUI extends JFrame implements LeaderboardView {
     private JPanel panel1;
     private JList<String> leaderBoard;
     private JButton backButton;

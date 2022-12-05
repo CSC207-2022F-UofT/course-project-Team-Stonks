@@ -1,6 +1,6 @@
 package UseCases.BuyStockUseCase;
 
-public interface iPortfolioGUI {
+public interface PortfolioView {
     /**
      * Interface for the Portfolio GUI
      */

@@ -1,16 +1,17 @@
 package UseCases.PortfolioCreationUseCase;
 
+import Controllers.PortfolioCreationController;
 import entities.User;
 import main.OuterLayerFactory;
 
 import java.util.ArrayList;
 
 public class PortfolioCreationPresenter {
-    private final iPortfolioCreationGUI view;
+    private final PortfolioCreationView view;
     private final PortfolioCreationController controller;
     private final User user;
 
-    public PortfolioCreationPresenter(iPortfolioCreationGUI view, User user) {
+    public PortfolioCreationPresenter(PortfolioCreationView view, User user) {
         this.view = view;
         this.user = user;
         controller = new PortfolioCreationController(user);

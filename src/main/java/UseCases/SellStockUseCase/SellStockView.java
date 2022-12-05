@@ -1,6 +1,6 @@
 package UseCases.SellStockUseCase;
 
-public interface iSellStockGUI {
+public interface SellStockView {
      /**
       * This is the interface for the sell stock use case
       * Refactored from SellStockUseCase.SellStockGUI

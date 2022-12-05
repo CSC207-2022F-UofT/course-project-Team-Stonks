@@ -2,10 +2,10 @@ package UseCases.BuyStockUseCase;
 
 
 import UseCases.PortfolioCreationUseCase.CompPortRequest;
-import UseCases.PortfolioCreationUseCase.PortfolioSelectedController;
+import Controllers.PortfolioSelectedController;
 import UseCases.PortfolioCreationUseCase.UserPresenter;
 
-import UseCases.SearchStockUseCase.ViewStockController;
+import Controllers.ViewStockController;
 import UseCases.SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
 import entities.User;
@@ -18,12 +18,12 @@ public class PortfolioPresenter {
     /**
      * Presenter for the portfolio GUI
      */
-    private final iPortfolioGUI view;
+    private final PortfolioView view;
     private final Portfolio portfolio;
     private final User user;
     private final PortfolioSelectedController psController;
 
-    public PortfolioPresenter(iPortfolioGUI view, Portfolio portfolio, User user) {
+    public PortfolioPresenter(PortfolioView view, Portfolio portfolio, User user) {
         this.view = view;
         this.portfolio = portfolio;
         this.user = user;

@@ -1,4 +1,8 @@
-package UseCases.LoginUseCase;
+package Controllers;
+
+import UseCases.LoginUseCase.UserLoginInteractor;
+import UseCases.LoginUseCase.UserLoginRequest;
+import UseCases.LoginUseCase.UserLoginResponse;
 
 public class UserLoginController {
     private final UserLoginInteractor interactor;

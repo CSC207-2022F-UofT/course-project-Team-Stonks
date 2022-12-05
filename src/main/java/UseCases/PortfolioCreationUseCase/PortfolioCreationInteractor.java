@@ -1,14 +1,14 @@
 package UseCases.PortfolioCreationUseCase;
 
 import db.PortfolioDSRequest;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import entities.PortfolioFactory;
 import entities.User;
 import main.OuterLayerFactory;
 
 public class PortfolioCreationInteractor {
     private final User user;
-    private final iEntityDBGateway dbGateway;
+    private final EntityDBGateway dbGateway;
 
     public PortfolioCreationInteractor(User user) {
         this.user = user;

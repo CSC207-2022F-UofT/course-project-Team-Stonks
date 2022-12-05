@@ -12,7 +12,7 @@ import java.util.Locale;
 /**
  * A swing implementation of the user login view interface
  */
-public class UserLoginGUI extends JFrame implements iUserLoginGUI {
+public class UserLoginGUI extends JFrame implements UserLoginView {
     private JPanel loginPanel;
     private JButton loginBtn;
     private JButton signUpBtn;

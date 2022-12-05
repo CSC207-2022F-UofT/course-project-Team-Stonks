@@ -1,6 +1,6 @@
 package UserLoginPresenterTest;
 
-import UseCases.LoginUseCase.UserLoginController;
+import Controllers.UserLoginController;
 import UseCases.LoginUseCase.UserLoginRequest;
 import UseCases.LoginUseCase.UserLoginResponse;
 import UseCases.RegisterUseCase.RegisterInteractor;

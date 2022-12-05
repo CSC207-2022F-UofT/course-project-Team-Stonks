@@ -1,6 +1,6 @@
 package UseCases.LoginUseCase;
 
-public interface iUserLoginGUI {
+public interface UserLoginView {
 
     /**
      * This is the interface for the login use case

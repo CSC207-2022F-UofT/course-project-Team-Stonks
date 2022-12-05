@@ -1,5 +1,6 @@
 package UseCases.BuyStockUseCase;
 
+import Controllers.BuyStockController;
 import UseCases.SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
 import entities.User;
@@ -10,11 +11,11 @@ public class BuyStockPresenter {
     /**
      * Presenter for the buy stock GUI
      */
-    private final iBuyStockGUI view;
+    private final BuyStockView view;
     private final Portfolio currentPort;
     private final User user;
 
-    public BuyStockPresenter(iBuyStockGUI view, Portfolio currentPort, User user) {
+    public BuyStockPresenter(BuyStockView view, Portfolio currentPort, User user) {
         this.view = view;
         this.user = user;
         view.addBuyAction(this::onBuy);

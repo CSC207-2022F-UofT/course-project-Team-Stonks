@@ -1,4 +1,8 @@
-package UseCases.BuyStockUseCase;
+package Controllers;
+
+import UseCases.BuyStockUseCase.BuyInputRequest;
+import UseCases.BuyStockUseCase.BuyOutputResponse;
+import UseCases.BuyStockUseCase.BuyUseCaseInteractor;
 
 public class BuyStockController {
     /**

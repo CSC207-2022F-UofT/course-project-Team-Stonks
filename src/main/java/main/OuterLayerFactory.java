@@ -1,27 +1,27 @@
 package main;
 
 import APIInterface.StockAPIGateway;
-import APIInterface.iStockDatabaseGateway;
+import APIInterface.StockDatabaseGateway;
 import UseCases.BuyStockUseCase.BuyStockGUI;
 import UseCases.BuyStockUseCase.PortfolioGUI;
-import UseCases.BuyStockUseCase.iBuyStockGUI;
-import UseCases.BuyStockUseCase.iPortfolioGUI;
+import UseCases.BuyStockUseCase.BuyStockView;
+import UseCases.BuyStockUseCase.PortfolioView;
 import UseCases.LeaderboardUseCase.LeaderboardGUI;
-import UseCases.LeaderboardUseCase.iLeaderboardGUI;
+import UseCases.LeaderboardUseCase.LeaderboardView;
 import UseCases.LoginUseCase.UserLoginGUI;
-import UseCases.LoginUseCase.iUserLoginGUI;
+import UseCases.LoginUseCase.UserLoginView;
 import UseCases.PortfolioCreationUseCase.PortfolioCreationGUI;
 import UseCases.PortfolioCreationUseCase.UserGUI;
-import UseCases.PortfolioCreationUseCase.iPortfolioCreationGUI;
-import UseCases.PortfolioCreationUseCase.iUserGUI;
+import UseCases.PortfolioCreationUseCase.PortfolioCreationView;
+import UseCases.PortfolioCreationUseCase.UserView;
 import UseCases.RegisterUseCase.RegistrationPage;
-import UseCases.RegisterUseCase.iRegisterGUI;
+import UseCases.RegisterUseCase.RegisterView;
 import UseCases.SearchStockUseCase.ViewStockGUI;
-import UseCases.SearchStockUseCase.iViewStockGUI;
+import UseCases.SearchStockUseCase.ViewStockView;
 import UseCases.SellStockUseCase.SellStockGUI;
-import UseCases.SellStockUseCase.iSellStockGUI;
+import UseCases.SellStockUseCase.SellStockView;
 import db.EntitySQLGateway;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import entities.Portfolio;
 
 import java.sql.Date;
@@ -30,43 +30,43 @@ import java.util.List;
 public class OuterLayerFactory {
     public static final OuterLayerFactory instance = new OuterLayerFactory();
 
-    public iEntityDBGateway getEntityDSGateway() {
+    public EntityDBGateway getEntityDSGateway() {
         return new EntitySQLGateway();
     }
 
-    public iUserLoginGUI getUserLoginGUI() {
+    public UserLoginView getUserLoginGUI() {
         return new UserLoginGUI();
     }
 
-    public iUserGUI getUserGUI(String username, List<String> portfolioNames, Date lastLogin) {
+    public UserView getUserGUI(String username, List<String> portfolioNames, Date lastLogin) {
         return new UserGUI(username, portfolioNames, lastLogin);
     }
 
-    public iPortfolioCreationGUI getPortfolioCreationGUI() {return new PortfolioCreationGUI();}
+    public PortfolioCreationView getPortfolioCreationGUI() {return new PortfolioCreationGUI();}
 
-    public iPortfolioGUI getPortfolioGUI(Portfolio port, String username, boolean isComp) {
+    public PortfolioView getPortfolioGUI(Portfolio port, String username, boolean isComp) {
         return new PortfolioGUI(port, username, isComp);
     }
 
-    public iRegisterGUI getRegisterGUI() {
+    public RegisterView getRegisterGUI() {
         return new RegistrationPage();
     }
 
-    public iBuyStockGUI getBuyGUI(String symbol, int quantity, double balance) {
+    public BuyStockView getBuyGUI(String symbol, int quantity, double balance) {
         return new BuyStockGUI(symbol, quantity, balance);
     }
     
-    public iSellStockGUI getSellGUI(String symbol, int quantity) {
+    public SellStockView getSellGUI(String symbol, int quantity) {
         return new SellStockGUI(symbol, quantity);
     }
     
-    public iLeaderboardGUI getLeaderboardGUI(List<String> topUsers) {
+    public LeaderboardView getLeaderboardGUI(List<String> topUsers) {
         return new LeaderboardGUI(topUsers);
     }
 
-    public iViewStockGUI getViewStockGUI(String symbol, Portfolio port) { return new ViewStockGUI(symbol, port);}
+    public ViewStockView getViewStockGUI(String symbol, Portfolio port) { return new ViewStockGUI(symbol, port);}
 
-    public iStockDatabaseGateway getStockDBGateway() {
+    public StockDatabaseGateway getStockDBGateway() {
         return new StockAPIGateway();
     }
 }

@@ -1,4 +1,9 @@
-package UseCases.RegisterUseCase;
+package Controllers;
+
+import UseCases.RegisterUseCase.RegisterError;
+import UseCases.RegisterUseCase.RegisterInteractor;
+import UseCases.RegisterUseCase.RegisterRequest;
+import UseCases.RegisterUseCase.RegisterResponse;
 
 public class RegisterController {
     private final RegisterInteractor interactor;

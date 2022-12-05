@@ -1,6 +1,6 @@
 package UseCases.RegisterUseCase;
 
-public interface iRegisterGUI {
+public interface RegisterView {
     /**
      * This is the interface for the register use case
      * Refactored from RegisterUseCase.RegisterGUI

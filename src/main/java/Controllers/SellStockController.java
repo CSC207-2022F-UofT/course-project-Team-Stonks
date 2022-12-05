@@ -1,4 +1,8 @@
-package UseCases.SellStockUseCase;
+package Controllers;
+
+import UseCases.SellStockUseCase.SellInputRequest;
+import UseCases.SellStockUseCase.SellOutputResponse;
+import UseCases.SellStockUseCase.SellUseCaseInteractor;
 
 public class SellStockController {
     /**

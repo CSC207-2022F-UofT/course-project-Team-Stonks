@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.Locale;
 import java.util.Map;
 
-public class PortfolioGUI extends JFrame implements iPortfolioGUI {
+public class PortfolioGUI extends JFrame implements PortfolioView {
     private JLabel portfolioName;
     private JPanel portfolioPanel;
     private JLabel balance;

@@ -9,7 +9,7 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.Locale;
 
-public class PortfolioCreationGUI extends JFrame implements iPortfolioCreationGUI {
+public class PortfolioCreationGUI extends JFrame implements PortfolioCreationView {
     private JPanel portfolioPanel;
     private JButton btnBack;
     private JButton btnContinue;

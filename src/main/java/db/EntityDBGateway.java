@@ -8,7 +8,7 @@ import java.util.List;
  * of an entity database, with methods such as adding, deleting, and modifying
  * user, portfolio, and stock objects in the database
  */
-public interface iEntityDBGateway {
+public interface EntityDBGateway {
 
     /**
      * @param username non-empty string representing a username

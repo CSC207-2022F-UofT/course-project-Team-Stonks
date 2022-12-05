@@ -10,7 +10,7 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.Locale;
 
-public class RegistrationPage extends JFrame implements iRegisterGUI {
+public class RegistrationPage extends JFrame implements RegisterView {
     private JLabel stonksLabel;
     private JTextField txtUserName;
     private JPanel RegistrationPanel;

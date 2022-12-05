@@ -9,7 +9,7 @@ import java.util.List;
  * contains methods such as adding, deleting, and updating user, portfolio,
  * and stock objects in the database
  */
-public class EntitySQLGateway implements iEntityDBGateway {
+public class EntitySQLGateway implements EntityDBGateway {
     Connection con;
 
     /**

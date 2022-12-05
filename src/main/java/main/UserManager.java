@@ -2,7 +2,7 @@ package main;
 
 import db.UserDSRequest;
 import db.UserDSResponse;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import entities.User;
 import entities.UserFactory;
 
@@ -18,10 +18,10 @@ public class UserManager {
             new UserManager(
                     OuterLayerFactory.instance.getEntityDSGateway());
     private User user;
-    private final iEntityDBGateway dbGateway;
+    private final EntityDBGateway dbGateway;
     private final UserFactory userFactory = new UserFactory();
 
-    public UserManager(iEntityDBGateway dbGateway) {
+    public UserManager(EntityDBGateway dbGateway) {
         this.dbGateway = dbGateway;
     }
 

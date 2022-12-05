@@ -2,9 +2,9 @@ package UseCases.PortfolioCreationUseCase;
 
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
-import APIInterface.iStockDatabaseGateway;
+import APIInterface.StockDatabaseGateway;
 import db.StockDSResponse;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import entities.*;
 import main.OuterLayerFactory;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PortfolioSelectedInteractor {
-    private final iEntityDBGateway dbGateway;
+    private final EntityDBGateway dbGateway;
     private final StockFactory stockFactory;
 
     public PortfolioSelectedInteractor() {
@@ -24,7 +24,7 @@ public class PortfolioSelectedInteractor {
     public void populatePortfolio(User user, String portfolioName) {
         List<StockDSResponse> stockDSResponses = dbGateway.findPortfolio(portfolioName, user.getUsername()).getStocks();
         List<Stock> stocks = new ArrayList<>();
-        iStockDatabaseGateway stockDb = OuterLayerFactory.instance.getStockDBGateway();
+        StockDatabaseGateway stockDb = OuterLayerFactory.instance.getStockDBGateway();
         StockAPIResponse response;
 
         for (StockDSResponse stock : stockDSResponses) {

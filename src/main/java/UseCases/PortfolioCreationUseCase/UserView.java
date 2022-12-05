@@ -1,6 +1,6 @@
 package UseCases.PortfolioCreationUseCase;
 
-public interface iUserGUI {
+public interface UserView {
     void addLogoutAction(Runnable onLogout);
 
     void addPortfolioSelectedAction(Runnable onPortfolioSelected);

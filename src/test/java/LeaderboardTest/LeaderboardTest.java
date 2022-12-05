@@ -2,7 +2,7 @@ package LeaderboardTest;
 
 import UseCases.LeaderboardUseCase.LeaderboardResponse;
 import db.PortfolioDSRequest;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import entities.*;
 import main.OuterLayerFactory;
 import main.UserManager;
@@ -19,7 +19,7 @@ import db.UserDSRequest;
 
 public class LeaderboardTest {
     private static LeaderboardUseCaseInteractor interactor;
-    private static iEntityDBGateway dbGateway;
+    private static EntityDBGateway dbGateway;
 
 
 

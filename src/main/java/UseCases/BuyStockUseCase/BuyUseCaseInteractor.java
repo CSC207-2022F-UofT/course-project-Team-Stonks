@@ -4,14 +4,14 @@ import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
 import db.StockDSRequest;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import entities.Portfolio;
 import main.OuterLayerFactory;
 
 import java.io.IOException;
 
 public class BuyUseCaseInteractor {
-    private final iEntityDBGateway dbGateway;
+    private final EntityDBGateway dbGateway;
 
     public BuyUseCaseInteractor() {
         dbGateway = OuterLayerFactory.instance.getEntityDSGateway();

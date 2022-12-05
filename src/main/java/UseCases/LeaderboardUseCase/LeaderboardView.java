@@ -1,6 +1,6 @@
 package UseCases.LeaderboardUseCase;
 
-public interface iLeaderboardGUI {
+public interface LeaderboardView {
     void addBackAction(Runnable onBackAction);
     void close();
 }

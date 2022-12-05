@@ -1,5 +1,6 @@
 package UseCases.SellStockUseCase;
 
+import Controllers.SellStockController;
 import UseCases.SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
 import entities.User;
@@ -10,12 +11,12 @@ public class SellStockPresenter {
     /**
      * This class is used to process the data from the model and display it to the user
      */
-    private final iSellStockGUI view;
+    private final SellStockView view;
     private final Portfolio portfolio;
     private final SellStockController controller;
     private final User user;
 
-    public SellStockPresenter(iSellStockGUI view, Portfolio portfolio, User user) {
+    public SellStockPresenter(SellStockView view, Portfolio portfolio, User user) {
         this.view = view;
         this.user = user;
         controller = new SellStockController();

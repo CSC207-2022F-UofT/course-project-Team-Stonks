@@ -1,5 +1,9 @@
-package UseCases.PortfolioCreationUseCase;
+package Controllers;
 
+import UseCases.PortfolioCreationUseCase.PortfolioCreationError;
+import UseCases.PortfolioCreationUseCase.PortfolioCreationInteractor;
+import UseCases.PortfolioCreationUseCase.PortfolioCreationRequest;
+import UseCases.PortfolioCreationUseCase.PortfolioCreationResponse;
 import entities.User;
 
 public class PortfolioCreationController {

@@ -9,7 +9,7 @@ import UseCases.RegisterUseCase.RegisterInteractor;
 import UseCases.SellStockUseCase.SellInputRequest;
 import UseCases.SellStockUseCase.SellOutputResponse;
 import UseCases.SellStockUseCase.SellUseCaseInteractor;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import entities.Portfolio;
 import entities.Stock;
 import entities.User;
@@ -38,7 +38,7 @@ public class SellStockTest {
     public static void SetUp() throws IOException {
         Date date = new Date(100);
 
-        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        EntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         dbGateway.deleteUser(username);
 
         RegisterInteractor interactor1 = new RegisterInteractor();

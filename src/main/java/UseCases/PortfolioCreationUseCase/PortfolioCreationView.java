@@ -1,6 +1,6 @@
 package UseCases.PortfolioCreationUseCase;
 
-public interface iPortfolioCreationGUI {
+public interface PortfolioCreationView {
     String getNewPortfolioName();
 
     void addCreatePortfolioAction(Runnable onCreate);

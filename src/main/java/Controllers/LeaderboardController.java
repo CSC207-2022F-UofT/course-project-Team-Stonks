@@ -1,4 +1,7 @@
-package UseCases.LeaderboardUseCase;
+package Controllers;
+
+import UseCases.LeaderboardUseCase.LeaderboardResponse;
+import UseCases.LeaderboardUseCase.LeaderboardUseCaseInteractor;
 
 public class LeaderboardController {
     private final LeaderboardUseCaseInteractor interactor;

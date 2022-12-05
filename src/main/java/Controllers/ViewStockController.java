@@ -1,5 +1,6 @@
-package UseCases.SearchStockUseCase;
+package Controllers;
 
+import UseCases.SearchStockUseCase.ViewStockUseCaseInteractor;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 

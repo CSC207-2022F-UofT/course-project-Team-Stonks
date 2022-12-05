@@ -10,7 +10,7 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.Locale;
 
-public class SellStockGUI extends JFrame implements iSellStockGUI {
+public class SellStockGUI extends JFrame implements SellStockView {
     /**
      * This is the GUI for the sell stock use case
      */

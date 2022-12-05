@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 
-public interface iViewStockGUI {
+public interface ViewStockView {
     /**
      * This is the interface for the view stock use case
      */

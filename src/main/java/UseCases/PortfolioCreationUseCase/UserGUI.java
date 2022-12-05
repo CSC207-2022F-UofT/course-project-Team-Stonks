@@ -12,7 +12,7 @@ import java.sql.Date;
 import java.util.Locale;
 import java.util.List;
 
-public class UserGUI extends JFrame implements iUserGUI {
+public class UserGUI extends JFrame implements UserView {
     private JPanel userPanel;
     private JLabel username;
     private JList<String> portfolios;

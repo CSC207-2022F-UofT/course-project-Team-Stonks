@@ -1,6 +1,7 @@
 package UseCases.SearchStockUseCase;
 
 
+import Controllers.ViewStockController;
 import UseCases.BuyStockUseCase.BuyStockPresenter;
 import UseCases.BuyStockUseCase.PortfolioPresenter;
 
@@ -20,12 +21,12 @@ public class ViewStockPresenter {
     /**
      * This class is used to process the data from the model and display it to the user
      */
-    private final iViewStockGUI view;
+    private final ViewStockView view;
     private final Portfolio portfolio;
     private final User user;
     private final ViewStockController controller;
 
-    public ViewStockPresenter(iViewStockGUI view, Portfolio portfolio, User user) {
+    public ViewStockPresenter(ViewStockView view, Portfolio portfolio, User user) {
         this.view = view;
         this.controller = new ViewStockController(this.view.getStockSymbol());
         JOptionPane jop = new JOptionPane();

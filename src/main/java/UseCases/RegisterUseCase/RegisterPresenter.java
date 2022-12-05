@@ -1,5 +1,6 @@
 package UseCases.RegisterUseCase;
 
+import Controllers.RegisterController;
 import UseCases.LoginUseCase.UserLoginPresenter;
 import main.OuterLayerFactory;
 
@@ -11,14 +12,14 @@ import java.time.LocalDate;
  * the user registration view
  */
 public class RegisterPresenter {
-    private final iRegisterGUI view;
+    private final RegisterView view;
     private final RegisterController controller;
 
     /**
      * @param view not-null input
      *  initializes the presenter and adds button action observers
      */
-    public RegisterPresenter(iRegisterGUI view) {
+    public RegisterPresenter(RegisterView view) {
         this.view = view;
         controller = new RegisterController();
 

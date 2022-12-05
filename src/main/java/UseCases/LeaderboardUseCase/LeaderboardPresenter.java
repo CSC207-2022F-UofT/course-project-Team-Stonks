@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 
 public class LeaderboardPresenter {
-    private final iLeaderboardGUI view;
+    private final LeaderboardView view;
     private final User user;
 
     /**
      * @param view an instance of iLeaderboard GUI for the leaderboard screen
      * @param user the user accessing the leaderboard
      */
-    public LeaderboardPresenter(iLeaderboardGUI view, User user) {
+    public LeaderboardPresenter(LeaderboardView view, User user) {
         this.view = view;
         this.user = user;
         view.addBackAction(this::onBackAction);

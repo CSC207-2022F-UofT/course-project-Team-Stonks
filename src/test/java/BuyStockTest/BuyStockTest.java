@@ -7,7 +7,7 @@ import UseCases.LoginUseCase.UserLoginInteractor;
 import UseCases.PortfolioCreationUseCase.PortfolioCreationInteractor;
 import UseCases.PortfolioCreationUseCase.PortfolioSelectedInteractor;
 import UseCases.RegisterUseCase.RegisterInteractor;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import entities.Portfolio;
 import entities.Stock;
 import entities.User;
@@ -32,7 +32,7 @@ public class BuyStockTest {
         Date date = new Date(100);
         RegisterInteractor interactor1 = new RegisterInteractor();
 
-        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        EntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         dbGateway.deleteUser(username);
 
         interactor1.signUpUser(username, "password", "password", date);

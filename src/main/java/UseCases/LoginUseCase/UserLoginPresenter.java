@@ -1,5 +1,6 @@
 package UseCases.LoginUseCase;
 
+import Controllers.UserLoginController;
 import UseCases.PortfolioCreationUseCase.UserPresenter;
 import UseCases.RegisterUseCase.RegisterPresenter;
 import entities.User;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * the user login view
  */
 public class UserLoginPresenter {
-    private final iUserLoginGUI view;
+    private final UserLoginView view;
     private final UserLoginController controller;
 
 
@@ -22,7 +23,7 @@ public class UserLoginPresenter {
      * @param view not-null input
      * Initializes the presenter and adds button action observers
      */
-    public UserLoginPresenter(iUserLoginGUI view) {
+    public UserLoginPresenter(UserLoginView view) {
         this.view = view;
         controller = new UserLoginController();
 

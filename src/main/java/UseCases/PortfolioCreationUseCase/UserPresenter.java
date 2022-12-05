@@ -1,21 +1,22 @@
 package UseCases.PortfolioCreationUseCase;
 
+import Controllers.PortfolioSelectedController;
 import UseCases.BuyStockUseCase.PortfolioPresenter;
 import UseCases.LoginUseCase.UserLoginPresenter;
 import entities.User;
 import main.OuterLayerFactory;
 import UseCases.LeaderboardUseCase.LeaderboardPresenter;
-import UseCases.LeaderboardUseCase.LeaderboardController;
+import Controllers.LeaderboardController;
 import java.util.List;
 
 public class UserPresenter {
-    private final iUserGUI view;
+    private final UserView view;
     private final PortfolioSelectedController controller;
     private final User user;
     private final LeaderboardController lController;
 
 
-    public UserPresenter(iUserGUI view, User user) {
+    public UserPresenter(UserView view, User user) {
         this.view = view;
 
         this.user = user;
