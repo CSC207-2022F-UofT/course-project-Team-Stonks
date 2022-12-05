@@ -72,28 +72,25 @@ public class PortfolioCreationGUI extends JFrame implements iPortfolioCreationGU
     private void $$$setupUI$$$() {
         portfolioPanel = new JPanel();
         portfolioPanel.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
+        portfolioPanel.setMinimumSize(new Dimension(474, 369));
         btnBack = new JButton();
         Font btnBackFont = this.$$$getFont$$$(null, -1, 16, btnBack.getFont());
-        if (btnBackFont != null)
-            btnBack.setFont(btnBackFont);
+        if (btnBackFont != null) btnBack.setFont(btnBackFont);
         btnBack.setText("Go Back");
-        portfolioPanel.add(btnBack, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        portfolioPanel.add(btnBack, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnContinue = new JButton();
         Font btnContinueFont = this.$$$getFont$$$(null, -1, 16, btnContinue.getFont());
-        if (btnContinueFont != null)
-            btnContinue.setFont(btnContinueFont);
+        if (btnContinueFont != null) btnContinue.setFont(btnContinueFont);
         btnContinue.setText("Make New Portfolio");
-        portfolioPanel.add(btnContinue, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        portfolioPanel.add(btnContinue, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         textPortfolioName = new JLabel();
         Font textPortfolioNameFont = this.$$$getFont$$$(null, -1, 16, textPortfolioName.getFont());
-        if (textPortfolioNameFont != null)
-            textPortfolioName.setFont(textPortfolioNameFont);
+        if (textPortfolioNameFont != null) textPortfolioName.setFont(textPortfolioNameFont);
         textPortfolioName.setText("Portfolio Name");
         portfolioPanel.add(textPortfolioName, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtPortfolioName = new JTextField();
         Font txtPortfolioNameFont = this.$$$getFont$$$(null, -1, 16, txtPortfolioName.getFont());
-        if (txtPortfolioNameFont != null)
-            txtPortfolioName.setFont(txtPortfolioNameFont);
+        if (txtPortfolioNameFont != null) txtPortfolioName.setFont(txtPortfolioNameFont);
         portfolioPanel.add(txtPortfolioName, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
     }
 
@@ -101,8 +98,7 @@ public class PortfolioCreationGUI extends JFrame implements iPortfolioCreationGU
      * @noinspection ALL
      */
     private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null)
-            return null;
+        if (currentFont == null) return null;
         String resultName;
         if (fontName == null) {
             resultName = currentFont.getName();
@@ -126,4 +122,5 @@ public class PortfolioCreationGUI extends JFrame implements iPortfolioCreationGU
     public JComponent $$$getRootComponent$$$() {
         return portfolioPanel;
     }
+
 }

@@ -1,13 +1,21 @@
 package BuyStockUseCase;
 
-import APIInterface.StockAPIAccess;
+import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
+import db.StockDSRequest;
+import db.iEntityDBGateway;
 import entities.Portfolio;
+import main.OuterLayerFactory;
 
 import java.io.IOException;
 
 public class BuyUseCaseInteractor {
+    iEntityDBGateway dbGateway;
+
+    public BuyUseCaseInteractor() {
+        dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+    }
 
     /**
      * Receives symbol and quantity input from user, obtains stock price through
@@ -15,10 +23,9 @@ public class BuyUseCaseInteractor {
      *
      * @param req Request with user input
      * @return BuyOutputResponse containing message to be displayed to user
-     * @throws IOException when there's a connection problem with the API
      */
 
-    public BuyOutputResponse buyStock(BuyInputRequest req) throws IOException {
+    public BuyOutputResponse buyStock(BuyInputRequest req){
         int buy_quantity = req.getQuantity();
         String symbol = req.getSymbol();
         Portfolio port = req.getPort();
@@ -28,17 +35,31 @@ public class BuyUseCaseInteractor {
             return new BuyOutputResponse(false);
         }
 
-        // Accesses stock price from API
-        StockAPIAccess access = new StockAPIAccess();
-        StockAPIResponse res = access.getPrice(new StockAPIRequest(symbol));
+        // Tries to access stock price from API, returns output = null if failure occurs
+        StockAPIGateway access = new StockAPIGateway();
+        StockAPIResponse res;
+        try {
+            res = access.getPrice(new StockAPIRequest(symbol));
+        } catch(IOException e) {
+            return new BuyOutputResponse(null);
+        }
+
         double price = res.getPrice();
 
         // Passes parameters to Portfolio, outputs results
-        boolean result = port.addStock(symbol, price, buy_quantity);
-        if (result) {
-            return new BuyOutputResponse(true);
-        } else {
+        BuyType result = port.addStock(symbol, price, buy_quantity);
+
+        if (result == BuyType.FAILED) {
             return new BuyOutputResponse(false);
         }
+
+        if (result == BuyType.NEW){
+            dbGateway.addStock(new StockDSRequest(symbol, price, buy_quantity, port.getUsername(), port.getName()));
+        }
+
+        dbGateway.updateStockQuantity(symbol, port.getStockQuantity(symbol), port.getUsername(), port.getName());
+        dbGateway.updatePortfolioBalance(port.getName(), port.getBalance(), port.getUsername());
+
+        return new BuyOutputResponse(true);
     }
 }

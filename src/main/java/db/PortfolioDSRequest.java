@@ -1,5 +1,9 @@
 package db;
 
+/**
+ * Request model class containing input for creating a new portfolio
+ * object in the entity database
+ */
 public class PortfolioDSRequest {
     private final String name;
     private final double balance;

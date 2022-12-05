@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 public class UserLoginPresenterTest {
     private static UserLoginController controller;
-    private static final String correctUsername = "database";
+    private static final String correctUsername = "LoginTestUser";
     private static final String correctPassword = "password";
 
     @BeforeAll
@@ -24,6 +24,9 @@ public class UserLoginPresenterTest {
         controller = new UserLoginController();
     }
 
+    /**
+     * Test that the presenter correctly handles a failed login with an incorrect username
+     */
     @Test
     public void testLoginFalseUsername() {
         UserLoginRequest request = new UserLoginRequest(
@@ -35,6 +38,10 @@ public class UserLoginPresenterTest {
         Assertions.assertNull(response.user());
     }
 
+
+    /**
+     * Test an invalid password to ensure that the user cannot login
+     */
     @Test
     public void testLoginFalsePassword() {
         UserLoginRequest request = new UserLoginRequest(
@@ -46,6 +53,9 @@ public class UserLoginPresenterTest {
         Assertions.assertNull(response.user());
     }
 
+    /**
+     * Test that the user is logged in when the correct username and password are entered
+     */
     @Test
     public void testLoginUserExists() {
         Date loginTime = Date.valueOf(LocalDate.now());
@@ -58,6 +68,5 @@ public class UserLoginPresenterTest {
         User user = response.user();
         Assertions.assertEquals(user.getUsername(), correctUsername);
         Assertions.assertTrue(user.isPassword(correctPassword));
-        Assertions.assertEquals(user.getLastLogin(), loginTime);
     }
 }
