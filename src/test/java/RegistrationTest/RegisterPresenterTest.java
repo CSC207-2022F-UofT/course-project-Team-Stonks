@@ -1,9 +1,9 @@
 package RegistrationTest;
 
-import RegisterUseCase.*;
+import UseCases.RegisterUseCase.*;
 import db.UserDSRequest;
 import db.iEntityDBGateway;
-import entities.UserManager;
+import main.UserManager;
 import main.OuterLayerFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

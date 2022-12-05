@@ -1,9 +1,9 @@
 package UserLoginPresenterTest;
 
-import LoginUseCase.UserLoginController;
-import LoginUseCase.UserLoginRequest;
-import LoginUseCase.UserLoginResponse;
-import RegisterUseCase.RegisterInteractor;
+import UseCases.LoginUseCase.UserLoginController;
+import UseCases.LoginUseCase.UserLoginRequest;
+import UseCases.LoginUseCase.UserLoginResponse;
+import UseCases.RegisterUseCase.RegisterInteractor;
 import entities.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

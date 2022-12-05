@@ -1,12 +1,12 @@
 package BuyStockTest;
 
-import BuyStockUseCase.BuyInputRequest;
-import BuyStockUseCase.BuyOutputResponse;
-import BuyStockUseCase.BuyUseCaseInteractor;
-import LoginUseCase.UserLoginInteractor;
-import PortfolioCreationUseCase.PortfolioCreationInteractor;
-import PortfolioCreationUseCase.PortfolioSelectedInteractor;
-import RegisterUseCase.RegisterInteractor;
+import UseCases.BuyStockUseCase.BuyInputRequest;
+import UseCases.BuyStockUseCase.BuyOutputResponse;
+import UseCases.BuyStockUseCase.BuyUseCaseInteractor;
+import UseCases.LoginUseCase.UserLoginInteractor;
+import UseCases.PortfolioCreationUseCase.PortfolioCreationInteractor;
+import UseCases.PortfolioCreationUseCase.PortfolioSelectedInteractor;
+import UseCases.RegisterUseCase.RegisterInteractor;
 import db.iEntityDBGateway;
 import entities.Portfolio;
 import entities.Stock;
