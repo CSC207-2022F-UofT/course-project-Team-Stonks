@@ -36,6 +36,10 @@ public class PortfolioCreationTest {
         controller = new PortfolioCreationController(user);
     }
 
+
+    /**
+     * Test that after processing a new createportfolio request, the portfolio is added to the user.
+     */
     @Test
     public void testNewPortfolio(){
         PortfolioCreationRequest request = new PortfolioCreationRequest(portfolioName);
@@ -44,6 +48,10 @@ public class PortfolioCreationTest {
         Assertions.assertTrue(user.getPortfolioNames().contains(portfolioName));
     }
 
+    /**
+     * Test that when a portfolio name already exists, processing another request with the same name would get a
+     * response indicating duplicate name
+     */
     @Test
     public void testDupePortfolio() {
         PortfolioCreationRequest request = new PortfolioCreationRequest(portfolioName);
@@ -55,6 +63,9 @@ public class PortfolioCreationTest {
         Assertions.assertEquals(response2.portfolioCreated(), PortfolioCreationError.DUPLICATE_NAME);
     }
 
+    /**
+     * Test that processing a request with empty name would get a response indicating invalid name
+     */
     @Test
     public void testNoName() {
         PortfolioCreationRequest request = new PortfolioCreationRequest("");

@@ -22,6 +22,10 @@ public class PortfolioCreationPresenter {
         view.addBackAction(this::onBack);
     }
 
+    /**
+     * Contains logic for when user clicks on the create portfolio button.
+     * Makes a request containing the string from view input, then processes the request using the controller
+     */
     private void createPortfolio(){
         PortfolioCreationRequest request = new PortfolioCreationRequest(view.getNewPortfolioName());
 
@@ -36,6 +40,9 @@ public class PortfolioCreationPresenter {
         }
     }
 
+    /**
+     * contains logic for when the user clicks on the back button, ie moves to the user view
+     */
     private void onBack(){
         view.close();
         new UserPresenter(
