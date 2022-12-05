@@ -2,6 +2,10 @@ package UseCases.RegisterUseCase;
 
 import java.sql.Date;
 
+/**
+ * Request model object for when user attempts to register, contains
+ * given username, password, password confirmation, and current date
+ */
 public final class RegisterRequest {
     private final String username;
     private final String password;

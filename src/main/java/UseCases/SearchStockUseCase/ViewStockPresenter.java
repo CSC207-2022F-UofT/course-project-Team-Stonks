@@ -95,6 +95,6 @@ public class ViewStockPresenter {
         //Call Buy Presenter
         view.close();
         int quantity = portfolio.getStockQuantity(view.getStockSymbol());
-        new BuyStockPresenter(OuterLayerFactory.instance.getBuyGUI(view.getStockSymbol(), quantity), this.portfolio, this.user);
+        new BuyStockPresenter(OuterLayerFactory.instance.getBuyGUI(view.getStockSymbol(), quantity, this.portfolio.getBalance()), this.portfolio, this.user);
     }
 }
