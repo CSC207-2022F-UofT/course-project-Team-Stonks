@@ -1,12 +1,16 @@
 package PortfolioCreationTest;
 
-import LoginUseCase.UserLoginController;
-import LoginUseCase.UserLoginInteractor;
-import PortfolioCreationUseCase.*;
-import RegisterUseCase.RegisterInteractor;
-import db.EntitySQLGateway;
+
+import Controllers.PortfolioCreationController;
+import UseCases.LoginUseCase.UserLoginInteractor;
+import UseCases.PortfolioCreationUseCase.PortfolioCreationError;
+import UseCases.PortfolioCreationUseCase.PortfolioCreationRequest;
+import UseCases.PortfolioCreationUseCase.PortfolioCreationResponse;
+import UseCases.RegisterUseCase.RegisterInteractor;
+import db.EntityDBGateway;
 import entities.User;
 
+import main.OuterLayerFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -19,7 +23,7 @@ public class PortfolioCreationTest {
 
     private static PortfolioCreationController controller;
 
-    private static final String username = "TestUsername";
+    private static final String username = "PortCreationUser";
     private static final String password = "TestPassword";
 
     private static final String portfolioName = "Portfolio1";
@@ -27,6 +31,9 @@ public class PortfolioCreationTest {
 
     @BeforeAll
     public static void setUp(){
+        EntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        dbGateway.deleteUser(username);
+
         RegisterInteractor registerInteractor = new RegisterInteractor();
         registerInteractor.signUpUser(username, password, password, Date.valueOf(LocalDate.now()));
 
@@ -45,6 +52,7 @@ public class PortfolioCreationTest {
         PortfolioCreationRequest request = new PortfolioCreationRequest(portfolioName);
         PortfolioCreationResponse response = controller.createPortfolio(request);
 
+        Assertions.assertEquals(response.portfolioCreated(), PortfolioCreationError.NONE);
         Assertions.assertTrue(user.getPortfolioNames().contains(portfolioName));
     }
 
