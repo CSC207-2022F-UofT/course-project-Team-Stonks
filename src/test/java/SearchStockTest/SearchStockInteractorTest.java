@@ -1,6 +1,6 @@
 package SearchStockTest;
 
-import SearchStockUseCase.ViewStockUseCaseInteractor;
+import UseCases.SearchStockUseCase.ViewStockUseCaseInteractor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class SearchStockInteractorTest {
      */
     @Test
     public void incorrectSymbol(){
-        Assertions.assertThrows(NullPointerException.class, ()->{incorrectInteractor.searchStock();});
+        Assertions.assertThrows(NullPointerException.class, ()-> incorrectInteractor.searchStock());
     }
 
     /**
@@ -30,7 +30,7 @@ public class SearchStockInteractorTest {
      */
     @Test
     public void correctSymbol(){
-        Assertions.assertDoesNotThrow(()->{correctInteractor.searchStock();});
+        Assertions.assertDoesNotThrow(()-> correctInteractor.searchStock());
     }
 
 }

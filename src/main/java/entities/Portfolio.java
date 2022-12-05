@@ -1,7 +1,7 @@
 package entities;
 
-import BuyStockUseCase.BuyType;
-import SellStockUseCase.SellType;
+import UseCases.BuyStockUseCase.BuyType;
+import UseCases.SellStockUseCase.SellType;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
