@@ -17,6 +17,9 @@ import java.time.LocalTime;
 
 
 public class ViewStockGUI extends JFrame implements iViewStockGUI {
+    /**
+     * This is the GUI for the view stock use case
+     */
     private double stockPrice;
     private final Portfolio portfolio;
     private final String stockSymbol;

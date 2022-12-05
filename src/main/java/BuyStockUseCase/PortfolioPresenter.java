@@ -34,12 +34,18 @@ public class PortfolioPresenter {
         view.addMakeCompPortfolioAction(this::onMakeCompPortfolio);
         view.addSearchAction(this::onSearch);
     }
+    /**
+     * This method is called when the user clicks the back button
+     */
     public void onBack() {
         view.close();
         new UserPresenter(OuterLayerFactory.instance.getUserGUI(user.getUsername(),
                 new ArrayList<>(user.getPortfolioNames()), user.getLastLogin()), user);
 
     }
+    /**
+     * This method is called when the user clicks the search stock button
+     */
     public void onSearch() {
         String symbol = view.getSearchField();
         try{
@@ -52,6 +58,9 @@ public class PortfolioPresenter {
         new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(symbol, this.portfolio), this.portfolio, this.user);
 
     }
+    /**
+     * This method is called when the user clicks the make competitive portfolio button
+     */
     public void onMakeCompPortfolio() {
         psController.NewCompPort(new CompPortRequest(user, portfolio.getName()));
         view.removeCompPortfolioButton();

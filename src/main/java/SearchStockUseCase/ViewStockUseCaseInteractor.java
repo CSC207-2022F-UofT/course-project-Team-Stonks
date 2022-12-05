@@ -14,6 +14,9 @@ import java.util.List;
 
 
 public class ViewStockUseCaseInteractor{
+    /**
+     * This is the interactor for the view stock use case, it is used to interact with the API and display the stock data to the user
+     */
     private StockAPIResponse stock;
     private final String stockSymbol;
     private Calendar from = Calendar.getInstance();

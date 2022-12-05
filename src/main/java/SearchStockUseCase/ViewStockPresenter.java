@@ -17,6 +17,9 @@ import java.io.IOException;
 
 
 public class ViewStockPresenter {
+    /**
+     * This class is used to process the data from the model and display it to the user
+     */
     private final iViewStockGUI view;
     private final Portfolio portfolio;
     private final User user;

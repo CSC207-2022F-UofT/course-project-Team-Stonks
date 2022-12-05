@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class ViewStockController {
+    /**
+     * This is the controller for the view stock use case
+     */
     private final ViewStockUseCaseInteractor interactor;
 
     public ViewStockController(String symbol){
