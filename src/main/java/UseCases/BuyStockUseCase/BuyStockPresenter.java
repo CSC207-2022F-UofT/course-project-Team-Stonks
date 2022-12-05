@@ -22,6 +22,9 @@ public class BuyStockPresenter {
         this.currentPort = currentPort;
     }
 
+    /**
+     * This method is called when the user clicks the buy button
+     */
     private void onBuy() {
         String symbol = view.getSymbol();
 
@@ -60,6 +63,9 @@ public class BuyStockPresenter {
         }
     }
 
+    /**
+     * This method is called when the user clicks the back button
+     */
     private void onBack() {
         view.close();
         new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol(), currentPort), this.currentPort, this.user);

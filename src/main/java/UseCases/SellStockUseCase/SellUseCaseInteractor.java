@@ -28,6 +28,7 @@ public class SellUseCaseInteractor {
         iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         StockAPIGateway stockAPIAccess = new StockAPIGateway();
         StockAPIRequest stockAPIRequest = new StockAPIRequest(symbol);
+        // checks if user input is valid, prompts the user if not
         if(quantity < 1) {
             return new SellOutputResponse(false, "Please enter a positive quantity.");
         }
@@ -43,13 +44,14 @@ public class SellUseCaseInteractor {
                         portfolio.getName(),
                         portfolio.getBalance(),
                         portfolio.getUsername());
-
+                // if the stock is not in the portfolio, remove it from the database
                 if (possible == SellType.REMOVE) {
                     dbGateway.deleteStock(
                             symbol,
                             portfolio.getUsername(),
                             portfolio.getName());
                 } else {
+                    // otherwise, update the quantity in the database
                     dbGateway.updateStockQuantity(
                             symbol,
                             portfolio.getStockQuantity(symbol),

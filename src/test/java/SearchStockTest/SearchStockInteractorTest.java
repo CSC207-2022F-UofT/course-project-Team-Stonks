@@ -25,6 +25,9 @@ public class SearchStockInteractorTest {
         Assertions.assertThrows(NullPointerException.class, ()-> incorrectInteractor.searchStock());
     }
 
+    /**
+     * Inputs valid symbol to receive a Stock object
+     */
     @Test
     public void correctSymbol(){
         Assertions.assertDoesNotThrow(()-> correctInteractor.searchStock());
