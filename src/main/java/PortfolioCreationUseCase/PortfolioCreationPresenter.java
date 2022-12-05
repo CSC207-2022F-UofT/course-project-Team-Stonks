@@ -4,7 +4,10 @@ import entities.User;
 import main.OuterLayerFactory;
 
 import java.util.ArrayList;
-
+/**
+ * This class is responsible for controlling the logic of
+ * the portfolio creation view
+ */
 public class PortfolioCreationPresenter {
     private final iPortfolioCreationGUI view;
     private final PortfolioCreationController controller;
