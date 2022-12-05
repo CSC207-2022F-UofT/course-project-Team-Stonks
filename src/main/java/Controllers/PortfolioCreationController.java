@@ -12,7 +12,12 @@ public class PortfolioCreationController {
     public PortfolioCreationController(User user) {
         pInteractor = new PortfolioCreationInteractor(user);
     }
-
+    /**
+     * This method is used to create a portfolio by taking in a param of type PortfolioCreationRequest
+     * and using the interactor to process this request, returning a PortfolioCreationResponse
+     * @param request the request to make a new portfolio which contains the name
+     * @return PortfolioCreationResponse
+     */
     public PortfolioCreationResponse createPortfolio(PortfolioCreationRequest request) {
         PortfolioCreationError portfolioCreated = pInteractor.makeNewPortfolio(request.portfolioName());
 

@@ -1,5 +1,8 @@
 package UseCases.PortfolioCreationUseCase;
 
+/**
+ * This is the interface for the portfolio creation use case
+ */
 public interface PortfolioCreationView {
     String getNewPortfolioName();
 
