@@ -52,8 +52,8 @@ public class OuterLayerFactory {
         return new RegistrationPage();
     }
 
-    public iBuyStockGUI getBuyGUI(String symbol, int quantity) {
-        return new BuyStockGUI(symbol, quantity);
+    public iBuyStockGUI getBuyGUI(String symbol, int quantity, double balance) {
+        return new BuyStockGUI(symbol, quantity, balance);
     }
     
     public iSellStockGUI getSellGUI(String symbol, int quantity) {

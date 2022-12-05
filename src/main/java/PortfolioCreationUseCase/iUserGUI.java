@@ -11,4 +11,6 @@ public interface iUserGUI {
     String getPortfolioSelected();
 
     void close();
+
+    boolean confirmPortfolioMessage(String portfolioName);
 }

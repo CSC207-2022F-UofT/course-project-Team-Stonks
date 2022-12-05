@@ -52,8 +52,10 @@ public class RegisterInteractor {
     private boolean passwordValid(String password) {
         int minLength = 8;
         int maxLength = 50;
+        // SQL Column Error for length > 50
 
         if (password.contains("\"")) {
+            // SQL Error for quotation mark
             return false;
         }
 

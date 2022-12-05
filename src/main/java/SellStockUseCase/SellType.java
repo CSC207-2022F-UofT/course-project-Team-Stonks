@@ -1,7 +1,10 @@
 package SellStockUseCase;
 
 public enum SellType {
+    /**
+     * Enum for the different types of sell stock use cases
+     */
     REMOVE,
-    SUCCESFUL,
+    SUCCESSFUL,
     ERROR
 }

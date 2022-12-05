@@ -23,6 +23,9 @@ public class SellStockPresenter {
         view.addSellAction(this::onSell);
         view.addGoBackAction(this::onBack);
     }
+    /**
+     * This method is called when the user clicks the back button
+     */
     private void onBack() {
         view.close();
         new ViewStockPresenter(OuterLayerFactory.instance.getViewStockGUI(view.getSymbol(), portfolio), this.portfolio, this.user);

@@ -2,6 +2,10 @@ package db;
 
 import java.sql.Date;
 
+/**
+ * Request model class containing input for creating a new user
+ * object in the entity database
+ */
 public class UserDSRequest {
     private final String username;
     private final String password;

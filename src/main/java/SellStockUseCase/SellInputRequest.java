@@ -9,6 +9,12 @@ public class SellInputRequest {
     private final String symbol;
     private final int quantity;
 
+    /**
+     * This constructor is used to create a request for the sell stock use case
+     * @param portfolio the portfolio to sell from
+     * @param symbol the symbol of the stock to sell
+     * @param quantity the quantity of the stock to sell
+     */
     public SellInputRequest(Portfolio portfolio, String symbol, int quantity) {
         this.portfolio = portfolio;
         this.symbol = symbol;

@@ -1,19 +1,23 @@
 # Group Members:
 - Inaam (Inaam2)
-- Noel 
-- Elad
-- Hoa (Peacful36)
-- Elliot
-- Rohan
-- Ben
-- Jack
+- Noel (noel-toms)
+- Elad (eladperlman)
+- Hoa (Peaceful36)
+- Elliot (Spaghetti-12)
+- Rohan (Rohh1)
+- Ben (benmarlow)
+- Jack (jackzxliu)
 
 ## Stock Market Simulation
 
-The Stockmarket Simulator is a program that allows a user to simulate the environment of stock investments. It allows a user to register an account and then have the options to buy/sell/watchlist a stock and naturally develop multiple portfolios and an interest in the investment world! This also involves a compeitive aspect such that each user can select a competitive portfolio which allows each user to put foreward a portfolio which can compete with other user's portfolios. 
+The Stock-market Simulator is a program that allows a user to simulate the environment of stock investments. It allows a user to register an account and then have the options to buy/sell/watchlist a stock and naturally develop multiple portfolios and an interest in the investment world! This also involves a competitive aspect such that each user can select a competitive portfolio which allows each user to put forward a portfolio which can compete with other user's portfolios. 
 
 # Entities
-
+## Leaderboard
+Leaderboard is a list of competitive portfolios that are ranked by their total value.
+Contains attributes:
+- int SIZE 
+- Map<User, Double> topUsers
 ## Portfolio
 The portfolio class stores the portfolios of each user
 Contains attributes:
@@ -53,6 +57,9 @@ Contains attributes:
 The user factory class is used to create user objects
 ## User Manager
 The user manager class is used to manage the user objects
+Contains attributes:
+- iEntityDBGateway dbGateway
+- UserFactory userFactory
 
 # Use Cases
 
@@ -62,17 +69,19 @@ This use case provides the interface to register a user with a username and pass
 - signUpUser() 
   - Takes in the username, password and password confirmation to check with the input data is suitable to be registered given that it passes certain conditions
 - passwordValid()
-  - Takes in the password and password confirmation and checks if it follows the neccessary conditions of being a valid password. If it does, it will return True, otherwise False
+  - Takes in the password and password confirmation and checks if it follows the necessary conditions of being a valid password. If it does, it will return True, otherwise False
 - usernameValid()
-  - Takes in the input username and checks if it follows the neccessary conditions of being a valid username. If it does, it will return True, otherwise False
+  - Takes in the input username and checks if it follows the necessary conditions of being a valid username. If it does, it will return True, otherwise False
   
 ## Login use case
 
-This use case provides the interface to login to the user's account and access their portfolio(s). This use case has the following functions:
+This use case provides the interface to log in to the user's account and access their portfolio(s). This use case has the following functions:
 - loginUser()
   - Takes in username and password, and then returns the UserLoginResponse
 - loginResult()
-  - 
+  - method in presenter class responsible for displaying weather login was successful based on the user
+  - object given from the user manager, if it is null presenter invokes view's failed login method,
+  - otherwise creates a new user presenter and closes current view
 
 ## Portfolio use case
 This use case provides the interface to allow users to create new portfolios and allow users to enter into a portfolio and begin investing. This includes deciding on a competitive portfolio. This use case has the following functions:
@@ -116,13 +125,49 @@ This use case provides the interface to allow users to view the leaderboard of t
   - Takes in a list of values and returns the index of the maximum value
 - TopValue()
   - Return list of values of each of the users' competitive portfolio net values
-- upadateLeaderboard()
+- updateLeaderboard()
   - Return a Leaderboard with the top users according to the current value of their competitive portfolios
-
-
-# Controllers
-(TODO)
 
 # GUI
 
-Add pictures of each GUI
+Swing GUIs that require user input have a JTextField which in turn allows for users to input information into the program
+
+## Registration GUI
+
+![Screenshot](images/registrationPage.png)
+
+## Login GUI
+
+![Screenshot](images/LoginScreen.png)
+
+## User GUI
+
+![Screenshot](images/UserScreen.png)
+
+## Portfolio GUI
+
+![Screenshot](images/PortfolioScreen.png)
+
+## Create Portfolio GUI
+
+![Screenshot](images/CreatePortfolioScreen.png)
+
+## Search Stock GUI
+
+![Screenshot](images/ViewStockScreen.png)
+
+## Buy Stock GUI
+
+![Screenshot](images/BuyStockScreen.png)
+
+## Sell Stock GUI
+
+![Screenshot](images/SellStockScreen.png)
+
+## Watchlist GUI
+
+(input images)
+
+## Leaderboard GUI
+
+![Screenshot](images/LeaderboardScreen.png)

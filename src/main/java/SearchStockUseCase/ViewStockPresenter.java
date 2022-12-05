@@ -17,6 +17,9 @@ import java.io.IOException;
 
 
 public class ViewStockPresenter {
+    /**
+     * This class is used to process the data from the model and display it to the user
+     */
     private final iViewStockGUI view;
     private final Portfolio portfolio;
     private final User user;
@@ -95,6 +98,6 @@ public class ViewStockPresenter {
         //Call Buy Presenter
         view.close();
         int quantity = portfolio.getStockQuantity(view.getStockSymbol());
-        new BuyStockPresenter(OuterLayerFactory.instance.getBuyGUI(view.getStockSymbol(), quantity), this.portfolio, this.user);
+        new BuyStockPresenter(OuterLayerFactory.instance.getBuyGUI(view.getStockSymbol(), quantity, this.portfolio.getBalance()), this.portfolio, this.user);
     }
 }

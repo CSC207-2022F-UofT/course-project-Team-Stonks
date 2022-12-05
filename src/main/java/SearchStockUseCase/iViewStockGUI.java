@@ -8,6 +8,9 @@ import java.util.List;
 
 
 public interface iViewStockGUI {
+    /**
+     * This is the interface for the view stock use case
+     */
     void updateTable(DefaultTableModel tableModel);
 
     void refreshButtonAction(Runnable onRefreshButton);
