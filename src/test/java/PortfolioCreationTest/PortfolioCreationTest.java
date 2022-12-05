@@ -44,4 +44,21 @@ public class PortfolioCreationTest {
         Assertions.assertTrue(user.getPortfolioNames().contains(portfolioName));
     }
 
+    @Test
+    public void testDupePortfolio() {
+        PortfolioCreationRequest request = new PortfolioCreationRequest(portfolioName);
+        controller.createPortfolio(request);
+        Assertions.assertTrue(user.getPortfolioNames().contains(portfolioName));
+
+        PortfolioCreationResponse response2 = controller.createPortfolio(request);
+        Assertions.assertTrue(user.getPortfolioNames().contains(portfolioName));
+        Assertions.assertEquals(response2.portfolioCreated(), PortfolioCreationError.DUPLICATE_NAME);
+    }
+
+    @Test
+    public void testNoName() {
+        PortfolioCreationRequest request = new PortfolioCreationRequest("");
+        PortfolioCreationResponse response = controller.createPortfolio(request);
+        Assertions.assertEquals(response.portfolioCreated(), PortfolioCreationError.INVALID_NAME);
+    }
 }
