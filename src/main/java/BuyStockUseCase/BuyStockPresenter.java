@@ -3,6 +3,7 @@ package BuyStockUseCase;
 import SearchStockUseCase.ViewStockPresenter;
 import entities.Portfolio;
 import entities.User;
+
 import main.OuterLayerFactory;
 
 public class BuyStockPresenter {
@@ -13,7 +14,7 @@ public class BuyStockPresenter {
     private final Portfolio currentPort;
     private final User user;
 
-    public BuyStockPresenter(iBuyStockGUI view, Portfolio currentPort, User user){
+    public BuyStockPresenter(iBuyStockGUI view, Portfolio currentPort, User user) {
         this.view = view;
         this.user = user;
         view.addBuyAction(this::onBuy);
@@ -52,6 +53,8 @@ public class BuyStockPresenter {
         } else if (res.getOutput()) {
             view.displaySuccess();
             view.updateQuantityLabel(quantity);
+            view.updateBalanceLabel(currentPort.getBalance());
+
         } else {
             view.displayBalanceFailure();
         }
