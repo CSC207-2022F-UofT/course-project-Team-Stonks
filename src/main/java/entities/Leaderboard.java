@@ -2,23 +2,22 @@ package entities;
 
 import java.util.Map;
 
-public class Leaderboard {
+public record Leaderboard(Map<User, Double> topUsers) {
 
     public static final int SIZE = 5;
-    private final Map<User, Double> topUsers;
 
     /**
      * @param topUsers the Map representation of the Leaderboard, with keys representing Users and values representing
      *                 net values of competitive portfolio
      */
-    public Leaderboard(Map<User, Double> topUsers) {
-        this.topUsers = topUsers;
+    public Leaderboard {
     }
 
     /**
      * @return the topUsers attribute from a leaderboard
      */
-    public Map<User, Double> getTopUsers() {
+    @Override
+    public Map<User, Double> topUsers() {
         return this.topUsers;
     }
 }

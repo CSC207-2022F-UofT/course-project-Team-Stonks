@@ -8,5 +8,4 @@ public interface StockDatabaseGateway {
      */
     StockAPIResponse getPrice(StockAPIRequest req) throws IOException;
 
-    StockAPIResponse getPriceHist(StockAPIRequest req) throws IOException;
 }

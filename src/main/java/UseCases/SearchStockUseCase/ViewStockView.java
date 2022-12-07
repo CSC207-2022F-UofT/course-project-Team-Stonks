@@ -28,7 +28,7 @@ public interface ViewStockView {
     void addBuyStockAction(Runnable onBuyStock);
     void addSellStockAction(Runnable onSellStock);
     void addBackAction(Runnable onBack);
-    String stockMarketStatus();
+
     void close();
     String getStockSymbol();
     void setHistData(List<HistoricalQuote> historicalQuotes);

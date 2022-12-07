@@ -78,7 +78,7 @@ public class BuyStockTest {
 
         Stock stock = map.get("AMZN");
 
-        assert !res.getOutput();
+        assert !res.output();
         assert stock == null;
     }
 }

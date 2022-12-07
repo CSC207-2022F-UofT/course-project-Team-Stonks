@@ -4,22 +4,14 @@ package db;
  * Response model class containing the information for creating a new stock
  * object in the application from the entity database
  */
-public class StockDSResponse {
-    private final String symbol;
-    private final double value;
-    private final int quantity;
-
-    public StockDSResponse (String symbol, double value, int quantity){
-        this.symbol = symbol;
-        this.value = value;
-        this.quantity = quantity;
-    }
+public record StockDSResponse(String symbol, double value, int quantity) {
 
     /**
      * @return String symbol of the stock
      * Getter for the symbol of the stock
      */
-    public String getSymbol() {
+    @Override
+    public String symbol() {
         return this.symbol;
     }
 
@@ -27,7 +19,8 @@ public class StockDSResponse {
      * @return double value of the stock
      * Getter for the value of the stock
      */
-    public double getValue() {
+    @Override
+    public double value() {
         return this.value;
     }
 
@@ -35,7 +28,8 @@ public class StockDSResponse {
      * @return int quantity of the stock
      * Getter for the quantity of the stock
      */
-    public int getQuantity(){
+    @Override
+    public int quantity() {
         return this.quantity;
     }
 }

@@ -22,23 +22,23 @@ public class PortfolioSelectedInteractor {
     }
 
     public void populatePortfolio(User user, String portfolioName) {
-        List<StockDSResponse> stockDSResponses = dbGateway.findPortfolio(portfolioName, user.getUsername()).getStocks();
+        List<StockDSResponse> stockDSResponses = dbGateway.findPortfolio(portfolioName, user.getUsername()).stocks();
         List<Stock> stocks = new ArrayList<>();
         StockDatabaseGateway stockDb = OuterLayerFactory.instance.getStockDBGateway();
         StockAPIResponse response;
 
         for (StockDSResponse stock : stockDSResponses) {
             try {
-                response = stockDb.getPrice(new StockAPIRequest(stock.getSymbol()));
+                response = stockDb.getPrice(new StockAPIRequest(stock.symbol()));
             } catch (
                     IOException e) {
                 throw new RuntimeException(e);
             }
 
             stocks.add(stockFactory.createStock(
-                    stock.getSymbol(),
-                    response.getPrice(),
-                    stock.getQuantity()));
+                    stock.symbol(),
+                    response.price(),
+                    stock.quantity()));
         }
 
         user.setCurPortfolio(portfolioName);

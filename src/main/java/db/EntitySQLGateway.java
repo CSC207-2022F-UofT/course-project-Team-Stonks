@@ -115,9 +115,9 @@ public class EntitySQLGateway implements EntityDBGateway {
         try {
             Statement st = con.createStatement();
             st.executeUpdate("INSERT INTO Users VALUES ('" +
-                    newUser.getUsername() + "','" +
-                    newUser.getPassword() + "','" +
-                    newUser.getLastLogin() + "','" +
+                    newUser.username() + "','" +
+                    newUser.password() + "','" +
+                    newUser.lastLogin() + "','" +
                     null + "')");
         } catch (
                 SQLException e) {
@@ -249,9 +249,9 @@ public class EntitySQLGateway implements EntityDBGateway {
         try {
             Statement st = con.createStatement();
             st.executeUpdate("INSERT INTO Portfolios VALUES ('" +
-                    newPortfolio.getName() + "','" +
-                    newPortfolio.getBalance() + "','" +
-                    newPortfolio.getUsername() + "')");
+                    newPortfolio.name() + "','" +
+                    newPortfolio.balance() + "','" +
+                    newPortfolio.username() + "')");
         } catch (
                 SQLException e) {
             throw new RuntimeException(e);
@@ -315,8 +315,7 @@ public class EntitySQLGateway implements EntityDBGateway {
      * @param username a non-empty string following the valid username parameters
      *                 deletes the given portfolio from the database if it exists
      */
-    @Override
-    public void deletePortfolio(String name, String username) {
+    private void deletePortfolio(String name, String username) {
         try {
             PreparedStatement ps = con.prepareStatement("SELECT stockName FROM PortfolioStock WHERE " +
                     "portfolioName = ? AND " +
@@ -374,21 +373,21 @@ public class EntitySQLGateway implements EntityDBGateway {
         try {
             Statement st;
 
-            if (!findStock(newStock.getSymbol())) {
+            if (!findStock(newStock.symbol())) {
                 st = con.createStatement();
                 st.execute(
                         "INSERT INTO Stocks VALUES ('" +
-                                newStock.getSymbol() + "','" +
-                                newStock.getValue() + "')");
+                                newStock.symbol() + "','" +
+                                newStock.value() + "')");
             }
 
             st = con.createStatement();
             st.executeUpdate(
                     "INSERT INTO PortfolioStock VALUES ('" +
-                            newStock.getPortfolioName() + "','" +
-                            newStock.getSymbol() + "','" +
-                            newStock.getQuantity() + "','" +
-                            newStock.getUsername() + "')");
+                            newStock.portfolioName() + "','" +
+                            newStock.symbol() + "','" +
+                            newStock.quantity() + "','" +
+                            newStock.username() + "')");
         } catch (
                 SQLException e) {
             throw new RuntimeException(e);
@@ -402,8 +401,7 @@ public class EntitySQLGateway implements EntityDBGateway {
      * @return stock database response model containing a stock's info belonging to the
      * specified portfolio
      */
-    @Override
-    public StockDSResponse findStock(String symbol, String username, String portfolioName) {
+    private StockDSResponse findStock(String symbol, String username, String portfolioName) {
         try {
             PreparedStatement st = con.prepareStatement(
                     "SELECT * FROM Stocks WHERE symbol = ?");
@@ -441,8 +439,7 @@ public class EntitySQLGateway implements EntityDBGateway {
      * @param symbol a non-empty string representing a stock name
      * @return weather a stock with the given symbol nae exists in the database
      */
-    @Override
-    public boolean findStock(String symbol) {
+    private boolean findStock(String symbol) {
         try {
             PreparedStatement st = con.prepareStatement(
                     "SELECT * FROM Stocks WHERE symbol = ?");

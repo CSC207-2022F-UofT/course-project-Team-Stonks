@@ -101,8 +101,7 @@ public class ViewStockGUI extends JFrame implements ViewStockView {
         backButton.addActionListener(e -> onBack.run());
     }
 
-    @Override
-    public String stockMarketStatus() {
+    private String stockMarketStatus() {
         if (LocalDate.EPOCH.getDayOfWeek() == DayOfWeek.SATURDAY || LocalDate.EPOCH.getDayOfWeek() == DayOfWeek.SUNDAY) {
             return "(Closed)";
         } else if (9 > LocalTime.MAX.getHour() || LocalTime.MAX.getHour() > 16) {

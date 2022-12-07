@@ -6,22 +6,14 @@ import java.util.List;
  * Response model class containing the information for creating a new portfolio
  * object in the application from the entity database
  */
-public class PortfolioDSResponse {
-    private final String name;
-    private final double balance;
-    private final List<StockDSResponse> stocks;
-
-    public PortfolioDSResponse(String name, double balance, List<StockDSResponse> stocks){
-        this.name = name;
-        this.balance = balance;
-        this.stocks = stocks;
-    }
+public record PortfolioDSResponse(String name, double balance, List<StockDSResponse> stocks) {
 
     /**
      * @return String name of the portfolio
      * Getter for the name of the portfolio
      */
-    public String getName() {
+    @Override
+    public String name() {
         return this.name;
     }
 
@@ -29,7 +21,8 @@ public class PortfolioDSResponse {
      * @return double balance of the portfolio
      * Getter for the balance of the portfolio
      */
-    public double getBalance() {
+    @Override
+    public double balance() {
         return this.balance;
     }
 
@@ -37,7 +30,8 @@ public class PortfolioDSResponse {
      * @return List<StockDSResponse> stocks of the portfolio
      * Getter for the stocks of the portfolio
      */
-    public List<StockDSResponse> getStocks() {
+    @Override
+    public List<StockDSResponse> stocks() {
         return this.stocks;
     }
 }

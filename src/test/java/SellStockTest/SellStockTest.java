@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Objects;
 
@@ -32,6 +33,7 @@ public class SellStockTest {
     private static final int invalidQuant = 100;
     private static final int negativeQuant = -1;
     private static final String username = "SellTestUser";
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
 
     @BeforeAll
@@ -54,7 +56,7 @@ public class SellStockTest {
 
         StockAPIGateway access = new StockAPIGateway();
         StockAPIResponse res = access.getPrice(new StockAPIRequest(symbol));
-        double price = res.getPrice();
+        double price = res.price();
         portfolio = user.getPortfolio("newPortfolio");
         portfolio.addStock(symbol, price, quantity);
         interactor = new SellUseCaseInteractor();
@@ -71,7 +73,7 @@ public class SellStockTest {
         interactor.sellStock(sell);
         Stock stock = map.get(symbol);
         assert stock.getQuantity() == quantity - sellQuant;
-        assert portfolio.getBalance() == balance + sellQuant * stock.getValue();
+        assert df.format(portfolio.getBalance()).equals(df.format(balance + sellQuant * stock.getValue()));
     }
 
     /**
