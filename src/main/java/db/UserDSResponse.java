@@ -7,27 +7,16 @@ import java.util.List;
  * Response model class containing the information for creating a new user
  * object in the application from the entity database
  */
-public class UserDSResponse {
-    private final String username;
-    private final String password;
-    private final Date lastLogin;
-    private final String compPort;
-    private final List<PortfolioDSResponse> portfolios;
-
-    public UserDSResponse(String username, String password, Date lastLogin, String compPort, List<PortfolioDSResponse> portfolios) {
-        this.username = username;
-        this.password = password;
-        this.lastLogin = lastLogin;
-        this.compPort = compPort;
-        this.portfolios = portfolios;
-    }
+public record UserDSResponse(String username, String password, Date lastLogin, String compPort,
+                             List<PortfolioDSResponse> portfolios) {
 
 
     /**
      * @return the username
      * Getter for the username
      */
-    public String getUsername() {
+    @Override
+    public String username() {
         return this.username;
     }
 
@@ -35,7 +24,8 @@ public class UserDSResponse {
      * @return the password
      * Getter for the password
      */
-    public String getPassword() {
+    @Override
+    public String password() {
         return this.password;
     }
 
@@ -43,7 +33,8 @@ public class UserDSResponse {
      * @return the lastLogin
      * Getter for the lastLogin
      */
-    public Date getLastLogin() {
+    @Override
+    public Date lastLogin() {
         return this.lastLogin;
     }
 
@@ -51,7 +42,8 @@ public class UserDSResponse {
      * @return the compPort
      * Getter for the compPort
      */
-    public String getCompPort() {
+    @Override
+    public String compPort() {
         return compPort;
     }
 
@@ -59,7 +51,8 @@ public class UserDSResponse {
      * @return the portfolios
      * Getter for the portfolios
      */
-    public List<PortfolioDSResponse> getPortfolios() {
+    @Override
+    public List<PortfolioDSResponse> portfolios() {
         return this.portfolios;
     }
 }

@@ -93,12 +93,6 @@ public class BuyStockGUI extends JFrame implements BuyStockView {
     }
 
     @Override
-    public double getBalance() {
-        String num = this.balanceLabel.getText().replaceAll("[^0-9.]+", " ").trim();
-        return Double.parseDouble(num);
-    }
-
-    @Override
     public void updateBalanceLabel(double balance) {
         this.setVisible(true);
         this.balance = balance;

@@ -38,7 +38,7 @@ public class BuyStockPresenter {
             return;
         }
 
-        if (quantity < 0) {
+        if (quantity <= 0) {
             view.displayInvalidInputFailure();
             return;
         }
@@ -52,9 +52,9 @@ public class BuyStockPresenter {
 
         BuyOutputResponse res = cont.buyStock(req);
 
-        if (res.getOutput() == null) {
+        if (res.output() == null) {
             view.displayConnectionFailure();
-        } else if (res.getOutput()) {
+        } else if (res.output()) {
             view.displaySuccess();
             view.updateQuantityLabel(quantity);
             view.updateBalanceLabel(currentPort.getBalance());

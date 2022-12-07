@@ -34,8 +34,8 @@ public class PortfolioFactory {
         Map<String, Stock> symbolToStock = new HashMap<>();
 
         for (StockDSResponse stock : stocks) {
-            Stock newStock = stockFactory.createStock(stock.getSymbol(), stock.getValue(), stock.getQuantity());
-            symbolToStock.put(stock.getSymbol(), newStock);
+            Stock newStock = stockFactory.createStock(stock.symbol(), stock.value(), stock.quantity());
+            symbolToStock.put(stock.symbol(), newStock);
         }
 
         return new Portfolio(balance, name, symbolToStock, username);

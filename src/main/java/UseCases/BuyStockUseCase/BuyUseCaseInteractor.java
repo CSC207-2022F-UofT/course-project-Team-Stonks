@@ -44,7 +44,7 @@ public class BuyUseCaseInteractor {
             return new BuyOutputResponse(null);
         }
 
-        double price = res.getPrice();
+        double price = res.price();
 
         // Passes parameters to Portfolio, outputs results
         BuyType result = port.addStock(symbol, price, buy_quantity);

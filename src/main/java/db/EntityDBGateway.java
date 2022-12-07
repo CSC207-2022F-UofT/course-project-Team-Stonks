@@ -79,13 +79,6 @@ public interface EntityDBGateway {
 
     /**
      * @param name a non-empty string following the valid portfolio name parameters
-     * @param username a non-empty string following the valid username parameters
-     * deletes the given portfolio from the database if it exists
-     */
-    void deletePortfolio(String name, String username);
-
-    /**
-     * @param name a non-empty string following the valid portfolio name parameters
      * @param newBalance a positive amount representing the portfolios updated balance
      * @param username a non-empty string following the valid username parameters
      */
@@ -98,21 +91,6 @@ public interface EntityDBGateway {
      */
     void addStock(StockDSRequest newStock);
 
-    /**
-     * @param symbol a non-empty string representing a stock name
-     * @param username a non-empty string following the valid username parameters
-     * @param portfolioName a non-empty string following the valid portfolio name parameters
-     * @return stock database response model containing a stock's info belonging to the
-     * specified portfolio
-     */
-    StockDSResponse findStock(String symbol, String username, String portfolioName);
-
-
-    /**
-     * @param symbol a non-empty string representing a stock name
-     * @return weather a stock with the given symbol nae exists in the database
-     */
-    boolean findStock(String symbol);
 
     /**
      * @param symbol a non-empty string representing a stock name

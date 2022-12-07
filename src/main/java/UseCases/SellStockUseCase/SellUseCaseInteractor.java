@@ -21,9 +21,9 @@ public class SellUseCaseInteractor {
 
     public SellOutputResponse sellStock(SellInputRequest sell) {
 
-        Portfolio portfolio = sell.getPortfolio();
-        String symbol = sell.getSymbol();
-        int quantity = sell.getQuantity();
+        Portfolio portfolio = sell.portfolio();
+        String symbol = sell.symbol();
+        int quantity = sell.quantity();
 
         EntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         StockAPIGateway stockAPIAccess = new StockAPIGateway();
@@ -35,7 +35,7 @@ public class SellUseCaseInteractor {
 
         try {
             StockAPIResponse stockAPIResponse = stockAPIAccess.getPrice(stockAPIRequest);
-            SellType possible = portfolio.sellStock(symbol, stockAPIResponse.getPrice(), quantity);
+            SellType possible = portfolio.sellStock(symbol, stockAPIResponse.price(), quantity);
 
             if (possible == SellType.ERROR) {
                 return new SellOutputResponse(false, "Please enter a valid amount.");

@@ -88,18 +88,11 @@ public class UserManager {
         }
 
         return userFactory.createUser(
-                userDSResponse.getUsername(),
-                userDSResponse.getPassword(),
-                userDSResponse.getLastLogin(),
-                userDSResponse.getCompPort(),
-                userDSResponse.getPortfolios());
+                userDSResponse.username(),
+                userDSResponse.password(),
+                userDSResponse.lastLogin(),
+                userDSResponse.compPort(),
+                userDSResponse.portfolios());
     }
-    
-    /**
-     * Getter for user
-     * @return the user that is currently logged in
-     */
-    public User getUser() {
-        return user;
-    }
+
 }

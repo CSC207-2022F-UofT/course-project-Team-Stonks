@@ -17,7 +17,7 @@ public class UserFactory {
         Map<String, Portfolio> portfolios = new HashMap<>();
 
         for (PortfolioDSResponse portfolio : portfolioResponses) {
-            portfolios.put(portfolio.getName(), portfolioFactory.createPortfolio(portfolio.getBalance(), portfolio.getName(), username, portfolio.getStocks()));
+            portfolios.put(portfolio.name(), portfolioFactory.createPortfolio(portfolio.balance(), portfolio.name(), username, portfolio.stocks()));
         }
 
         return new User(username, password, creationTime, compPort, portfolios);
