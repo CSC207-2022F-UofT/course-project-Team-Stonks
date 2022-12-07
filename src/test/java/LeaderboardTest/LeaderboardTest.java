@@ -1,14 +1,15 @@
 package LeaderboardTest;
 
-import LeaderboardUseCase.LeaderboardResponse;
+import UseCases.LeaderboardUseCase.LeaderboardResponse;
 import db.PortfolioDSRequest;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import entities.*;
 import main.OuterLayerFactory;
+import main.UserManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import LeaderboardUseCase.LeaderboardUseCaseInteractor;
+import UseCases.LeaderboardUseCase.LeaderboardUseCaseInteractor;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,11 +17,9 @@ import java.sql.Date;
 
 import db.UserDSRequest;
 
-import javax.sound.sampled.Port;
-
 public class LeaderboardTest {
     private static LeaderboardUseCaseInteractor interactor;
-    private static iEntityDBGateway dbGateway;
+    private static EntityDBGateway dbGateway;
 
 
 
