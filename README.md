@@ -63,10 +63,10 @@ Contains attributes:
 ## Watchlist
 The watchlist class stores the watchlist information in the form of a Watchlist object.
 Contains Attributes:
--String symbol
--String username
--String condition
--Float value
+- String symbol
+- String username
+- String condition
+- Float value
 
 # Use Cases
 
