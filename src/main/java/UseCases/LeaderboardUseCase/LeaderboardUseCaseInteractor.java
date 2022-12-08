@@ -5,8 +5,6 @@ import APIInterface.StockAPIRequest;
 import entities.Leaderboard;
 import entities.User;
 import main.UserManager;
-import entities.Portfolio;
-import entities.Stock;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
