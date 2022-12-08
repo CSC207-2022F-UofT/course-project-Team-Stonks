@@ -98,7 +98,8 @@ This use case provides the interface to allow users to search any stock and view
 - isValidStock()
   - Check with the API if the stock is valid. Throw an exception if it is not and tell the user to try again
 - SearchStock()
-  - Assigns the stock from the API to the stock object 
+  - Assigns the stock from the API to get the stock properties. This is different from isValidStock() as it has more parameters
+  for the historical data and takes more time.
 - GetHisData()
   - Get the historical data of the stock from the API
 - SortHistoricalData()
