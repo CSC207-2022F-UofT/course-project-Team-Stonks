@@ -38,7 +38,7 @@ public class BuyStockPresenter {
             return;
         }
 
-        if (quantity < 0) {
+        if (quantity <= 0) {
             view.displayInvalidInputFailure();
             return;
         }
