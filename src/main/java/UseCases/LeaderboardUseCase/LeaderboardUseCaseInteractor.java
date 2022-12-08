@@ -1,9 +1,12 @@
 package UseCases.LeaderboardUseCase;
 
+import APIInterface.StockAPIGateway;
+import APIInterface.StockAPIRequest;
 import entities.Leaderboard;
 import entities.User;
 import main.UserManager;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +41,19 @@ public class LeaderboardUseCaseInteractor {
 
         for (User u : users) {
             if (u.getCompPortfolio() != null) {
-                listOfVals[i] = u.getCompPortfolio().getNetValue();
+                StockAPIGateway gateway = new StockAPIGateway();
+                for(String stockSym : u.getCompPortfolio().getSymbolToStock().keySet()) {
+                    StockAPIRequest request = new StockAPIRequest(stockSym);
+                    try {
+                        int quantity = u.getCompPortfolio().getSymbolToStock().get(stockSym).getQuantity();
+                        listOfVals[i] += gateway.getPrice(request).getPrice()*quantity;
+                    }
+                    catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                listOfVals[i] += u.getCompPortfolio().getBalance();
+
             } else {
                 listOfVals[i] = 0;
             }
