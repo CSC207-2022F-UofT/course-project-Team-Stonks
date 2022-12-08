@@ -63,10 +63,10 @@ Contains attributes:
 ## Watchlist
 The watchlist class stores the watchlist information in the form of a Watchlist object.
 Contains Attributes:
-- String symbol
-- String username
-- String condition
-- Float value
+- String symbol (Stock symbol)
+- String username (Username of account creating the watchlist item)
+- String condition (Above or Below)
+- Float value (Value of the stock they want the notification to send)
 
 # Use Cases
 
@@ -127,12 +127,12 @@ This use case provides the interface to allow users to sell a stock after having
 ## Watchlist use case
 This use case provides the interface to allow users to watchlist any stock and notify the user once the stock price has reached a desired price range. This use case has the following functions:
 
--addStockToWatchlist()
+- addStockToWatchlist()
   - Takes in a stock symbol, value, a portfolio id and a condition (Above or Below), after verifying the stock is in the users portfolio and the value is a positive number it then adds the stock to the users watchlist and then it displays a message to the user that the item is successfully added to the watchlist.
-  - removeStockFromWatchlist()
-    - Takes in a stock symbol, value, a portfolio id and a condition (Above or Below), after verifying the stock is in the users watchlist and all the values match it then removes the item from the watchlist and sends a notification to the user that it has been removed
-  - updateWatchlist() 
-    - This is a backend function that every few minutes pulls each item in the watchlist and checks if the watchlist notification should trigger and if it should it sends that notification to the user
+- removeStockFromWatchlist()
+  - Takes in a stock symbol, value, a portfolio id and a condition (Above or Below), after verifying the stock is in the users watchlist and all the values match it then removes the item from the watchlist and sends a notification to the user that it has been removed
+- updateWatchlist() 
+  - This is a backend function that every few minutes pulls each item in the watchlist and checks if the watchlist notification should trigger and if it should it sends that notification to the user
 
 ## Leaderboard use case
 This use case provides the interface to allow users to view the leaderboard of the top competitive portfolios. This use case has the following functions:
