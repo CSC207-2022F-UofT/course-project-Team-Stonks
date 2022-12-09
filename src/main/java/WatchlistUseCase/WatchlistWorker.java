@@ -14,8 +14,15 @@ import db.WatchlistDSRequest;
 
 /**
  * This class is responsible for all cron jobs related to the watchlist.
+ * This cron will run every 5 miniutes to avoid overloading the api and to avoid crashing a users device.
  */
 public class WatchlistWorker {
+
+
+    /**
+     * This function checks all watchlist items for a specified user
+     * @param username --> username of the user to check watchlist items for
+     */
 
     public void checkWatchlists(String username) {
   

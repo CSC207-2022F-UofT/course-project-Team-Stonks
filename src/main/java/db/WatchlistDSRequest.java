@@ -6,7 +6,6 @@ public class WatchlistDSRequest {
     private Float stockValue;
     private String username;
     private String condition;
-    private String portfolioId;
 
     public WatchlistDSRequest( 
         String username, 
@@ -35,10 +34,6 @@ public class WatchlistDSRequest {
 
     public String getCondition() {
         return this.condition;
-    }
-
-    public String getPortfolioId() {
-        return this.portfolioId;
     }
 
 }

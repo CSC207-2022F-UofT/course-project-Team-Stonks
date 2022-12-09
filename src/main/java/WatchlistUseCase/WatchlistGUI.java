@@ -131,6 +131,9 @@ public class WatchlistGUI extends JFrame implements iWatchlistGUI {
         setVisible(true);
         pack();
     }
+    /**
+     * Main watchlist gui to view watchlist, add to watchlist, and remove from watchlist
+     */
     
     public static void main() {
         new WatchlistGUI(null);

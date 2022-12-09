@@ -513,6 +513,9 @@ public class EntitySQLGateway implements EntityDBGateway {
         }
     }
 
+    /**
+     * adds a watchlist request item to the database
+     */
     @Override
     public void addWatchlist(WatchlistDSRequest newWatchlist) {
         try {
@@ -529,6 +532,11 @@ public class EntitySQLGateway implements EntityDBGateway {
         }
     }
 
+    /**
+     * removes a watchlist item from the database
+     * @param username a non-empty string following the valid username parameters of the user to remove the watchlist item from
+     * @param symbol a non-empty string representing a stock symbol
+     */
     @Override
     public void removeWatchlist(String symbol, String username) {
         try {
@@ -541,7 +549,13 @@ public class EntitySQLGateway implements EntityDBGateway {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * update an existing watchlist item
+     * @param username a non-empty string following the valid username parameters of the user to update the watchlist item from
+     * @param symbol a non-empty string representing a stock symbol
+     * @param value a positive value representing the new value of the watchlist item
+     * @param condition a non-empty string representing the new condition of the watchlist item (above or below)
+     */
     @Override
     public void updateWatchlist(String username, String symbol, Float value, String condition) {
         try {
