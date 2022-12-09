@@ -3,26 +3,26 @@ package db;
 public class WatchlistDSRequest {
 
     private String stockSymbol;
-    private String stockType;
     private Float stockValue;
     private String username;
     private String condition;
+    private String portfolioId;
 
-    public WatchlistDSRequest(String symbol, String type, Float value, String username, String condition){
-        this.stockSymbol = symbol;
-        this.stockType = type;
-        this.stockValue = value;
+    public WatchlistDSRequest( 
+        String username, 
+        String symbol, 
+        Float value, 
+        String condition
+    ){
         this.username = username;
+        this.stockSymbol = symbol;
+        this.stockValue = value;
         this.condition = condition;
 
     }
 
     public String getSymbol() {
         return this.stockSymbol;
-    }
-
-    public String getType() {
-        return this.stockType;
     }
 
     public Float getValue() {
@@ -37,5 +37,8 @@ public class WatchlistDSRequest {
         return this.condition;
     }
 
+    public String getPortfolioId() {
+        return this.portfolioId;
+    }
 
 }

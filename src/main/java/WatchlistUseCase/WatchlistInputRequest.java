@@ -36,4 +36,5 @@ public class WatchlistInputRequest {
         return this.condition;
     }
 
+
 }

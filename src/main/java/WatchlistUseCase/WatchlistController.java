@@ -1,72 +1,37 @@
 package WatchlistUseCase;
 
+import java.util.List;
+
 import db.WatchlistDSRequest;
-import db.iEntityDBGateway;
+import db.EntityDBGateway;
 import main.OuterLayerFactory;
 
 public class WatchlistController {
-    iEntityDBGateway dbGateway;
+    EntityDBGateway dbGateway;
 
     public WatchlistController() {
         dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
     }
 
-    public WatchlistOutputResponse addWatchlist(WatchlistInputRequest req) {
-        WatchlistUseCaseInteractor interactor = new WatchlistUseCaseInteractor();
-        return interactor.addStockToWatchlist(req);
+
+
+    public WatchlistOutputResponse addStockToWatchlist(String username, String symbol, Float value,String condition) {
+      
+        dbGateway.addWatchlist(new WatchlistDSRequest(username, symbol, value, condition));
+
+        return new WatchlistOutputResponse();
     }
 
-    public WatchlistOutputResponse removeWatchlist(WatchlistInputRequest req) {
-        WatchlistUseCaseInteractor interactor = new WatchlistUseCaseInteractor();
-        return interactor.removeStockFromWatchlist(req);
+    public WatchlistOutputResponse removeStockFromWatchlist(String symbol, String username) {
+        dbGateway.removeWatchlist(symbol, username);
+
+        return new WatchlistOutputResponse();
     }
 
-    public WatchlistOutputResponse addStockToWatchlist(WatchlistInputRequest req) {
-        String symbol = req.getSymbol();
-        String type = req.getType();
-        Float value = req.getValue();
-        String username = req.getUsername();
-        String condition = req.getCondition();
 
-        dbGateway.addWatchlist(new WatchlistDSRequest(symbol, type, value, username, condition));
 
-        return new WatchlistOutputResponse(true);
-    }
-
-    public WatchlistOutputResponse removeStockFromWatchlist(WatchlistInputRequest req) {
-        String symbol = req.getSymbol();
-        String type = req.getType();
-        Float value = req.getValue();
-        String username = req.getUsername();
-        String condition = req.getCondition();
-
-        dbGateway.removeWatchlist(new WatchlistDSRequest(symbol, type, value, username, condition));
-
-        return new WatchlistOutputResponse(true);
-    }
-
-    public WatchlistOutputResponse updateWatchlist(WatchlistInputRequest req) {
-        String symbol = req.getSymbol();
-        String type = req.getType();
-        Float value = req.getValue();
-        String username = req.getUsername();
-        String condition = req.getCondition();
-
-        dbGateway.updateWatchlist(symbol, type, value, username, condition);
-
-        return new WatchlistOutputResponse(true);
-    }
-
-    public WatchlistOutputResponse getWatchlist(WatchlistInputRequest req) {
-        String symbol = req.getSymbol();
-        String type = req.getType();
-        Float value = req.getValue();
-        String username = req.getUsername();
-        String condition = req.getCondition();
-
-        dbGateway.getWatchlist(symbol, type, value, username, condition);
-
-        return new WatchlistOutputResponse(true);
+    public List<WatchlistDSRequest> getAllWatchlists() {
+        return dbGateway.getAllWatchlists();
     }
 
 }

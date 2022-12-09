@@ -44,8 +44,7 @@ public class UserGUI extends JFrame implements UserView {
         goToWatchList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                // on click show watchlistgui.
-                WatchlistGUI watchlistGUI = new WatchlistGUI();
+                WatchlistGUI watchlistGUI = new WatchlistGUI(username);
                 watchlistGUI.setVisible(true);
             }
         });
