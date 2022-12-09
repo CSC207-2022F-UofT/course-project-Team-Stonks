@@ -1,4 +1,4 @@
-package WatchlistUseCase;
+package UseCases.WatchlistUseCase;
 
 import com.intellij.uiDesigner.core.GridLayoutManager;
 

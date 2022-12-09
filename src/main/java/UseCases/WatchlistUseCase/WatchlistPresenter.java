@@ -1,4 +1,4 @@
-package WatchlistUseCase;
+package UseCases.WatchlistUseCase;
 
 public class WatchlistPresenter {
     

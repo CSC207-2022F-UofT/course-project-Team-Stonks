@@ -1,4 +1,4 @@
-package WatchlistUseCase;
+package UseCases.WatchlistUseCase;
 
 import java.awt.*;
 import java.io.BufferedReader;

@@ -1,4 +1,4 @@
-package WatchlistUseCase;
+package UseCases.WatchlistUseCase;
 
 public interface iWatchlistGUI {
     public void loadWatchlist(String watchlistName);

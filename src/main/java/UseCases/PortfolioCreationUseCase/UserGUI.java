@@ -3,18 +3,18 @@ package UseCases.PortfolioCreationUseCase;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
-import WatchlistUseCase.WatchlistGUI;
+import UseCases.WatchlistUseCase.WatchlistGUI;
+import UseCases.WatchlistUseCase.WatchlistWorker;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.Locale;
 import java.util.List;
+
 
 public class UserGUI extends JFrame implements UserView {
     private JPanel userPanel;
@@ -30,6 +30,10 @@ public class UserGUI extends JFrame implements UserView {
     public UserGUI(String username, List<String> portfolioNames, Date lastLogin) {
         super();
 
+
+        WatchlistWorker watchlistWorker = new WatchlistWorker();
+        watchlistWorker.run(username);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(userPanel);
         this.pack();
@@ -41,13 +45,19 @@ public class UserGUI extends JFrame implements UserView {
         DefaultListModel<String> dPortfolios = new DefaultListModel<>();
         dPortfolios.addAll(portfolioNames);
         portfolios.setModel(dPortfolios);
-        goToWatchList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                WatchlistGUI watchlistGUI = new WatchlistGUI(username);
-                watchlistGUI.setVisible(true);
-            }
+        goToWatchList.addActionListener(actionEvent -> {
+            WatchlistGUI watchlistGUI = new WatchlistGUI(username);
+            watchlistGUI.setVisible(true);
         });
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setContentPane(userPanel);
+        this.pack();
+        this.setVisible(true);
+
+        this.username.setText("Welcome: " + username);
+        this.lastLogin.setText("Last login: " + lastLogin);
+
  
     }
 
@@ -74,7 +84,6 @@ public class UserGUI extends JFrame implements UserView {
     public void goToWatchList(Runnable onGoToWatchList) {
         goToWatchList.addActionListener(e -> onGoToWatchList.run());
     }
-
     @Override
     public String getPortfolioSelected() {
         return portfolios.getSelectedValue();

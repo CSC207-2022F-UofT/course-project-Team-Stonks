@@ -1,4 +1,4 @@
-package WatchlistUseCase;
+package UseCases.WatchlistUseCase;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
