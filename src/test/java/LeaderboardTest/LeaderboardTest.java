@@ -6,6 +6,7 @@ import db.EntityDBGateway;
 import entities.*;
 import main.OuterLayerFactory;
 import main.UserManager;
+import org.junit.AfterClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -94,5 +95,12 @@ public class LeaderboardTest {
         List<String> stringList = response.toStringList();
         assert (stringList.get(0).equals("1. testUser1:           $100003.0"));
         assert (stringList.get(1).equals("2. testUser2:           $100003.0"));
+    }
+    @AfterClass
+    @Test
+    public void endTests() {
+        dbGateway.deleteUser("testUser1");
+        dbGateway.deleteUser("testUser2");
+
     }
 }
