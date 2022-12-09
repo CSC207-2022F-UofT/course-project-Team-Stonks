@@ -1,6 +1,6 @@
 package main;
 
-import LoginUseCase.UserLoginPresenter;
+import UseCases.LoginUseCase.UserLoginPresenter;
 
 public class StockSimulator {
     public static void main(String[] args) {

@@ -60,6 +60,13 @@ The user manager class is used to manage the user objects
 Contains attributes:
 - iEntityDBGateway dbGateway
 - UserFactory userFactory
+## Watchlist
+The watchlist class stores the watchlist information in the form of a Watchlist object.
+Contains Attributes:
+- String symbol (Stock symbol)
+- String username (Username of account creating the watchlist item)
+- String condition (Above or Below)
+- Float value (Value of the stock they want the notification to send)
 
 # Use Cases
 
@@ -98,7 +105,8 @@ This use case provides the interface to allow users to search any stock and view
 - isValidStock()
   - Check with the API if the stock is valid. Throw an exception if it is not and tell the user to try again
 - SearchStock()
-  - Assigns the stock from the API to the stock object 
+  - Assigns the stock from the API to get the stock properties. This is different from isValidStock() as it has more parameters
+  for the historical data and takes more time.
 - GetHisData()
   - Get the historical data of the stock from the API
 - SortHistoricalData()
@@ -118,6 +126,13 @@ This use case provides the interface to allow users to sell a stock after having
 
 ## Watchlist use case
 This use case provides the interface to allow users to watchlist any stock and notify the user once the stock price has reached a desired price range. This use case has the following functions:
+
+- addStockToWatchlist()
+  - Takes in a stock symbol, value, a portfolio id and a condition (Above or Below), after verifying the stock is in the users portfolio and the value is a positive number it then adds the stock to the users watchlist and then it displays a message to the user that the item is successfully added to the watchlist.
+- removeStockFromWatchlist()
+  - Takes in a stock symbol, value, a portfolio id and a condition (Above or Below), after verifying the stock is in the users watchlist and all the values match it then removes the item from the watchlist and sends a notification to the user that it has been removed
+- updateWatchlist() 
+  - This is a backend function that every few minutes pulls each item in the watchlist and checks if the watchlist notification should trigger and if it should it sends that notification to the user
 
 ## Leaderboard use case
 This use case provides the interface to allow users to view the leaderboard of the top competitive portfolios. This use case has the following functions:
@@ -166,7 +181,10 @@ Swing GUIs that require user input have a JTextField which in turn allows for us
 
 ## Watchlist GUI
 
-(input images)
+![Screenshot](images/AddWatchlistGUI.png)
+
+![Screenshot](images/ViewWatchlistGUI.png)
+
 
 ## Leaderboard GUI
 

@@ -3,13 +3,13 @@ package SellStockTest;
 import APIInterface.StockAPIGateway;
 import APIInterface.StockAPIRequest;
 import APIInterface.StockAPIResponse;
-import LoginUseCase.UserLoginInteractor;
-import PortfolioCreationUseCase.PortfolioCreationInteractor;
-import RegisterUseCase.RegisterInteractor;
-import SellStockUseCase.SellInputRequest;
-import SellStockUseCase.SellOutputResponse;
-import SellStockUseCase.SellUseCaseInteractor;
-import db.iEntityDBGateway;
+import UseCases.LoginUseCase.UserLoginInteractor;
+import UseCases.PortfolioCreationUseCase.PortfolioCreationInteractor;
+import UseCases.RegisterUseCase.RegisterInteractor;
+import UseCases.SellStockUseCase.SellInputRequest;
+import UseCases.SellStockUseCase.SellOutputResponse;
+import UseCases.SellStockUseCase.SellUseCaseInteractor;
+import db.EntityDBGateway;
 import entities.Portfolio;
 import entities.Stock;
 import entities.User;
@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Objects;
 
@@ -32,13 +33,14 @@ public class SellStockTest {
     private static final int invalidQuant = 100;
     private static final int negativeQuant = -1;
     private static final String username = "SellTestUser";
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
 
     @BeforeAll
     public static void SetUp() throws IOException {
         Date date = new Date(100);
 
-        iEntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
+        EntityDBGateway dbGateway = OuterLayerFactory.instance.getEntityDSGateway();
         dbGateway.deleteUser(username);
 
         RegisterInteractor interactor1 = new RegisterInteractor();
@@ -71,7 +73,7 @@ public class SellStockTest {
         interactor.sellStock(sell);
         Stock stock = map.get(symbol);
         assert stock.getQuantity() == quantity - sellQuant;
-        assert portfolio.getBalance() == balance + sellQuant * stock.getValue();
+        assert df.format(portfolio.getBalance()).equals(df.format(balance + sellQuant * stock.getValue()));
     }
 
     /**
