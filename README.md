@@ -60,13 +60,6 @@ The user manager class is used to manage the user objects
 Contains attributes:
 - iEntityDBGateway dbGateway
 - UserFactory userFactory
-## Watchlist
-The watchlist class stores the watchlist information in the form of a Watchlist object.
-Contains Attributes:
-- String symbol (Stock symbol)
-- String username (Username of account creating the watchlist item)
-- String condition (Above or Below)
-- Float value (Value of the stock they want the notification to send)
 
 # Use Cases
 
