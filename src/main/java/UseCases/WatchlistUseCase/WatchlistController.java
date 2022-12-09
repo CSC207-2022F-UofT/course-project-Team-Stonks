@@ -22,10 +22,10 @@ public class WatchlistController {
      */
 
     public WatchlistOutputResponse addStockToWatchlist(String username, String symbol, Float value,String condition) {
-      
+
         dbGateway.addWatchlist(new WatchlistDSRequest(username, symbol, value, condition));
 
-        return new WatchlistOutputResponse();
+        return new WatchlistOutputResponse(condition, value, condition, condition);
     }
     /**
      * Function to remove a stock from watchlist
@@ -35,7 +35,7 @@ public class WatchlistController {
     public WatchlistOutputResponse removeStockFromWatchlist(String symbol, String username) {
         dbGateway.removeWatchlist(symbol, username);
 
-        return new WatchlistOutputResponse();
+        return new WatchlistOutputResponse(username, null, username, username);
     }
 
 
