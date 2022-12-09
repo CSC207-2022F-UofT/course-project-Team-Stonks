@@ -3,6 +3,7 @@ package db;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * SQL implementation of the entity database gateway interface,
@@ -511,4 +512,95 @@ public class EntitySQLGateway implements EntityDBGateway {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * adds a watchlist request item to the database
+     */
+    @Override
+    public void addWatchlist(WatchlistDSRequest newWatchlist) {
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("INSERT INTO Watchlist VALUES ('" +
+                    newWatchlist.getUsername() + "','" +
+                    new Random().nextInt(1000000) + "','" +
+                    newWatchlist.getSymbol() + "','" +
+                    newWatchlist.getValue() + "','" +
+                    newWatchlist.getCondition() + "')");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * removes a watchlist item from the database
+     * @param username a non-empty string following the valid username parameters of the user to remove the watchlist item from
+     * @param symbol a non-empty string representing a stock symbol
+     */
+    @Override
+    public void removeWatchlist(String symbol, String username) {
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("DELETE FROM Watchlist WHERE " +
+                    "symbol = '" + symbol + "' AND " +
+                    "username = '" + username + "'");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    /**
+     * update an existing watchlist item
+     * @param username a non-empty string following the valid username parameters of the user to update the watchlist item from
+     * @param symbol a non-empty string representing a stock symbol
+     * @param value a positive value representing the new value of the watchlist item
+     * @param condition a non-empty string representing the new condition of the watchlist item (above or below)
+     */
+    @Override
+    public void updateWatchlist(String username, String symbol, Float value, String condition) {
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("UPDATE Watchlist SET " +
+                    "value = '" + value + "' WHERE " +
+                    "symbol = '" + symbol + "' AND ");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void getWatchlist(String username, String symbol, Float value, String condition) {
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("SELECT * FROM Watchlist WHERE " +
+                    "symbol = '" + symbol + "' AND " +
+                    "value = '" + value + "'");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<WatchlistDSRequest> getAllWatchlists() {
+        try {
+            List<WatchlistDSRequest> watchlistDSResponses = new ArrayList<>();
+
+            PreparedStatement st = con.prepareStatement(
+                    "SELECT * FROM Watchlist");
+            ResultSet userRS = st.executeQuery();
+            while (userRS.next()) {
+                watchlistDSResponses.add(new WatchlistDSRequest(
+                        userRS.getString(1),
+                        userRS.getString(3),
+                        userRS.getFloat(4),
+                        userRS.getString(5)));
+            }
+            return watchlistDSResponses;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

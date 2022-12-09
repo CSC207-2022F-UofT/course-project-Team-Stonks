@@ -132,4 +132,20 @@ public interface EntityDBGateway {
      * deletes the given portfolio from the database if it exists
      */
     void updateStockQuantity(String symbol, int newQuantity, String username, String portfolioName);
+
+    void addWatchlist(WatchlistDSRequest newWatchlist);
+
+    void removeWatchlist(String symbol, String username);
+
+    void updateWatchlist(String username, String symbol, Float value, String condition);
+
+    void getWatchlist(String username, String symbol, Float value, String condition);
+
+    /**
+     * Get all watchlists from database.
+     */
+
+    List<WatchlistDSRequest> getAllWatchlists();
+
+
 }

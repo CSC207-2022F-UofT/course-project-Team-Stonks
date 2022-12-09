@@ -1,5 +1,4 @@
 package UseCases.WatchlistUseCase;
 
-public class Delete {
-
+public class watchlistViewer {
 }

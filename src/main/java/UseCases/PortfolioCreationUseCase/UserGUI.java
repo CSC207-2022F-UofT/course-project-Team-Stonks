@@ -3,6 +3,9 @@ package UseCases.PortfolioCreationUseCase;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
+import UseCases.WatchlistUseCase.WatchlistGUI;
+import UseCases.WatchlistUseCase.WatchlistWorker;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
@@ -11,6 +14,7 @@ import java.awt.*;
 import java.sql.Date;
 import java.util.Locale;
 import java.util.List;
+
 
 public class UserGUI extends JFrame implements UserView {
     private JPanel userPanel;
@@ -21,9 +25,14 @@ public class UserGUI extends JFrame implements UserView {
     private JLabel lastLogin;
     private JButton createPortfolio;
     private JButton goToLeaderboard;
+    private JButton goToWatchList;
 
     public UserGUI(String username, List<String> portfolioNames, Date lastLogin) {
         super();
+
+
+        WatchlistWorker watchlistWorker = new WatchlistWorker();
+        watchlistWorker.run(username);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(userPanel);
@@ -36,6 +45,20 @@ public class UserGUI extends JFrame implements UserView {
         DefaultListModel<String> dPortfolios = new DefaultListModel<>();
         dPortfolios.addAll(portfolioNames);
         portfolios.setModel(dPortfolios);
+        goToWatchList.addActionListener(actionEvent -> {
+            WatchlistGUI watchlistGUI = new WatchlistGUI(username);
+            watchlistGUI.setVisible(true);
+        });
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setContentPane(userPanel);
+        this.pack();
+        this.setVisible(true);
+
+        this.username.setText("Welcome: " + username);
+        this.lastLogin.setText("Last login: " + lastLogin);
+
+ 
     }
 
     @Override
@@ -58,6 +81,9 @@ public class UserGUI extends JFrame implements UserView {
         goToLeaderboard.addActionListener(e -> onGoToLeaderboard.run());
     }
 
+    public void goToWatchList(Runnable onGoToWatchList) {
+        goToWatchList.addActionListener(e -> onGoToWatchList.run());
+    }
     @Override
     public String getPortfolioSelected() {
         return portfolios.getSelectedValue();
@@ -149,6 +175,9 @@ public class UserGUI extends JFrame implements UserView {
         goToLeaderboard = new JButton();
         goToLeaderboard.setText("Leaderboard");
         userPanel.add(goToLeaderboard, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        goToWatchList = new JButton();
+        goToWatchList.setText("Watchlist");
+        userPanel.add(goToWatchList, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_SOUTHEAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 20), null, 0, false));
     }
 
     /**
@@ -179,5 +208,6 @@ public class UserGUI extends JFrame implements UserView {
     public JComponent $$$getRootComponent$$$() {
         return userPanel;
     }
+
 
 }

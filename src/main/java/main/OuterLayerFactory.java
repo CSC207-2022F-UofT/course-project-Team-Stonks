@@ -23,7 +23,6 @@ import UseCases.SellStockUseCase.SellStockView;
 import db.EntitySQLGateway;
 import db.EntityDBGateway;
 import entities.Portfolio;
-
 import java.sql.Date;
 import java.util.List;
 
